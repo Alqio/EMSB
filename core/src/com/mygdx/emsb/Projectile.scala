@@ -38,9 +38,9 @@ class Projectile(val creator: Instance, val spritePath: String, ctrl: Controller
   			println("this.index : " + World.projectiles.indexOf(this))
   			println("size before removal: " + World.projectiles.size)
   			
-  			World.projectiles(World.projectiles.indexOf(this)) = null
+  			//World.projectiles(World.projectiles.indexOf(this)) = null
   			
-  			//World.projectiles.remove(World.projectiles.indexOf(this))
+  			World.projectiles.remove(World.projectiles.indexOf(this))
   			
   			
   			println("size after removal: " + World.projectiles.size)

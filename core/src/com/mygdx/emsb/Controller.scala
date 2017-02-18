@@ -1,4 +1,4 @@
-package com.mygdx.emsb;
+package com.mygdx.emsb
 
 import com.badlogic.gdx.ApplicationAdapter
 import com.badlogic.gdx.Gdx
@@ -8,6 +8,12 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.g2d.Sprite
 import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.graphics.Color
+import com.badlogic.gdx.graphics.OrthographicCamera
+import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.Input;
+
+
+import collection.mutable.Buffer
 
 class Controller extends ApplicationAdapter {
 	var batch: SpriteBatch = null
@@ -15,8 +21,132 @@ class Controller extends ApplicationAdapter {
 	var spr: Sprite = null
 	var rot = 0
 	var font: BitmapFont = null
-	val HEIGHT = 720
+	val WIDTH = 400
+	val HEIGHT = 400
+	var cam: OrthographicCamera = null
+	var rotationSpeed = 1f
+	private var tausta: Sprite = null
 
+	override def create() = {
+
+		font = new BitmapFont()
+		font.setColor(Color.RED)
+		
+		tausta = new Sprite(new Texture(Gdx.files.internal("tausta.png")))
+		tausta.setPosition(0,0)
+		tausta.setSize(WIDTH, HEIGHT)
+		
+		batch = new SpriteBatch()
+
+		var yks = new Vihuy(this)
+		var toka = new Vihuy(this)
+		var torni = new SnowTower(this)
+		torni.coords = new Coords(50, 50)
+		toka.coords = new Coords(720, 200)
+
+		World.instances += yks
+		World.instances += toka
+		World.instances += torni
+
+		val h: Float = Gdx.graphics.getHeight()
+		val w: Float = Gdx.graphics.getWidth()
+		
+		cam = new OrthographicCamera(100, 100 * (h / w))
+		cam.position.set(cam.viewportWidth / 2f, cam.viewportHeight / 2f, 0)
+		cam.update()
+		
+	}
+
+	def updateWorld() = {
+		/** Execute the step event for all instances **/
+		World.instances.toVector.foreach(_.step())
+		
+		/** Execute the step event for all projectiles **/
+		World.projectiles.toVector.foreach(_.step())
+		
+		/** Move all alarms **/
+		World.instances.foreach(_.alarms.foreach(_.move()))	  
+	}
+	
+	def draw() = {
+	  
+		World.instances.foreach(_.draw(batch))
+
+		World.projectiles.foreach(x => if (x != null) x.sprite.setPosition(x.coords.x.toFloat, x.coords.y.toFloat))
+		World.projectiles.foreach(x => if (x != null) x.sprite.draw(batch))	  
+		tausta.draw(batch)
+	}
+	
+	
+	/** The game loop */
+	override def render() = {
+	  println("x: " + Gdx.input.getX())
+		println("y: " + Gdx.input.getY())
+		
+		updateWorld()
+		
+	  handleInput()
+	  cam.update()
+	  batch.setProjectionMatrix(cam.combined)
+	  
+	  /** Clear the screen */
+		Gdx.gl.glClearColor(0.5f, 0f, 0.3f, 1)
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
+
+		batch.begin()
+	  draw()
+		drawOutline("x: " + Gdx.input.getX() + "\ny: " + (Gdx.input.getY()), Gdx.input.getX(), Gdx.input.getY(), 1,Color.RED, font, batch)
+		batch.end()
+	}
+
+	def handleInput() = {
+	  if (Gdx.input.isKeyPressed(Input.Keys.A)) {
+      cam.zoom += 0.02f;
+      //If the A Key is pressed, add 0.02 to the Camera's Zoom
+    }
+    if (Gdx.input.isKeyPressed(Input.Keys.Q)) {
+      cam.zoom -= 0.02f;
+        //If the Q Key is pressed, subtract 0.02 from the Camera's Zoom
+    }
+    if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+        cam.translate(-3, 0, 0);
+        //If the LEFT Key is pressed, translate the camera -3 units in the X-Axis
+    }
+    if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+        cam.translate(3, 0, 0);
+        //If the RIGHT Key is pressed, translate the camera 3 units in the X-Axis
+    }
+    if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+        cam.translate(0, -3, 0);
+        //If the DOWN Key is pressed, translate the camera -3 units in the Y-Axis
+    }
+    if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
+        cam.translate(0, 3, 0);
+        //If the UP Key is pressed, translate the camera 3 units in the Y-Axis
+    }
+    if (Gdx.input.isKeyPressed(Input.Keys.W)) {
+        cam.rotate(-rotationSpeed, 0, 0, 1);
+        //If the W Key is pressed, rotate the camera by -rotationSpeed around the Z-Axis
+    }
+    if (Gdx.input.isKeyPressed(Input.Keys.E)) {
+        cam.rotate(rotationSpeed, 0, 0, 1);
+        //If the E Key is pressed, rotate the camera by rotationSpeed around the Z-Axis
+    }
+
+    cam.zoom = MathUtils.clamp(cam.zoom, 0.1f, 100/cam.viewportWidth);
+
+    val effectiveViewportWidth: Float = cam.viewportWidth * cam.zoom;
+    val effectiveViewportHeight: Float = cam.viewportHeight * cam.zoom;
+
+    cam.position.x = MathUtils.clamp(cam.position.x, effectiveViewportWidth / 2f, 100 - effectiveViewportWidth / 2f);
+    cam.position.y = MathUtils.clamp(cam.position.y, effectiveViewportHeight / 2f, 100 - effectiveViewportHeight / 2f);
+	}
+	
+	
+	override def dispose() = {
+		batch.dispose()
+	}
+	
 	def drawOutline(str: String, x: Int, y: Int, width: Int, c: Color, font: BitmapFont, batch: SpriteBatch): Unit = {
 		font.setColor(Color.BLACK)
 		font.draw(batch, str, x - width, y - width)
@@ -31,63 +161,5 @@ class Controller extends ApplicationAdapter {
 		font.setColor(c)
 		font.draw(batch, str, x, y)
 
-	}
-
-	override def create() = {
-
-		font = new BitmapFont()
-		
-		font.setColor(Color.RED)
-		batch = new SpriteBatch()
-		img = new Texture("badlogic.jpg")
-		spr = new Sprite(img)
-		spr.setRotation(45)
-		spr.setPosition(10, 10)
-
-		var yks = new Vihuy(this)
-		var toka = new Vihuy(this)
-		var torni = new SnowTower(this)
-		torni.coords = new Coords(400, 200)
-		toka.coords = new Coords(720, 200)
-
-		World.instances += yks
-		World.instances += toka
-		World.instances += torni
-
-	}
-
-	/** The game loop **/
-	override def render() = {
-		rot += 1
-
-		/** Execute the step event for all instances **/
-		World.instances.foreach(_.step())
-		/** Execute the step event for all projectiles **/
-		World.projectiles.foreach(x => if (x != null) x.step())
-		/** Move all alarms **/
-		World.instances.foreach(_.alarms.foreach(_.move()))
-
-		Gdx.gl.glClearColor(0.5f, 0.5f, 0.3f, 1)
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
-
-		spr.setRotation(rot)
-		batch.begin()
-
-		World.instances.foreach(x => x.sprite.setPosition(x.coords.x.toFloat, x.coords.y.toFloat))
-		World.instances.foreach(_.sprite.draw(batch))
-
-		World.projectiles.foreach(x => if (x != null) x.sprite.setPosition(x.coords.x.toFloat, x.coords.y.toFloat))
-		World.projectiles.foreach(x => if (x != null) x.sprite.draw(batch))
-
-		//spr.draw(batch)
-		
-		//font.draw(batch, "Hello world", Gdx.input.getX(), HEIGHT - Gdx.input.getY());
-		drawOutline("jouu", Gdx.input.getX(), HEIGHT - Gdx.input.getY(), 1,Color.RED, font, batch)
-		batch.end()
-	}
-
-	override def dispose() = {
-		batch.dispose()
-		img.dispose()
 	}
 }

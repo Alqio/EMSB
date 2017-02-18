@@ -20,6 +20,7 @@ class Vihuy(ctrl: Controller) extends EnemyUnit(ctrl) {
   }
   
   var sprite = new Sprite(new Texture("vihuy.png"))
+  sprite.setSize(32f, 32f)
   
   override def toString = "Vihuy at: " + this.coords.toString + " with " + hp + "/" + maxHp + " hp"
 

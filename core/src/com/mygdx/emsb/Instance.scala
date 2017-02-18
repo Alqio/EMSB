@@ -2,6 +2,8 @@ package com.mygdx.emsb
 
 //import processing.core._
 import com.badlogic.gdx.graphics.g2d.Sprite
+import com.badlogic.gdx.graphics.g2d.SpriteBatch
+
 import scala.collection.mutable.Map
 
 
@@ -36,16 +38,9 @@ abstract class Instance(ctrl: Controller) {
   }
   
   /** Draw the instance */
-  def draw() = {
-  	//ctrl.image(this.sprite, this.coords.x.toInt - this.sprite.getWidth()/2, this.coords.y.toInt - this.sprite.getHeight());
-  	
-  	
-  	//ctrl.noFill()
-  	//ctrl.stroke(0)
-  	//ctrl.ellipse(this.coords.x.toFloat, this.coords.y.toFloat - this.sprite.getHeight()/2, range*2, range*2)
-  	//ctrl.stroke(255,0,0)
-  	//ctrl.rect(this.hitArea.xy1.x.toFloat, this.hitArea.xy1.y.toFloat, this.hitArea.width.toFloat, this.hitArea.height.toFloat)
-  	//ctrl.rect(this.coords.x.toFloat - this.sprite.width/2, this.coords.y.toFloat - this.sprite.height, this.sprite.width, this.sprite.height )
+  def draw(batch: SpriteBatch) = {
+    this.sprite.setPosition(this.coords.x.toFloat, this.coords.y.toFloat)
+		this.sprite.draw(batch)
   }
   
   /**

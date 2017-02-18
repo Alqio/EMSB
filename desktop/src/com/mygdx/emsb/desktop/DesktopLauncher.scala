@@ -10,8 +10,8 @@ object DesktopLauncher {
 	def main(args: Array[String]) {
 		var config: LwjglApplicationConfiguration = new LwjglApplicationConfiguration
 		config.foregroundFPS = 60
-		config.width = 1280
-		config.height = 720
+		//config.width = 1280
+		//config.height = 720
 		new LwjglApplication(new Controller, config)
 	}
 }
