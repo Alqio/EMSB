@@ -11,7 +11,7 @@ import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.Input;
-
+import com.badlogic.gdx.math.Vector3
 
 import collection.mutable.Buffer
 
@@ -21,8 +21,8 @@ class Controller extends ApplicationAdapter {
 	var spr: Sprite = null
 	var rot = 0
 	var font: BitmapFont = null
-	val WIDTH = 400
-	val HEIGHT = 400
+	val WIDTH = 100
+	val HEIGHT = 100
 	var cam: OrthographicCamera = null
 	var rotationSpeed = 1f
 	private var tausta: Sprite = null
@@ -44,8 +44,8 @@ class Controller extends ApplicationAdapter {
 		torni.coords = new Coords(50, 50)
 		toka.coords = new Coords(720, 200)
 
-		World.instances += yks
-		World.instances += toka
+		//World.instances += yks
+		//World.instances += toka
 		World.instances += torni
 
 		val h: Float = Gdx.graphics.getHeight()
@@ -69,19 +69,19 @@ class Controller extends ApplicationAdapter {
 	}
 	
 	def draw() = {
-	  
-		World.instances.foreach(_.draw(batch))
+	  tausta.draw(batch)
+		World.instances.foreach(_.draw(batch, cam))
 
 		World.projectiles.foreach(x => if (x != null) x.sprite.setPosition(x.coords.x.toFloat, x.coords.y.toFloat))
 		World.projectiles.foreach(x => if (x != null) x.sprite.draw(batch))	  
-		tausta.draw(batch)
+		
 	}
 	
 	
 	/** The game loop */
 	override def render() = {
-	  println("x: " + Gdx.input.getX())
-		println("y: " + Gdx.input.getY())
+	  //println("x: " + Gdx.input.getX())
+		//println("y: " + Gdx.input.getY())
 		
 		updateWorld()
 		
@@ -90,12 +90,16 @@ class Controller extends ApplicationAdapter {
 	  batch.setProjectionMatrix(cam.combined)
 	  
 	  /** Clear the screen */
-		Gdx.gl.glClearColor(0.5f, 0f, 0.3f, 1)
+		//Gdx.gl.glClearColor(0.5f, 0f, 0.3f, 1)
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
 
 		batch.begin()
-	  draw()
-		drawOutline("x: " + Gdx.input.getX() + "\ny: " + (Gdx.input.getY()), Gdx.input.getX(), Gdx.input.getY(), 1,Color.RED, font, batch)
+	  
+		draw()
+		
+		val pos = new Vector3(Gdx.input.getX(),Gdx.input.getY(), 0)
+		cam.unproject(pos)
+		drawOutline("x: " + pos.x + "\ny: " + (pos.y), pos.x.toInt, pos.y.toInt, 1,Color.RED, font, batch)
 		batch.end()
 	}
 

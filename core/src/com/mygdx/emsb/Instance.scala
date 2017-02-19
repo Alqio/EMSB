@@ -3,6 +3,8 @@ package com.mygdx.emsb
 //import processing.core._
 import com.badlogic.gdx.graphics.g2d.Sprite
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
+import com.badlogic.gdx.graphics.OrthographicCamera
+import com.badlogic.gdx.math.Vector3
 
 import scala.collection.mutable.Map
 
@@ -38,8 +40,13 @@ abstract class Instance(ctrl: Controller) {
   }
   
   /** Draw the instance */
-  def draw(batch: SpriteBatch) = {
-    this.sprite.setPosition(this.coords.x.toFloat, this.coords.y.toFloat)
+  def draw(batch: SpriteBatch, cam: OrthographicCamera) = {
+    
+    val pos = new Vector3(this.coords.x.toFloat, this.coords.y.toFloat, 0)
+    
+    cam.unproject(pos)
+    println("x: " + pos.x + "\ny: " + pos.y)
+    this.sprite.setPosition(pos.x, pos.y)
 		this.sprite.draw(batch)
   }
   

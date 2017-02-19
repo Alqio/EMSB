@@ -10,6 +10,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.Color;
 
 public class OrthographicCameraExample implements ApplicationListener {
 
@@ -18,14 +20,17 @@ public class OrthographicCameraExample implements ApplicationListener {
 
     private OrthographicCamera cam;
     private SpriteBatch batch;
-
+    
+    private BitmapFont font;
+    
     private Sprite mapSprite;
     private float rotationSpeed;
 
     @Override
     public void create() {
         rotationSpeed = 0.5f;
-
+		font = new BitmapFont();
+		font.setColor(Color.RED);
         mapSprite = new Sprite(new Texture(Gdx.files.internal("tausta.png")));
         mapSprite.setPosition(0, 0);
         mapSprite.setSize(WORLD_WIDTH, WORLD_HEIGHT);
@@ -53,6 +58,8 @@ public class OrthographicCameraExample implements ApplicationListener {
 
         batch.begin();
         mapSprite.draw(batch);
+        
+        font.draw(batch, "moi", Gdx.input.getX(),Gdx.input.getY());
         batch.end();
     }
 
