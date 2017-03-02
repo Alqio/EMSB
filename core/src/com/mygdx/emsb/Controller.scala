@@ -32,7 +32,7 @@ class Controller extends ApplicationAdapter {
 		font = new BitmapFont()
 		font.setColor(Color.RED)
 		
-		tausta = new Sprite(new Texture(Gdx.files.internal("tausta.png")))
+		tausta = new Sprite(new Texture(Gdx.files.internal("testitausta.png")))
 		tausta.setPosition(0,0)
 		tausta.setSize(WIDTH, HEIGHT)
 		
@@ -98,8 +98,9 @@ class Controller extends ApplicationAdapter {
 		draw()
 		
 		val pos = new Vector3(Gdx.input.getX(),Gdx.input.getY(), 0)
-		cam.unproject(pos)
-		drawOutline("x: " + pos.x + "\ny: " + (pos.y), pos.x.toInt, pos.y.toInt, 1,Color.RED, font, batch)
+		//cam.unproject(pos)
+		//drawOutline("x: " + pos.x + "\ny: " + (pos.y), pos.x.toInt, pos.y.toInt, 1,Color.RED, font, batch)
+		font.draw(batch, "x: " + pos.x + "\ny: " + (pos.y), pos.x.toInt, pos.y.toInt)
 		batch.end()
 	}
 
@@ -150,7 +151,9 @@ class Controller extends ApplicationAdapter {
 	override def dispose() = {
 		batch.dispose()
 	}
-	
+	/**
+	 * @param str String
+	 */
 	def drawOutline(str: String, x: Int, y: Int, width: Int, c: Color, font: BitmapFont, batch: SpriteBatch): Unit = {
 		font.setColor(Color.BLACK)
 		font.draw(batch, str, x - width, y - width)
