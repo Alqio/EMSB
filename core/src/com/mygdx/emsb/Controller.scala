@@ -21,8 +21,8 @@ class Controller extends ApplicationAdapter {
 	var spr: Sprite = null
 	var rot = 0
 	var font: BitmapFont = null
-	val WIDTH = 100
-	val HEIGHT = 100
+	val WIDTH = 1280
+	val HEIGHT = 720
 	var cam: OrthographicCamera = null
 	var rotationSpeed = 1f
 	private var tausta: Sprite = null
@@ -32,9 +32,9 @@ class Controller extends ApplicationAdapter {
 		font = new BitmapFont()
 		font.setColor(Color.RED)
 		
-		tausta = new Sprite(new Texture(Gdx.files.internal("testitausta.png")))
+		tausta = new Sprite(new Texture(Gdx.files.internal("bg1.png")))
 		tausta.setPosition(0,0)
-		tausta.setSize(WIDTH, HEIGHT)
+		tausta.setSize(480, 480)
 		
 		batch = new SpriteBatch()
 
@@ -46,12 +46,13 @@ class Controller extends ApplicationAdapter {
 
 		//World.instances += yks
 		//World.instances += toka
-		World.instances += torni
+		//World.instances += torni
 
 		val h: Float = Gdx.graphics.getHeight()
 		val w: Float = Gdx.graphics.getWidth()
 		
-		cam = new OrthographicCamera(100, 100 * (h / w))
+		cam = new OrthographicCamera(480, 480 * (h / w))
+		//cam = new OrthographicCamera(Gdx.graphics.getWidth(),Gdx.graphics.getHeight())
 		cam.position.set(cam.viewportWidth / 2f, cam.viewportHeight / 2f, 0)
 		cam.update()
 		
@@ -82,23 +83,22 @@ class Controller extends ApplicationAdapter {
 	override def render() = {
 	  //println("x: " + Gdx.input.getX())
 		//println("y: " + Gdx.input.getY())
+	  Gdx.gl.glClearColor(0.5f, 0f, 0.3f, 1)
+	  Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
 		
 		updateWorld()
-		
 	  handleInput()
 	  cam.update()
 	  batch.setProjectionMatrix(cam.combined)
 	  
 	  /** Clear the screen */
-		//Gdx.gl.glClearColor(0.5f, 0f, 0.3f, 1)
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
 
 		batch.begin()
 	  
 		draw()
 		
 		val pos = new Vector3(Gdx.input.getX(),Gdx.input.getY(), 0)
-		//cam.unproject(pos)
+		cam.unproject(pos)
 		//drawOutline("x: " + pos.x + "\ny: " + (pos.y), pos.x.toInt, pos.y.toInt, 1,Color.RED, font, batch)
 		font.draw(batch, "x: " + pos.x + "\ny: " + (pos.y), pos.x.toInt, pos.y.toInt)
 		batch.end()

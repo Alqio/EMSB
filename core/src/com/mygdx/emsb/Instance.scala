@@ -44,8 +44,8 @@ abstract class Instance(ctrl: Controller) {
     
     val pos = new Vector3(this.coords.x.toFloat, this.coords.y.toFloat, 0)
     
-    cam.unproject(pos)
-    println("x: " + pos.x + "\ny: " + pos.y)
+    //cam.unproject(pos)
+    //println("x: " + pos.x + "\ny: " + pos.y)
     this.sprite.setPosition(pos.x, pos.y)
 		this.sprite.draw(batch)
   }

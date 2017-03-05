@@ -3,6 +3,7 @@ package com.mygdx.emsb.desktop
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration
 import com.mygdx.emsb.Controller
+import com.mygdx.emsb.CameraDemo
 /**
  * @author alkiok1
  */
