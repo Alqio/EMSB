@@ -1,6 +1,7 @@
 package com.mygdx.emsb
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.Sprite
+import Methods._
 
 class SnowTower(ctrl: Controller) extends Building(ctrl) {
   override val maxHp = 100.0
@@ -29,9 +30,8 @@ class SnowTower(ctrl: Controller) extends Building(ctrl) {
   
   def attack() = {
   	if (this.target.isDefined && this.coords.distanceToPoint(this.target.get.coords) <= this.range) {
-  		var i = new Projectile(this, "towerProjectile.png", ctrl)
+  		var i = choose(new Snowball1(this), new Snowball2(this))
   		World.projectiles += i
-  		println("nyt ammuttiin taas")
   	} else if (this.target.isEmpty){
   		this.alarms(0).time = -1
   	}

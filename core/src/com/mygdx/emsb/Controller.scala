@@ -13,6 +13,8 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Vector3
 
+
+
 import collection.mutable.Buffer
 
 class Controller extends ApplicationAdapter {
@@ -53,44 +55,29 @@ class Controller extends ApplicationAdapter {
 		World.instances += torni
 		
 		
-		val h: Float = Gdx.graphics.getHeight()
-		val w: Float = Gdx.graphics.getWidth()
-		
 		
 	}
 	
 	def draw() = {
 	  tausta.draw(batch)
 		World.instances.foreach(_.draw(batch))
-
-		World.projectiles.foreach(x => if (x != null) x.sprite.setPosition(x.coords.x.toFloat, x.coords.y.toFloat))
-		World.projectiles.foreach(x => if (x != null) x.sprite.draw(batch))	  
-		
+		World.projectiles.foreach(_.draw(batch))
 	}
 	
 	
 	/** The game loop */
 	override def render() = {
-	  //println("x: " + Gdx.input.getX())
-		//println("y: " + Gdx.input.getY())
 	  Gdx.gl.glClearColor(0.5f, 0f, 0.3f, 1)
 	  Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
 	  
 		World.updateWorld()
-		
-	  //cam.update()
-	  //batch.setProjectionMatrix(cam.combined)
-	  
-	  /** Clear the screen */
 
 		batch.begin()
 	  
 		draw()
 		
 		val pos = new Vector3(Gdx.input.getX(),Gdx.input.getY(), 0)
-		//cam.unproject(pos)
-		drawOutline("x: " + pos.x + "\ny: " + (pos.y), pos.x.toInt, Gdx.graphics.getHeight() - 1 - pos.y.toInt, 1,Color.RED, font, batch)
-		//font.draw(batch, "x: " + pos.x + "\ny: " + (pos.y), pos.x.toInt,Gdx.graphics.getHeight() - 1 - pos.y.toInt)
+		drawOutline("x: " + pos.x + "\ny: " + (Gdx.graphics.getHeight() - 1 - pos.y.toInt), pos.x.toInt, Gdx.graphics.getHeight() - 1 - pos.y.toInt, 1,Color.RED, font, batch)
 		batch.end()
 	}
 
@@ -113,7 +100,6 @@ class Controller extends ApplicationAdapter {
 		font.draw(batch, str, x, y - width)
 		font.draw(batch, str, x - width, y)
 		font.draw(batch, str, x + width, y)
-		//font.draw(batch, "Hello world", Gdx.input.getX(), HEIGHT - Gdx.input.getY());
 		font.setColor(c)
 		font.draw(batch, str, x, y)
 

@@ -4,11 +4,6 @@ package com.mygdx.emsb
  * @author alkiok1
  */
 class Alarm (var time: Int, val actor: Instance) {
-  
-	/*val action = (actor: Instance) => {
-		
-	} */
-	
 	
 	/** Stops at -1 **/
 	def move() = {

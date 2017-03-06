@@ -45,8 +45,6 @@ abstract class Instance(ctrl: Controller) {
     
     val pos = new Vector3(this.coords.x.toFloat, this.coords.y.toFloat, 0)
     
-    //cam.unproject(pos)
-    //println("x: " + pos.x + "\ny: " + pos.y)
     this.sprite.setPosition(pos.x, pos.y)
 		this.sprite.draw(batch)
   }
@@ -54,7 +52,7 @@ abstract class Instance(ctrl: Controller) {
   /**
    * Return the center position of the instance
    */
-  def position = new Coords(this.coords.x, this.coords.y - this.sprite.getHeight()/2)
+  def position = new Coords(this.coords.x + this.sprite.getWidth()/2, this.coords.y + this.sprite.getHeight()/2)
   
   /**
    * Check whether a target (usually a projectile?) hits this instance
@@ -65,13 +63,13 @@ abstract class Instance(ctrl: Controller) {
    * Hit area
    */
   def hitArea = {
-  	new Area(new Coords(this.coords.x - this.sprite.getWidth()/2, this.coords.y - this.sprite.getHeight()), new Coords(this.coords.x + this.sprite.getWidth()/2, this.coords.y))
+  	new Area(new Coords(this.coords.x, this.coords.y), new Coords(this.coords.x + this.sprite.getWidth(), this.coords.y + this.sprite.getHeight()))
   }
   
   
   /**
    * Check if a coordinate is inside this instance's collision box
-   * Note to self: The actual coordinates are on the top left corner of the image, not in the center. //NOTE DUNNO IF THIS IS THE CASE STILL
+   * Note to self: The actual coordinates are on the bottom left corner
    */
   def checkCollision(coords: Coords) = this.hitArea.isInside(coords)
 
@@ -80,7 +78,8 @@ abstract class Instance(ctrl: Controller) {
    * Returns the nearest instance (not self)
    */
   def instanceNearest(onlyEnemy: Boolean = true): Option[Instance] = {
-    val enemies = World.instances.filter(x => x.side != this.side).toVector
+    
+    val enemies = if (onlyEnemy) World.instances.filter(x => x.side != this.side).toVector else World.instances.toVector
     
   	if (enemies.size < 1) {
   		None
@@ -116,7 +115,7 @@ abstract class Instance(ctrl: Controller) {
    */
   
   def takeDmg(dmg: Double) = {
-  	println(this)
+    println("jee")
   	this.hp -= dmg 
   	if (this.hp <= 0) {
   		World.instances.remove(World.instances.indexOf(this))
