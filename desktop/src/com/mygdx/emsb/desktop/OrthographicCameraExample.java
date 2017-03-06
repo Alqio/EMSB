@@ -123,3 +123,48 @@ public class OrthographicCameraExample implements ApplicationListener {
         new LwjglApplication(new OrthographicCameraExample());
     }
 }
+/*
+	def handleInput() = {
+	  if (Gdx.input.isKeyPressed(Input.Keys.A)) {
+      cam.zoom += 0.02f;
+      //If the A Key is pressed, add 0.02 to the Camera's Zoom
+    }
+    if (Gdx.input.isKeyPressed(Input.Keys.Q)) {
+      cam.zoom -= 0.02f;
+        //If the Q Key is pressed, subtract 0.02 from the Camera's Zoom
+    }
+    if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+        cam.translate(-3, 0, 0);
+        //If the LEFT Key is pressed, translate the camera -3 units in the X-Axis
+    }
+    if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+        cam.translate(3, 0, 0);
+        //If the RIGHT Key is pressed, translate the camera 3 units in the X-Axis
+    }
+    if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+        cam.translate(0, -3, 0);
+        //If the DOWN Key is pressed, translate the camera -3 units in the Y-Axis
+    }
+    if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
+        cam.translate(0, 3, 0);
+        //If the UP Key is pressed, translate the camera 3 units in the Y-Axis
+    }
+    if (Gdx.input.isKeyPressed(Input.Keys.W)) {
+        cam.rotate(-rotationSpeed, 0, 0, 1);
+        //If the W Key is pressed, rotate the camera by -rotationSpeed around the Z-Axis
+    }
+    if (Gdx.input.isKeyPressed(Input.Keys.E)) {
+        cam.rotate(rotationSpeed, 0, 0, 1);
+        //If the E Key is pressed, rotate the camera by rotationSpeed around the Z-Axis
+    }
+
+    cam.zoom = MathUtils.clamp(cam.zoom, 0.1f, 100/cam.viewportWidth);
+
+    val effectiveViewportWidth: Float = cam.viewportWidth * cam.zoom;
+    val effectiveViewportHeight: Float = cam.viewportHeight * cam.zoom;
+
+    cam.position.x = MathUtils.clamp(cam.position.x, effectiveViewportWidth / 2f, 100 - effectiveViewportWidth / 2f);
+    cam.position.y = MathUtils.clamp(cam.position.y, effectiveViewportHeight / 2f, 100 - effectiveViewportHeight / 2f);
+	}
+*
+*/

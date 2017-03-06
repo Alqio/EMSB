@@ -16,7 +16,7 @@ class SnowTower(ctrl: Controller) extends Building(ctrl) {
   
   def step() = {
   	/** Set target **/
-  	this.target = this.instanceNearest
+  	this.target = this.instanceNearest()
   	
   	/** Attack only if the target is defined **/
   	if (this.target != None) {

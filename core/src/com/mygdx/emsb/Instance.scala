@@ -13,10 +13,16 @@ import scala.collection.mutable.Map
  * @author alkiok1
  */
 abstract class Instance(ctrl: Controller) {
+  
+  //Coords class is mutable and changes when the coordinate changes
+  var coords = new Coords(100,480)
+  
   val solid = false
   var sprite: Sprite
-  var target: Option[Instance] = this.instanceNearest
+  var target: Option[Instance] = this.instanceNearest()
   var projectile: Option[Projectile] = None
+  
+  val side = "enemy"
   
   var dmg: Double
   var range: Int = 45
@@ -25,22 +31,17 @@ abstract class Instance(ctrl: Controller) {
   var hp: Double = maxHp
   
   
-  //Coords class is mutable and changes when the coordinate changes
-  var coords = new Coords(100,480)
-  
   val alarms = Array.fill(3)(new Alarm(0, this))
   var alarmActions = Map[Alarm, () => Unit]()
   
-  def placeholder() = {
-    
-  }
+  def placeholder() = {}
   
   for (i <- alarms) {
   	this.alarmActions += i -> placeholder
   }
   
   /** Draw the instance */
-  def draw(batch: SpriteBatch, cam: OrthographicCamera) = {
+  def draw(batch: SpriteBatch) = {
     
     val pos = new Vector3(this.coords.x.toFloat, this.coords.y.toFloat, 0)
     
@@ -70,23 +71,26 @@ abstract class Instance(ctrl: Controller) {
   
   /**
    * Check if a coordinate is inside this instance's collision box
-   * Note to self: The actual coordinates are on the top left corner of the image, not in the center. 
+   * Note to self: The actual coordinates are on the top left corner of the image, not in the center. //NOTE DUNNO IF THIS IS THE CASE STILL
    */
   def checkCollision(coords: Coords) = this.hitArea.isInside(coords)
-  //coords.x >= this.coords.x - this.sprite.width/2 && coords.x <= this.coords.x + this.sprite.width/2 && coords.y >= this.coords.y  - this.sprite.height/2 && coords.y <= this.coords.y + this.sprite.height
+
+  
   /**
    * Returns the nearest instance (not self)
    */
-  def instanceNearest: Option[Instance] = {
-  	if (World.instances.size == 0 || World.instances.size == 1) {
+  def instanceNearest(onlyEnemy: Boolean = true): Option[Instance] = {
+    val enemies = World.instances.filter(x => x.side != this.side).toVector
+    
+  	if (enemies.size < 1) {
   		None
   		
   	} else {
   		
-  		var dist = this.coords.distanceToPoint(World.instances(0).coords)
-  		var nearest = if (World.instances(0) != this) World.instances(0) else World.instances(1)
+  		var dist = this.coords.distanceToPoint(enemies(0).coords)
+  		var nearest = enemies(0)
   		
-  		for(ins <- World.instances) {
+  		for(ins <- enemies) {
   			if (ins != this && this.coords.distanceToPoint(ins.coords) < dist) {
   				nearest = ins
   			}

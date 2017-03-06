@@ -16,14 +16,14 @@ abstract class Character(ctrl: Controller) extends Instance(ctrl) {
   var direction = 0 // 0 - 360
   
   def step() = {
-  	this.target = this.instanceNearest
-  	
-  	if (this.coords.distanceToPoint(this.target.get.coords) <= range) {
-  		
-  	} else {
-  		this.move()
+  	this.target = this.instanceNearest()
+  	if (target.isDefined) {
+    	if (this.coords.distanceToPoint(this.target.get.coords) <= range) {
+    		
+    	} else {
+    		this.move()
+    	}
   	}
-  	
   	//println(this.coords)
   	//println(this.realSpdX)
   	
