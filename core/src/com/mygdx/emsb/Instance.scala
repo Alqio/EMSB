@@ -5,6 +5,8 @@ import com.badlogic.gdx.graphics.g2d.Sprite
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.math.Vector3
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType
 
 import scala.collection.mutable.Map
 
@@ -44,9 +46,9 @@ abstract class Instance(ctrl: Controller) {
   def draw(batch: SpriteBatch) = {
     
     val pos = new Vector3(this.coords.x.toFloat, this.coords.y.toFloat, 0)
-    
     this.sprite.setPosition(pos.x, pos.y)
 		this.sprite.draw(batch)
+	
   }
   
   /**
@@ -115,9 +117,9 @@ abstract class Instance(ctrl: Controller) {
    */
   
   def takeDmg(dmg: Double) = {
-    println("jee")
   	this.hp -= dmg 
   	if (this.hp <= 0) {
+  	  this.sprite.getTexture().dispose()
   		World.instances.remove(World.instances.indexOf(this))
   	}
   }

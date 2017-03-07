@@ -12,7 +12,8 @@ import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Vector3
-
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType
 
 
 import collection.mutable.Buffer
@@ -51,7 +52,7 @@ class Controller extends ApplicationAdapter {
 		
 		
 		World.instances += yks
-		World.instances += toka
+		//World.instances += toka
 		World.instances += torni
 		
 		
@@ -62,6 +63,14 @@ class Controller extends ApplicationAdapter {
 	  tausta.draw(batch)
 		World.instances.foreach(_.draw(batch))
 		World.projectiles.foreach(_.draw(batch))
+		World.instances.foreach(println)
+		/*
+		val shapeRenderer = new ShapeRenderer()
+	  shapeRenderer.setColor(Color.RED);
+		shapeRenderer.begin(ShapeType.Line)
+		World.instances.foreach(i => shapeRenderer.circle(i.position.x.toFloat, i.position.y.toFloat, i.range))
+		shapeRenderer.end()
+		*/
 	}
 	
 	
@@ -71,7 +80,7 @@ class Controller extends ApplicationAdapter {
 	  Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
 	  
 		World.updateWorld()
-
+		
 		batch.begin()
 	  
 		draw()

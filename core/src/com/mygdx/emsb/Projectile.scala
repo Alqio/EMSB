@@ -6,6 +6,9 @@ import com.badlogic.gdx.graphics.g2d.Sprite
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.math.Vector3
+
+
+import math._
 /**
  * @author alkiok1
  * val coords: Coords, var direction: Int, var dmg: Int, val spritePath: String, var friendly: Boolean, ctrl: Controller
@@ -22,9 +25,9 @@ class Projectile(val creator: Instance, val spritePath: String) {
   var target = this.creator.target
   
   def move() = {
-  	
-  	this.coords.x += (if (this.coords.x < this.target.get.position.x) spd else -1 * spd)
-  	this.coords.y += (if (this.coords.y <= this.target.get.position.y) spd else -1 * spd)
+  	var alpha = atan(abs(this.target.get.position.y - this.coords.y)/abs(this.target.get.position.x - this.coords.x))
+  	this.coords.x += (if (this.coords.x < this.target.get.position.x) cos(alpha)* spd else -1 * cos(alpha) * spd)
+  	this.coords.y += (if (this.coords.y <= this.target.get.position.y) sin(alpha) * spd else -1 * sin(alpha) * spd)
   	
   }
   
@@ -47,6 +50,7 @@ class Projectile(val creator: Instance, val spritePath: String) {
   		this.move()
   		if (this.target.get.isHitBy(this)) {
   			target.get.takeDmg(dmg)
+  			this.sprite.getTexture().dispose()
   			World.projectiles.remove(World.projectiles.indexOf(this))
   			
   		}

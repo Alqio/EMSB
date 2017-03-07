@@ -10,7 +10,7 @@ abstract class Character(ctrl: Controller) extends Instance(ctrl) {
   //Includes directions
   var realSpdX: Double = 0
   var realSpdY: Double = spd
-  
+  var suunta = 1 //1 = oikea, -1 = vasen
   
   
   var direction = 0 // 0 - 360
@@ -18,10 +18,14 @@ abstract class Character(ctrl: Controller) extends Instance(ctrl) {
   def step() = {
   	this.target = this.instanceNearest()
   	if (target.isDefined) {
-    	if (this.coords.distanceToPoint(this.target.get.coords) <= range) {
-    		
+  	  
+  	  if (this.coords.x < this.target.get.position.x) suunta = 1 else suunta = -1
+  	  println(suunta)
+    	if (this.coords.distanceToPoint(this.target.get.position) <= range) {
+    		println("nyt ollaan range")
     	} else {
     		this.move()
+    		//println("nyt liikuttiin")
     	}
   	}
   	//println(this.coords)
@@ -33,8 +37,9 @@ abstract class Character(ctrl: Controller) extends Instance(ctrl) {
    *  Returns true if move was successfull, else false
    *  */
   def move() = {
-  	if (place_free(this.realSpdX.toInt, this.realSpdY.toInt) && this.target.isDefined) {
-  		this.coords.x += (if (this.coords.x < this.target.get.coords.x) this.realSpdX else -1*this.realSpdX)
+    
+  	if (place_free((this.realSpdX.toInt + this.sprite.getWidth().toInt) * suunta, this.realSpdY.toInt) && this.target.isDefined) {
+  		this.coords.x += this.realSpdX * suunta
   		this.coords.y += (if (this.coords.y < this.target.get.coords.y) this.realSpdY else -1*this.realSpdX)
   		true
   	} else {
@@ -49,8 +54,10 @@ abstract class Character(ctrl: Controller) extends Instance(ctrl) {
   def place_free(x: Int, y: Int): Boolean = {
   	val newCoords = new Coords(this.coords.x + x, this.coords.y + y)
   	if (World.instanceAt(newCoords).forall(!_.solid) ) {
+  	  println("place free")
   		true
   	} else {
+  	  println("place not free")
   		false
   	}
   }
