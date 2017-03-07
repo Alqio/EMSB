@@ -44,7 +44,6 @@ abstract class Instance(ctrl: Controller) {
   
   /** Draw the instance */
   def draw(batch: SpriteBatch) = {
-    
     val pos = new Vector3(this.coords.x.toFloat, this.coords.y.toFloat, 0)
     this.sprite.setPosition(pos.x, pos.y)
 		this.sprite.draw(batch)
@@ -73,8 +72,9 @@ abstract class Instance(ctrl: Controller) {
    * Check if a coordinate is inside this instance's collision box
    * Note to self: The actual coordinates are on the bottom left corner
    */
-  def checkCollision(coords: Coords) = this.hitArea.isInside(coords)
-
+  def checkCollision(coords: Coords) = {
+  	this.hitArea.isInside(coords)
+  }
   
   /**
    * Returns the nearest instance (not self)

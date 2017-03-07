@@ -52,7 +52,7 @@ class Controller extends ApplicationAdapter {
 		
 		
 		World.instances += yks
-		//World.instances += toka
+		World.instances += toka
 		World.instances += torni
 		
 		
@@ -63,7 +63,7 @@ class Controller extends ApplicationAdapter {
 	  tausta.draw(batch)
 		World.instances.foreach(_.draw(batch))
 		World.projectiles.foreach(_.draw(batch))
-		World.instances.foreach(println)
+		//World.instances.foreach(println)
 		/*
 		val shapeRenderer = new ShapeRenderer()
 	  shapeRenderer.setColor(Color.RED);

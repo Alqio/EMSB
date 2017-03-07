@@ -20,12 +20,12 @@ abstract class Character(ctrl: Controller) extends Instance(ctrl) {
   	if (target.isDefined) {
   	  
   	  if (this.coords.x < this.target.get.position.x) suunta = 1 else suunta = -1
-  	  println(suunta)
+
     	if (this.coords.distanceToPoint(this.target.get.position) <= range) {
-    		println("nyt ollaan range")
+
     	} else {
     		this.move()
-    		//println("nyt liikuttiin")
+
     	}
   	}
   	//println(this.coords)
@@ -38,7 +38,7 @@ abstract class Character(ctrl: Controller) extends Instance(ctrl) {
    *  */
   def move() = {
     
-  	if (place_free((this.realSpdX.toInt + this.sprite.getWidth().toInt) * suunta, this.realSpdY.toInt) && this.target.isDefined) {
+  	if (place_free(this.position.x.toInt + (this.realSpdX.toInt + this.sprite.getWidth().toInt/2) * suunta, this.position.y.toInt + this.realSpdY.toInt + 5) && this.target.isDefined) {
   		this.coords.x += this.realSpdX * suunta
   		this.coords.y += (if (this.coords.y < this.target.get.coords.y) this.realSpdY else -1*this.realSpdX)
   		true
@@ -47,17 +47,14 @@ abstract class Character(ctrl: Controller) extends Instance(ctrl) {
   	}
   }
   
-  /** checks if the place in coordinates (x,y) relative to this instance's position.
-   *  For example, if the instance is	at coordinates (5,5) and the methdod is called with parameters
-   *  place_free(3,4), the coordinates to be checked is (8,9). 
+  /** checks if the place in coordinates (x,y) is free (it doesn't contain a SOLID object)
    *  **/
   def place_free(x: Int, y: Int): Boolean = {
-  	val newCoords = new Coords(this.coords.x + x, this.coords.y + y)
+  	val newCoords = new Coords(x, y)
+  	
   	if (World.instanceAt(newCoords).forall(!_.solid) ) {
-  	  println("place free")
   		true
   	} else {
-  	  println("place not free")
   		false
   	}
   }
