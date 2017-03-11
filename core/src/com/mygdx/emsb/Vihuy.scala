@@ -4,22 +4,24 @@ import com.badlogic.gdx.graphics.g2d.Sprite
 
 class Vihuy(ctrl: Controller) extends EnemyUnit(ctrl) {
   
-	val maxHp = 212.0
-	hp = maxHp
-  var spd = 1.0
-  realSpdX = spd
-  var dmg = 1.0
-  range = 20
-  this.alarmActions(this.alarms(0)) = () => {
-  	this.alarms(0).time += 60
-  }
-  this.alarmActions(this.alarms(1)) = () => {
-  	this.alarms(0).time += 60
-  }
+	maxHp      = 153
+	hp         = maxHp
+  var spd    = 1.0
+  realSpdX   = spd
+  dmg        = 1.0
+  range      = 20
   
-  var sprite = new Sprite(new Texture("vihuy.png"))
+  def attack() = {
+  	if (this.target.isDefined && this.coords.distanceToPoint(this.target.get.coords) <= this.range) {
+  	  target.get.takeDmg(this.dmg)
+  	} else if (this.target.isEmpty){
+  		this.alarms(0).time = -1
+  	}
+  }
+
+  sprite = global.sprites("vihuy")
   sprite.setSize(32f, 32f)
   
-  override def toString = "Vihuy at: " + this.coords.toString + " with " + hp + "/" + maxHp + " hp, TARGET: " + this.target
+  override def toString = "Vihuy at: " + this.coords.toString + " HP:" + hp + "/" + maxHp
 
 }

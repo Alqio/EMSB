@@ -22,7 +22,10 @@ abstract class Character(ctrl: Controller) extends Instance(ctrl) {
   	  if (this.coords.x < this.target.get.position.x) suunta = 1 else suunta = -1
 
     	if (this.coords.distanceToPoint(this.target.get.position) <= range) {
-
+    	  if (this.alarms(0).time == -1) {
+	  		  this.alarms(0).time += attackSpeed
+	  	  }
+    	  
     	} else {
     		this.move()
 

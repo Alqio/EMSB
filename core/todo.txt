@@ -1,0 +1,17 @@
+1. Test upgrades
+2. Test sprites
+
+Unit tests here mby?
+
+- hp bar
+- upgrade valikko
+- spawner
+- waves
+- menu
+- tower upgrades 
+	- fire
+	- ice
+	- poison
+- camera
+- damagen teko vihuille (se on ny jotenki alarmeissa ja stepissä, korjaa ku ehit :) SnowTower tekee sen aika jännästi atm, kokeile muokata molempiin joku yhteinen tapa)
+- vihujen kuoleminen

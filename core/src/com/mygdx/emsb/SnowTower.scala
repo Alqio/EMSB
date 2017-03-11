@@ -1,26 +1,36 @@
 package com.mygdx.emsb
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.Sprite
+import collection.mutable.Map
+
 import Methods._
 
 class SnowTower(ctrl: Controller) extends Building(ctrl) {
-  override val maxHp = 100.0
-  var dmg = 1.0
-  range = 250
-  var attackSpeed = 45
-  var sprite = new Sprite(new Texture("snowTower.png"))
   
-  this.alarmActions(this.alarms(0)) = () => {
-  	attack()
-  	this.alarms(0).time += attackSpeed
-  }
+  
+  
+  upgrades += "names"  -> Array("Normal", "Ice", "Fire", "Poison")
+  upgrades += "damage" -> Array(1.0, 3.0, 4.5, 3.0)
+  upgrades += "maxHp"  -> Array(100, 150, 150, 150)
+  upgrades += "sprite" -> Array("snowTower", "snowTower", "snowTower", "snowTower")
+  
+  
+  maxHp       = 100.0 * global.buildingHpMultiplier
+  hp          = maxHp
+  dmg         = 1.0   * global.buildingDmgMultiplier
+  range       = 250
+  attackSpeed = 45
+  sprite      = global.sprites("snowTower")
+  
   
   def step() = {
-  	/** Set target **/
+  	/** Set target */
   	this.target = this.instanceNearest()
   	
-  	/** Attack only if the target is defined **/
-  	if (this.target != None) {
+  	/** Attack only if the target is defined 
+  	 *  Alarm(0) (and AlarmActions(0)) is for attack
+  	 *  */
+  	if (this.target.isDefined) {
 	  	if (this.alarms(0).time == -1) {
 	  		this.alarms(0).time += attackSpeed
 	  	}
@@ -37,5 +47,5 @@ class SnowTower(ctrl: Controller) extends Building(ctrl) {
   	}
   }
   
-  override def toString = "Snow Tower at: " + this.coords.toString
+  override def toString = "Snow Tower at: " + this.coords.toString + " HP: " + this.hp + "/" + this.maxHp
 }

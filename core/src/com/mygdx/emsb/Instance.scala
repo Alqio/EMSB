@@ -2,6 +2,7 @@ package com.mygdx.emsb
 
 //import processing.core._
 import com.badlogic.gdx.graphics.g2d.Sprite
+import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.math.Vector3
@@ -20,20 +21,23 @@ abstract class Instance(ctrl: Controller) {
   var coords = new Coords(100,480)
   
   val solid = false
-  var sprite: Sprite
+  var sprite: Sprite = new Sprite(new Texture("vihuy.png"))
   var target: Option[Instance] = this.instanceNearest()
   var projectile: Option[Projectile] = None
   
+  // 60 = 1 second, the lower the better. 120 = 2 seconds for example and 10 = 1/6 second.
+  var attackSpeed: Int = 60
   val side = "enemy"
   
-  var dmg: Double
+  var dmg: Double = 1.0
   var range: Int = 45
   
-  val maxHp: Double
+  //maxHp can also change with upgrades etc.
+  var maxHp: Double = 5
   var hp: Double = maxHp
   
   
-  val alarms = Array.fill(3)(new Alarm(0, this))
+  val alarms = Array.fill(4)(new Alarm(0, this))
   var alarmActions = Map[Alarm, () => Unit]()
   
   def placeholder() = {}
@@ -41,6 +45,12 @@ abstract class Instance(ctrl: Controller) {
   for (i <- alarms) {
   	this.alarmActions += i -> placeholder
   }
+  // Set the alarm(0) to attack for each instance.
+  this.alarmActions(this.alarms(0)) = () => {
+  	attack()
+  	this.alarms(0).time += attackSpeed
+  }
+  
   
   /** Draw the instance */
   def draw(batch: SpriteBatch) = {
@@ -49,6 +59,11 @@ abstract class Instance(ctrl: Controller) {
 		this.sprite.draw(batch)
 	
   }
+  
+  /**
+   * The attack method. 
+   */
+  def attack()
   
   /**
    * Return the center position of the instance
@@ -115,13 +130,15 @@ abstract class Instance(ctrl: Controller) {
   /**
    * Take dmg from projectiles for example
    */
-  
   def takeDmg(dmg: Double) = {
   	this.hp -= dmg 
   	if (this.hp <= 0) {
-  	  this.sprite.getTexture().dispose()
-  		World.instances.remove(World.instances.indexOf(this))
+  	  die()
   	}
+  }
+  
+  def die() = {
+		World.instances.remove(World.instances.indexOf(this))    
   }
   
   

@@ -16,7 +16,7 @@ import math._
  
 class Projectile(val creator: Instance, val spritePath: String) {
 	
-  val sprite = new Sprite(new Texture(this.spritePath))
+  val sprite = global.sprites(spritePath)
   var spd = 4.0
   val dmg = this.creator.dmg
   
@@ -50,7 +50,6 @@ class Projectile(val creator: Instance, val spritePath: String) {
   		this.move()
   		if (this.target.get.isHitBy(this)) {
   			target.get.takeDmg(dmg)
-  			this.sprite.getTexture().dispose()
   			World.projectiles.remove(World.projectiles.indexOf(this))
   			
   		}
@@ -63,11 +62,11 @@ class Projectile(val creator: Instance, val spritePath: String) {
   
 }
 
-case class Snowball1(override val creator: Instance) extends Projectile(creator, "snowBall1.png") {
+case class Snowball1(override val creator: Instance) extends Projectile(creator, "snowBall1") {
   spd = 5
   
 }
-case class Snowball2(override val creator: Instance) extends Projectile(creator, "snowBall2.png") {
+case class Snowball2(override val creator: Instance) extends Projectile(creator, "snowBall2") {
   spd = 8
   
 }
