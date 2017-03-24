@@ -3,6 +3,7 @@
 
 Unit tests here mby?
 
+- sounds
 - hp bar
 - upgrade valikko
 - spawner
@@ -15,3 +16,8 @@ Unit tests here mby?
 - camera
 - damagen teko vihuille (se on ny jotenki alarmeissa ja stepissä, korjaa ku ehit :) SnowTower tekee sen aika jännästi atm, kokeile muokata molempiin joku yhteinen tapa) DONE
 - vihujen kuoleminen
+
+
+
+24.3.17 18:19
+Jatka seuraavaks selectionia, laita jonnekin näkymään upgradevaihtoehdot ja sillein et niit voi joko painaa, tai sit valita näppiksellä

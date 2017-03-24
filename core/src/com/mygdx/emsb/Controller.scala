@@ -19,20 +19,24 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType
 import collection.mutable.Buffer
 
 class Controller extends ApplicationAdapter {
-	var batch: SpriteBatch = null
-	var img: Texture = null
-	var spr: Sprite = null
-	var rot = 0
-	var font: BitmapFont = null
-	var cam: OrthographicCamera = null
-	var rotationSpeed = 1f
-	var selected: Option[Instance] = None
-	private var tausta: Sprite = null
+	var batch: SpriteBatch            = null
+	var img: Texture                  = null
+	var spr: Sprite                   = null
+	var rot                           = 0
+	var font: BitmapFont              = null
+	var cam: OrthographicCamera       = null
+	var rotationSpeed                 = 1f
+	var selected: Option[Instance]    = None
+	var shapeRenderer: ShapeRenderer  = null
+	private var tausta: Sprite        = null
+	var firstDraw: Boolean            = true
 
 	override def create() = {
 
 		font = new BitmapFont()
 		font.setColor(Color.RED)
+		
+		shapeRenderer = new ShapeRenderer()
 		
 		//val generator: FreeTypeFontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("assets/fonts/04B_03__.TTF"))
 		
@@ -45,15 +49,19 @@ class Controller extends ApplicationAdapter {
 		var yks = new Vihuy(this)
 		var toka = new Vihuy(this)
 		var torni = new SnowTower(this)
+		var torniToka = new SnowTower(this)
+		
+		
 		yks.coords = new Coords(120,200)
 		torni.coords = new Coords(350, 200)
+		torniToka.coords = new Coords(900, 200)
 		toka.coords = new Coords(720, 200)
 		
 		
 		World.instances += yks
 		World.instances += toka
 		World.instances += torni
-		
+		World.instances += torniToka
 		
 		
 	}
@@ -64,13 +72,16 @@ class Controller extends ApplicationAdapter {
 		World.projectiles.foreach(_.draw(batch))
 		
 		//World.instances.foreach(println)
-		/*
-		val shapeRenderer = new ShapeRenderer()
+		
+	}
+	
+	def drawShapes() = {
 	  shapeRenderer.setColor(Color.RED);
 		shapeRenderer.begin(ShapeType.Line)
-		World.instances.foreach(i => shapeRenderer.circle(i.position.x.toFloat, i.position.y.toFloat, i.range))
-		shapeRenderer.end()
-		*/
+		//selected.foreach(i => shapeRenderer.circle(i.position.x.toFloat, i.position.y.toFloat, i.range))
+		selected.foreach(i => shapeRenderer.rect(i.coords.x.toFloat, i.coords.y.toFloat, i.sprite.getWidth(), i.sprite.getHeight()))
+		selected.foreach(i => shapeRenderer.rect(i.coords.x.toFloat - 1, i.coords.y.toFloat - 1, i.sprite.getWidth() + 2, i.sprite.getHeight() + 2))
+		shapeRenderer.end()		
 	}
 	
 	
@@ -81,20 +92,25 @@ class Controller extends ApplicationAdapter {
 	  
 	  println(selected)
 	  
-	  if (selected.isDefined && selected.get.position.distanceToPoint(new Coords(Gdx.input.getX(), global.HEIGHT - Gdx.input.getY())) > 250) {
+	  if (selected.isDefined && selected.get.position.distanceToPoint(new Coords(Gdx.input.getX(), global.HEIGHT - Gdx.input.getY())) > 350) {
 	  	selected = None
 	  }
 	  
 	  
 		World.updateWorld()
 		handleInput()
-		batch.begin()
 	  
-		draw()
+	  
+		batch.begin()
 		
+		draw()		
 		val pos = new Vector3(Gdx.input.getX(),Gdx.input.getY(), 0)
 		drawOutline("x: " + pos.x + "\ny: " + (Gdx.graphics.getHeight() - 1 - pos.y.toInt), pos.x.toInt, Gdx.graphics.getHeight() - 1 - pos.y.toInt, 1,Color.RED, font, batch)
+		
 		batch.end()
+
+		drawShapes()
+		
 	}
 
 
@@ -116,6 +132,8 @@ class Controller extends ApplicationAdapter {
 		
 		if (Gdx.input.justTouched()) {
 			selected = World.instanceAt(new Coords(Gdx.input.getX(), global.HEIGHT - Gdx.input.getY()))
+			if (selected.isDefined && !selected.get.isInstanceOf[Building])
+				selected = None
 			println("Selected: " + selected)
 		}
 		
