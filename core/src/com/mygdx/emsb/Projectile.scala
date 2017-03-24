@@ -46,15 +46,19 @@ class Projectile(val creator: Instance, val spritePath: String) {
    * Step
    */
   def step() = {
-  	if (World.projectiles.contains(this) && this.target.isDefined && World.instances.contains(this.target.get)) {
-  		this.move()
-  		if (this.target.get.isHitBy(this)) {
-  			target.get.takeDmg(dmg)
-  			World.projectiles.remove(World.projectiles.indexOf(this))
-  			
-  		}
-  	}
   	
+  	if (this.target.isEmpty || !World.instances.contains(this.target.get)) {
+  		World.projectiles.remove(World.projectiles.indexOf(this))
+  	} else {
+	  	if (World.projectiles.contains(this) && this.target.isDefined && World.instances.contains(this.target.get)) {
+	  		this.move()
+	  		if (this.target.get.isHitBy(this)) {
+	  			target.get.takeDmg(dmg)
+	  			World.projectiles.remove(World.projectiles.indexOf(this))
+	  			
+	  		}
+	  	}
+  	}
   }
   
   override def toString = "Projectile at: " + this.coords.toString  + ",    Index: " + World.projectiles.indexOf(this)

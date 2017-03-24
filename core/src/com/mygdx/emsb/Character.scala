@@ -7,7 +7,7 @@ import Methods._
  */
 abstract class Character(ctrl: Controller) extends Instance(ctrl) {
   
-  var spd: Double
+  var spd: Double = 0
   
   //Includes directions
   var realSpdX: Double = 0
@@ -19,6 +19,7 @@ abstract class Character(ctrl: Controller) extends Instance(ctrl) {
   
   var direction = 0 // 0 - 360
   
+  
   def step() = {
   	
   	this.target = this.instanceNearest()
@@ -26,33 +27,29 @@ abstract class Character(ctrl: Controller) extends Instance(ctrl) {
   	if (target.isDefined) {
   	  
   	  if (this.coords.x < this.target.get.position.x) suunta = 1 else suunta = -1
-  	  
+  		this.attackPoint = this.position.x + suunta * range  
   	  //this.sprite.flip(intToBool(suunta), false)
   	  
-    	if (this.coords.distanceToPoint(this.target.get.position) <= range) {
-    		println("nyt ollaan rangen sisällä")
-    	  if (this.alarms(0).time == -1) {
-	  		  this.alarms(0).time += attackSpeed
-	  		  attack()
-	  	  }
-    	  
+    	if (canAttack) {
+  		  this.alarms(0).time += attackSpeed
+  		  attack()
     	} else {
     		this.move()
-
     	}
   	}
-  	
   }
 
+  def canAttack: Boolean = this.alarms(0).time == -1 && this.target.get.hitArea.isInside(new Coords(this.attackPoint, this.position.y))
+  
   /**
    * This method will be called only if
-   * 1) the target is within range and it exists
-   * 2) the alarm(0) == -1
+   * 1) target exists
+   * 2) attackPoint is inside target's hitArea (= canAttack is true)
+   * 3) alarm(0) == -1
    * 
    * alarm(0) will be set to attack speed and then this method will be called
    */
   def attack() = {
-		println("jee")
   	target.get.takeDmg(this.dmg)
   }
   

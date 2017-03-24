@@ -25,6 +25,7 @@ abstract class Instance(ctrl: Controller) {
   var sprite: Sprite = new Sprite(new Texture("vihuy.png"))
   var target: Option[Instance] = this.instanceNearest()
   var projectile: Option[Projectile] = None
+  var name = "sukka mehu"
   
   // 60 = 1 second, the lower the better. 120 = 2 seconds for example and 10 = 1/6 second.
   var attackSpeed: Int = 60
@@ -46,11 +47,12 @@ abstract class Instance(ctrl: Controller) {
   for (i <- alarms) {
   	this.alarmActions += i -> placeholder
   }
+  //The alarm(0) represents attack for each instance
   // Set the alarm(0) to attack for each instance.
-  this.alarmActions(this.alarms(0)) = () => {
-  	attack()
-  	this.alarms(0).time += attackSpeed
-  }
+//  this.alarmActions(this.alarms(0)) = () => {
+//  	attack()
+//  	this.alarms(0).time += attackSpeed
+//  }
   
   
   /** Draw the instance */
@@ -142,5 +144,6 @@ abstract class Instance(ctrl: Controller) {
 		World.instances.remove(World.instances.indexOf(this))    
   }
   
+  override def toString = name + ": " + this.coords.toString + " HP: " + hp + "/" + maxHp + " dmg: " + this.dmg
   
 }

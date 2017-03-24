@@ -18,6 +18,7 @@ object global{
   val sprites = Map[String, Sprite](
     "vihuy"     -> new Sprite(new Texture("vihuy.png")),
     "snowTower" -> new Sprite(new Texture("snowTower.png")),
+    "fireTower" -> new Sprite(new Texture("fireTower.png")),
     "snowBall1" -> new Sprite(new Texture("snowBall1.png")),
     "snowBall2" -> new Sprite(new Texture("snowBall2.png"))
   )

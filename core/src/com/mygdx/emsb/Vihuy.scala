@@ -4,16 +4,15 @@ import com.badlogic.gdx.graphics.g2d.Sprite
 
 class Vihuy(ctrl: Controller) extends EnemyUnit(ctrl) {
   
-	maxHp      = 50
+	maxHp      = 10
 	hp         = maxHp
-  var spd    = 1.0
+  spd        = 1.0
   realSpdX   = spd
   dmg        = 1.0
   range      = 20
+  name       = "Vihuy"
 
   sprite = global.sprites("vihuy")
   sprite.setSize(32f, 32f)
-  
-  override def toString = "Vihuy at: " + this.coords.toString + " HP:" + hp + "/" + maxHp
 
 }

@@ -80,7 +80,7 @@ class Controller extends ApplicationAdapter {
 	  Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
 	  
 		World.updateWorld()
-		
+		handleInput()
 		batch.begin()
 	  
 		draw()
@@ -96,6 +96,16 @@ class Controller extends ApplicationAdapter {
 	override def dispose() = {
 		batch.dispose()
 	}
+	
+	
+	def handleInput() = {
+		if (Gdx.input.isKeyJustPressed(Input.Keys.Q)) {
+			var torni: Building = World.instances.filter(_.side == "friendly").last.asInstanceOf[Building]
+			torni.upgrade(math.min(torni.level + 1, torni.maxLevel))
+		}
+	}
+	
+	
 	/**
 	 * @param str String
 	 */
