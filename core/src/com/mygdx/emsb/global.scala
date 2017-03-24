@@ -10,7 +10,8 @@ object global{
   var buildingHpMultiplier = 1.0
   var score = 0
   var playerName = "Sukka Mehuttaja"
-  
+	val WIDTH = 1280
+	val HEIGHT = 720  
   
   /**
    * A list of all sprites in the game. They are all loaded when the game starts, and they can then be disposed of later. 

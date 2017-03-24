@@ -24,10 +24,9 @@ class Controller extends ApplicationAdapter {
 	var spr: Sprite = null
 	var rot = 0
 	var font: BitmapFont = null
-	val WIDTH = 1280
-	val HEIGHT = 720
 	var cam: OrthographicCamera = null
 	var rotationSpeed = 1f
+	var selected: Option[Instance] = None
 	private var tausta: Sprite = null
 
 	override def create() = {
@@ -39,7 +38,7 @@ class Controller extends ApplicationAdapter {
 		
 		tausta = new Sprite(new Texture(Gdx.files.internal("bg1.png")))
 		tausta.setPosition(0,0)
-		tausta.setSize(WIDTH, HEIGHT)
+		tausta.setSize(global.WIDTH, global.HEIGHT)
 		
 		batch = new SpriteBatch()
 
@@ -63,7 +62,8 @@ class Controller extends ApplicationAdapter {
 	  tausta.draw(batch)
 		World.instances.foreach(_.draw(batch))
 		World.projectiles.foreach(_.draw(batch))
-		World.instances.foreach(println)
+		
+		//World.instances.foreach(println)
 		/*
 		val shapeRenderer = new ShapeRenderer()
 	  shapeRenderer.setColor(Color.RED);
@@ -78,6 +78,13 @@ class Controller extends ApplicationAdapter {
 	override def render() = {
 	  Gdx.gl.glClearColor(0.5f, 0f, 0.3f, 1)
 	  Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
+	  
+	  println(selected)
+	  
+	  if (selected.isDefined && selected.get.position.distanceToPoint(new Coords(Gdx.input.getX(), global.HEIGHT - Gdx.input.getY())) > 250) {
+	  	selected = None
+	  }
+	  
 	  
 		World.updateWorld()
 		handleInput()
@@ -100,9 +107,18 @@ class Controller extends ApplicationAdapter {
 	
 	def handleInput() = {
 		if (Gdx.input.isKeyJustPressed(Input.Keys.Q)) {
-			var torni: Building = World.instances.filter(_.side == "friendly").last.asInstanceOf[Building]
-			torni.upgrade(math.min(torni.level + 1, torni.maxLevel))
+			var torni: Option[Building] = if (selected.isDefined && selected.get.isInstanceOf[Building]) Some(selected.get.asInstanceOf[Building]) else None
+			
+			if (torni.isDefined) {
+				selected.get.asInstanceOf[Building].upgrade(math.min(torni.get.level + 1, torni.get.maxLevel))
+			}
 		}
+		
+		if (Gdx.input.justTouched()) {
+			selected = World.instanceAt(new Coords(Gdx.input.getX(), global.HEIGHT - Gdx.input.getY()))
+			println("Selected: " + selected)
+		}
+		
 	}
 	
 	

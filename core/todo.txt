@@ -1,4 +1,4 @@
-1. Test upgrades
+1. Test upgrades, DONE DE VÖRKAR
 2. Test sprites
 
 Unit tests here mby?
@@ -13,5 +13,5 @@ Unit tests here mby?
 	- ice
 	- poison
 - camera
-- damagen teko vihuille (se on ny jotenki alarmeissa ja stepissä, korjaa ku ehit :) SnowTower tekee sen aika jännästi atm, kokeile muokata molempiin joku yhteinen tapa)
+- damagen teko vihuille (se on ny jotenki alarmeissa ja stepissä, korjaa ku ehit :) SnowTower tekee sen aika jännästi atm, kokeile muokata molempiin joku yhteinen tapa) DONE
 - vihujen kuoleminen

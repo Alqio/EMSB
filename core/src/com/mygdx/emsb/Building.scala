@@ -37,7 +37,10 @@ abstract class Building(ctrl: Controller) extends Instance(ctrl){
     for (i <- upgrades.keys) {
       i match {
         case "damage" => this.dmg = upgrades("damage")(level).asInstanceOf[Double] * global.buildingDmgMultiplier
-        case "maxHp"  => this.maxHp = upgrades("maxHp")(level).asInstanceOf[Int] * global.buildingHpMultiplier
+        case "maxHp"  => {
+        	this.maxHp = upgrades("maxHp")(level).asInstanceOf[Int] * global.buildingHpMultiplier
+        	this.hp    = this.maxHp
+        }
         case "sprite" => this.sprite = upgrades("sprite")(level).asInstanceOf[Sprite]
         case _ =>
       }

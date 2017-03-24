@@ -74,7 +74,7 @@ abstract class Instance(ctrl: Controller) {
   def position = new Coords(this.coords.x + this.sprite.getWidth()/2, this.coords.y + this.sprite.getHeight()/2)
   
   /**
-   * Check whether a target (usually a projectile?) hits this instance
+   * Check whether a projectile is inside this instance's hit area.
    */
   def isHitBy(p: Projectile) = this.hitArea.isInside(p.coords)
   
