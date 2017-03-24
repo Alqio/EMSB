@@ -20,6 +20,7 @@ abstract class Instance(ctrl: Controller) {
   //Coords class is mutable and changes when the coordinate changes
   var coords = new Coords(100,480)
   
+  var suunta = 1 //1 = oikea, -1 = vasen
   val solid = false
   var sprite: Sprite = new Sprite(new Texture("vihuy.png"))
   var target: Option[Instance] = this.instanceNearest()

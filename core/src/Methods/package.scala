@@ -8,6 +8,13 @@ package object Methods {
 	
 	def boolToInt(bool: Boolean) = if (bool) 1 else 0
 	
+	/**
+	 * 1  == true
+	 * 0  == false
+	 * -1 == false myös
+	 */
+	def intToBool(value: Int) = if (value == 1) true else false
+	
   /*def choose(eka: String, toka: String) = {
     if (util.Random.nextInt(2) == 0) eka else toka
   }
