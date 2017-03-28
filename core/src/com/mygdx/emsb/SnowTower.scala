@@ -14,7 +14,7 @@ class SnowTower(ctrl: Controller) extends Building(ctrl) {
   upgrades += "maxHp"  -> Array(100, 150, 150, 150)
   upgrades += "sprite" -> Array(global.sprites("snowTower"), global.sprites("snowTower"), global.sprites("fireTower"), global.sprites("snowTower"))
   
-  maxLevel    = this.upgrades.size
+  maxLevel    = this.upgrades("names").size
   maxHp       = 100.0 * global.buildingHpMultiplier
   hp          = maxHp
   dmg         = 1.0   * global.buildingDmgMultiplier

@@ -49,8 +49,7 @@ class Controller extends ApplicationAdapter {
 		var yks = new Vihuy(this)
 		var toka = new Vihuy(this)
 		var torni = new SnowTower(this)
-		var torniToka = new SnowTower(this)
-		
+		var torniToka = new ResearchCenter(this)
 		
 		yks.coords = new Coords(120,200)
 		torni.coords = new Coords(350, 200)
