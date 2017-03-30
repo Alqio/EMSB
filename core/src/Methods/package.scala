@@ -20,10 +20,13 @@ package object Methods {
   def lerp(eka: Int, toka: Int, prosentti: Double) = {
     (toka - eka).toDouble * prosentti
   }
+  
   def lerp(eka: Double, toka: Double, prosentti: Double) = {
     (toka - eka).toDouble * prosentti
   }
-
+  
+  
+  
   def printf(s: String, vektori: Vector[AnyVal]) = {
     for (i <- s.indices) {
       if (i == '%') {
