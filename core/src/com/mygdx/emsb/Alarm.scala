@@ -16,3 +16,13 @@ class Alarm (var time: Int, val actor: Instance) {
 		
 	}
 }
+
+class WaveAlarm (var time: Int) {
+	
+	/** Stops at -1 **/
+	def move() = {
+		if (this.time >= 0) {
+			time -= 1
+		}
+	}	
+}
