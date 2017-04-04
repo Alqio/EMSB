@@ -4,6 +4,6 @@ package com.mygdx.emsb
  */
 abstract class EnemyUnit(ctrl: Controller) extends Character(ctrl) {
   override val side = "enemy"
-  val score = 1
-  val gold  = 1
+  val scoreGain = 1
+  val goldGain  = 1
 }

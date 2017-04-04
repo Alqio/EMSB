@@ -49,7 +49,7 @@ class Controller extends ApplicationAdapter {
 		var yks = new Vihuy(this)
 		var toka = new Vihuy(this)
 		var torni = new SnowTower(this)
-		var torniToka = new ResearchCenter(this)
+		var torniToka = new SnowTower(this)
 		
 		yks.coords = new Coords(120,200)
 		torni.coords = new Coords(350, 200)
@@ -89,7 +89,7 @@ class Controller extends ApplicationAdapter {
 	  Gdx.gl.glClearColor(0.5f, 0f, 0.3f, 1)
 	  Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
 	  
-	  println(selected)
+	  //println(selected)
 	  
 	  if (selected.isDefined && selected.get.position.distanceToPoint(new Coords(Gdx.input.getX(), global.HEIGHT - Gdx.input.getY())) > 350) {
 	  	selected = None
@@ -105,6 +105,9 @@ class Controller extends ApplicationAdapter {
 		draw()		
 		val pos = new Vector3(Gdx.input.getX(),Gdx.input.getY(), 0)
 		drawOutline("x: " + pos.x + "\ny: " + (Gdx.graphics.getHeight() - 1 - pos.y.toInt), pos.x.toInt, Gdx.graphics.getHeight() - 1 - pos.y.toInt, 1,Color.RED, font, batch)
+		
+		val pos2 = new Vector3(20, global.HEIGHT - 20, 0)
+		drawOutline("Score: " + global.score + "\nGold:   " + global.gold, pos2.x.toInt, pos2.y.toInt, 1, Color.RED, font, batch)
 		
 		batch.end()
 
@@ -122,10 +125,10 @@ class Controller extends ApplicationAdapter {
 	
 	def handleInput() = {
 		if (Gdx.input.isKeyJustPressed(Input.Keys.Q)) {
-			var torni: Option[Building] = if (selected.isDefined && selected.get.isInstanceOf[Building]) Some(selected.get.asInstanceOf[Building]) else None
+			var torni: Option[Building] = if (selected.isDefined && selected.get.isInstanceOf[SnowTower]) Some(selected.get.asInstanceOf[SnowTower]) else None
 			
 			if (torni.isDefined) {
-				selected.get.asInstanceOf[Building].upgrade(math.min(torni.get.level + 1, torni.get.maxLevel))
+				selected.get.asInstanceOf[SnowTower].upgrade(math.min(torni.get.level + 1, torni.get.maxLevel))
 			}
 		}
 		

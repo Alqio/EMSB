@@ -141,6 +141,10 @@ abstract class Instance(ctrl: Controller) {
   }
   
   def die() = {
+  	if (this.isInstanceOf[EnemyUnit]) {
+  		global.score += this.asInstanceOf[EnemyUnit].scoreGain
+  		global.gold  += this.asInstanceOf[EnemyUnit].goldGain
+  	}
 		World.instances.remove(World.instances.indexOf(this))    
   }
   
