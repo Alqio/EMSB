@@ -14,12 +14,21 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Vector3
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType
+import com.badlogic.gdx.scenes.scene2d.Stage
+import com.badlogic.gdx.utils.viewport.ScreenViewport
+import com.badlogic.gdx.scenes.scene2d.ui.Skin
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton
+import com.badlogic.gdx.graphics.Texture
+import com.badlogic.gdx.graphics.g2d.TextureRegion
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable
+import com.badlogic.gdx.scenes.scene2d.InputListener
+
 
 
 import collection.mutable.Buffer
 
 class Controller extends ApplicationAdapter {
-	var batch: SpriteBatch            = null
+	var batch: SpriteBatch            = _
 	var img: Texture                  = null
 	var spr: Sprite                   = null
 	var rot                           = 0
@@ -30,9 +39,12 @@ class Controller extends ApplicationAdapter {
 	var shapeRenderer: ShapeRenderer  = null
 	private var tausta: Sprite        = null
 	var firstDraw: Boolean            = true
-
+	private var stage: Stage					= null
+	var skin: Skin										= null
+	var squareButton: Texture 				= _
+	
 	override def create() = {
-
+		
 		font = new BitmapFont()
 		font.setColor(Color.RED)
 		
@@ -45,7 +57,8 @@ class Controller extends ApplicationAdapter {
 		tausta.setSize(global.WIDTH, global.HEIGHT)
 		
 		batch = new SpriteBatch()
-
+		
+		
 		var yks = new Vihuy()
 		var toka = new Vihuy()
 		var torni = new SnowTower()
@@ -83,6 +96,10 @@ class Controller extends ApplicationAdapter {
 		shapeRenderer.end()		
 	}
 	
+	def drawButtons() = {
+		//stage.act()
+		//stage.draw()
+	}
 	
 	/** The game loop */
 	override def render() = {
@@ -110,9 +127,10 @@ class Controller extends ApplicationAdapter {
 		drawOutline("Score: " + global.score + "\nGold:   " + global.gold, pos2.x.toInt, pos2.y.toInt, 1, Color.RED, font, batch)
 		
 		batch.end()
-
-		drawShapes()
 		
+		drawShapes()
+		drawButtons()	
+	
 	}
 
 
@@ -137,6 +155,9 @@ class Controller extends ApplicationAdapter {
 			if (selected.isDefined && !selected.get.isInstanceOf[Building])
 				selected = None
 			println("Selected: " + selected)
+			if (selected.get.isInstanceOf[ResearchCenter]) {
+				//var i = new UpgradeButton(selected.get, "DmgUpgrade")
+			}
 		}
 		
 		if (selected.isDefined && selected.get.isInstanceOf[ResearchCenter]) {
@@ -169,3 +190,27 @@ class Controller extends ApplicationAdapter {
 
 	}
 }
+
+
+		/*
+		stage = new Stage(new ScreenViewport())
+		Gdx.input.setInputProcessor(stage)
+		
+		
+		
+		var button = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("squareButtonEmpty.png")))))
+		button.setPosition(100f, 100f)
+		
+		button.addListener(new InputListener(){
+			override def touchUp (event: InputEvent,  x: Float, y: Float, pointer: Int, button: Int) {
+	    	println("press a button")
+	   	}
+	    override def touchDown (InputEvent event, float x, float y, int pointer, int button) {
+	    	println("pressed a button")
+	     	return true;
+	    }
+	  })
+	  
+		stage.addActor(button)
+		*/
+

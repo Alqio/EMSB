@@ -21,3 +21,7 @@ Unit tests here mby?
 
 24.3.17 18:19
 Jatka seuraavaks selectionia, laita jonnekin näkymään upgradevaihtoehdot ja sillein et niit voi joko painaa, tai sit valita näppiksellä
+
+5.4.17
+Korjaa se et upgradeemalla attackia ei myös hp upgraudu
+Sitte finishaa button luokka ja sen testaaminen ja sit upgradet kans...

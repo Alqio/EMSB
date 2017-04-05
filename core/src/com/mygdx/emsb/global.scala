@@ -48,11 +48,13 @@ object global{
   val upgrades = LinkedHashMap[String, Map[String, Any]](
   	"HpUpgrade" -> Map[String, Any] (
   		"level" -> this.buildingHpLevel,
-  		"cost"  -> 45
+  		"cost"  -> 45,
+  		"text"  -> "Upgrade the maximum HP of all buildings."
   	),
   	"DmgUpgrade" -> Map[String, Any] (
   		"level" -> this.buildingDmgLevel,
-  		"cost"  -> 45
+  		"cost"  -> 45,
+  		"text"  -> "Upgrade the damage of all attack towers."
   	)
   )
  
@@ -70,7 +72,8 @@ object global{
     "snowTower"       -> new Sprite(new Texture("snowTower.png")),
     "fireTower"       -> new Sprite(new Texture("fireTower.png")),
     "snowBall1"       -> new Sprite(new Texture("snowBall1.png")),
-    "snowBall2"       -> new Sprite(new Texture("snowBall2.png"))
+    "snowBall2"       -> new Sprite(new Texture("snowBall2.png")),
+    "squareButton"    -> new Sprite(new Texture("squareButtonEmpty.png"))
   )
   
 }

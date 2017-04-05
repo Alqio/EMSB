@@ -16,9 +16,9 @@ abstract class Building() extends Instance(){
    * This method updates the building's hp and damage when they have been upgraded in researchCenter.
    */
   def update() = {
-  	this.dmg   *= global.buildingDmgMultiplier
-  	this.maxHp *= global.buildingHpMultiplier
-  	this.hp    *= global.buildingHpMultiplier
+  	this.dmg   *= (global.buildingDmgLevel - 1) * global.buildingDmgMultiplier
+  	this.maxHp *= (global.buildingHpLevel - 1)  * global.buildingHpMultiplier
+  	this.hp    *= (global.buildingHpLevel - 1)  * global.buildingHpMultiplier
   }
   
   
