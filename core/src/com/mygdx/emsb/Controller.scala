@@ -46,10 +46,10 @@ class Controller extends ApplicationAdapter {
 		
 		batch = new SpriteBatch()
 
-		var yks = new Vihuy(this)
-		var toka = new Vihuy(this)
-		var torni = new SnowTower(this)
-		var torniToka = new SnowTower(this)
+		var yks = new Vihuy()
+		var toka = new Vihuy()
+		var torni = new SnowTower()
+		var torniToka = new ResearchCenter()
 		
 		yks.coords = new Coords(120,200)
 		torni.coords = new Coords(350, 200)
@@ -91,7 +91,7 @@ class Controller extends ApplicationAdapter {
 	  
 	  //println(selected)
 	  
-	  if (selected.isDefined && selected.get.position.distanceToPoint(new Coords(Gdx.input.getX(), global.HEIGHT - Gdx.input.getY())) > 350) {
+	  if (selected.isDefined && selected.get.position.distanceToPoint(new Coords(Gdx.input.getX(), global.HEIGHT - Gdx.input.getY())) > 550) {
 	  	selected = None
 	  }
 	  
@@ -137,6 +137,15 @@ class Controller extends ApplicationAdapter {
 			if (selected.isDefined && !selected.get.isInstanceOf[Building])
 				selected = None
 			println("Selected: " + selected)
+		}
+		
+		if (selected.isDefined && selected.get.isInstanceOf[ResearchCenter]) {
+			if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_1)) {
+				
+				var asCenter = selected.get.asInstanceOf[ResearchCenter]
+				asCenter.unlock("upgrade","DmgUpgrade")
+				
+			}
 		}
 		
 	}

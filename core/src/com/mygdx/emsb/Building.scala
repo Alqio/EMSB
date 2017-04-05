@@ -3,13 +3,24 @@ package com.mygdx.emsb
 import com.badlogic.gdx.graphics.g2d.Sprite
 import collection.mutable.Map
 
-abstract class Building(ctrl: Controller) extends Instance(ctrl){
+abstract class Building() extends Instance(){
   override val solid = true
   override val side = "friendly"
   
   val upgrades = Map[String, Array[Any]]()
-  var level = 1
+  var level = 0
   var maxLevel = 4
+  
+  
+  /**
+   * This method updates the building's hp and damage when they have been upgraded in researchCenter.
+   */
+  def update() = {
+  	this.dmg   *= global.buildingDmgMultiplier
+  	this.maxHp *= global.buildingHpMultiplier
+  	this.hp    *= global.buildingHpMultiplier
+  }
+  
   
   def step() = {
   	/** Set target */

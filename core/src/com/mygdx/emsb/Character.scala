@@ -5,7 +5,7 @@ import Methods._
 /**
  * @author alkiok1
  */
-abstract class Character(ctrl: Controller) extends Instance(ctrl) {
+abstract class Character() extends Instance() {
   
   var spd: Double = 0
   

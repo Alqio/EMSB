@@ -15,7 +15,7 @@ import scala.collection.mutable.Map
 /**
  * @author alkiok1
  */
-abstract class Instance(ctrl: Controller) {
+abstract class Instance() {
   
   //Coords class is mutable and changes when the coordinate changes
   var coords = new Coords(100,480)

@@ -8,12 +8,12 @@ import collection.mutable.Map
 
 object global{
   
-  var buildingDmgMultiplier = 1.0
+  var buildingDmgMultiplier = 1.2
   var buildingDmgLevel      = 1
-  var buildingHpMultiplier  = 1.0
+  var buildingHpMultiplier  = 1.2
   var buildingHpLevel       = 1
   var score                 = 0
-  var gold                  = 0
+  var gold                  = 100
   var playerName            = "Sukka Mehuttaja"
 	val WIDTH                 = 1280
 	val HEIGHT                = 720  
@@ -37,7 +37,7 @@ object global{
 			"cost"     -> 10
 		),
     "Fire"    -> Map[String, Any](
-			"unlocked" -> false,
+			"unlocked" -> true,
 			"cost"     -> 20
 		),
     "Poison" -> Map[String, Any](
@@ -45,7 +45,20 @@ object global{
 			"cost"     -> 10
 		)
   )
+  val upgrades = LinkedHashMap[String, Map[String, Any]](
+  	"HpUpgrade" -> Map[String, Any] (
+  		"level" -> this.buildingHpLevel,
+  		"cost"  -> 45
+  	),
+  	"DmgUpgrade" -> Map[String, Any] (
+  		"level" -> this.buildingDmgLevel,
+  		"cost"  -> 45
+  	)
+  )
+ 
   
+  var unlocked = (Array(1,2,3,4) zip towerUnlocks.values.map(x => x("unlocked").asInstanceOf[Boolean])).toMap
+  println(unlocked)  
 	
 	
   /**

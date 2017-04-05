@@ -5,8 +5,7 @@ import collection.mutable.Map
 
 import Methods._
 
-class SnowTower(ctrl: Controller) extends Building(ctrl) {
-  
+class SnowTower() extends Building() {
   
   
   upgrades += "names"  -> Array("Normal", "Ice", "Fire", "Poison")
@@ -24,11 +23,6 @@ class SnowTower(ctrl: Controller) extends Building(ctrl) {
   attackSpeed = 5
   sprite      = global.sprites("snowTower")
   name				= "Snow tower"
-  
-  val towerUnlocks = global.towerUnlocks.values.map(x => x("unlocked").asInstanceOf[Boolean])
-  
-  var unlocked = (Array(1,2,3,4) zip towerUnlocks).toMap
-  println(unlocked)
   
   
   /**
@@ -51,9 +45,9 @@ class SnowTower(ctrl: Controller) extends Building(ctrl) {
   def upgrade(level: Int) = {
   	println("trying to upgrade to level: " + level)
   	
-  	val realLevel = math.max(0, level - 1)
+  	val realLevel = level
   	
-  	if (unlocked(level)) {
+  	if (global.unlocked(level)) {
   	
     for (i <- upgrades.keys) {
       i match {

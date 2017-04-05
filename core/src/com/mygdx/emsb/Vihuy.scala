@@ -2,7 +2,7 @@ package com.mygdx.emsb
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.Sprite
 
-class Vihuy(ctrl: Controller) extends EnemyUnit(ctrl) {
+class Vihuy() extends EnemyUnit() {
   
 	maxHp      = 10
 	hp         = maxHp
