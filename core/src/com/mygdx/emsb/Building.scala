@@ -9,18 +9,25 @@ abstract class Building() extends Instance(){
   
   val upgrades = Map[String, Array[Any]]()
   var level = 0
-  var maxLevel = 4
+  var maxLevel = 3
   
   
   /**
    * This method updates the building's hp and damage when they have been upgraded in researchCenter.
    */
-  def update() = {
-  	this.dmg   *= (global.buildingDmgLevel - 1) * global.buildingDmgMultiplier
-  	this.maxHp *= (global.buildingHpLevel - 1)  * global.buildingHpMultiplier
-  	this.hp    *= (global.buildingHpLevel - 1)  * global.buildingHpMultiplier
+  def update(str: String) = {
+  	println("updated!")
+  	var level = global.upgrades(str)("level").asInstanceOf[Int] 
+  	str match {
+  		case "DmgUpgrade" => this.dmg *= global.buildingDmgMultiplier
+  		case "HpUpgrade"  => {
+  			this.maxHp *= global.buildingHpMultiplier
+  			this.hp    *= global.buildingHpMultiplier
+  		}  		
+  	}
   }
   
+  def onSelection()
   
   def step() = {
   	/** Set target */

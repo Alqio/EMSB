@@ -82,6 +82,7 @@ class Controller extends ApplicationAdapter {
 	  tausta.draw(batch)
 		World.instances.foreach(_.draw(batch))
 		World.projectiles.foreach(_.draw(batch))
+		World.buttons.foreach(_.draw(batch))
 		
 		//World.instances.foreach(println)
 		
@@ -96,10 +97,6 @@ class Controller extends ApplicationAdapter {
 		shapeRenderer.end()		
 	}
 	
-	def drawButtons() = {
-		//stage.act()
-		//stage.draw()
-	}
 	
 	/** The game loop */
 	override def render() = {
@@ -109,6 +106,7 @@ class Controller extends ApplicationAdapter {
 	  //println(selected)
 	  
 	  if (selected.isDefined && selected.get.position.distanceToPoint(new Coords(Gdx.input.getX(), global.HEIGHT - Gdx.input.getY())) > 550) {
+	  	World.buttons.clear()
 	  	selected = None
 	  }
 	  
@@ -129,12 +127,8 @@ class Controller extends ApplicationAdapter {
 		batch.end()
 		
 		drawShapes()
-		drawButtons()	
 	
 	}
-
-
-	
 	
 	override def dispose() = {
 		batch.dispose()
@@ -142,6 +136,8 @@ class Controller extends ApplicationAdapter {
 	
 	
 	def handleInput() = {
+		
+		
 		if (Gdx.input.isKeyJustPressed(Input.Keys.Q)) {
 			var torni: Option[Building] = if (selected.isDefined && selected.get.isInstanceOf[SnowTower]) Some(selected.get.asInstanceOf[SnowTower]) else None
 			
@@ -151,20 +147,31 @@ class Controller extends ApplicationAdapter {
 		}
 		
 		if (Gdx.input.justTouched()) {
-			selected = World.instanceAt(new Coords(Gdx.input.getX(), global.HEIGHT - Gdx.input.getY()))
-			if (selected.isDefined && !selected.get.isInstanceOf[Building])
-				selected = None
-			println("Selected: " + selected)
-			if (selected.get.isInstanceOf[ResearchCenter]) {
-				//var i = new UpgradeButton(selected.get, "DmgUpgrade")
-			}
-		}
-		
-		if (selected.isDefined && selected.get.isInstanceOf[ResearchCenter]) {
-			if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_1)) {
+			
+			/* If a button is pressed, don't change selection. 
+			 * Otherwise, change selected to either None if an empty location is pressed or an instance at that location
+			 */
+			if (World.buttonAt(new Coords(Gdx.input.getX(), global.HEIGHT - Gdx.input.getY())).isEmpty) {
 				
-				var asCenter = selected.get.asInstanceOf[ResearchCenter]
-				asCenter.unlock("upgrade","DmgUpgrade")
+				var tempSelected = World.instanceAt(new Coords(Gdx.input.getX(), global.HEIGHT - Gdx.input.getY()))
+				
+				//Delete all buttons
+				if (tempSelected != selected && selected.isDefined && selected.get.isInstanceOf[ResearchCenter]) {
+					World.buttons.clear()
+				}
+				
+				selected = tempSelected
+				
+				if (selected.isDefined && !selected.get.isInstanceOf[Building])
+					selected = None
+				
+				println("Selected: " + selected)
+				
+				if (selected.isDefined && selected.get.isInstanceOf[ResearchCenter]) {
+					var asCenter = selected.get.asInstanceOf[ResearchCenter]
+					asCenter.onSelection()
+				}
+				
 				
 			}
 		}

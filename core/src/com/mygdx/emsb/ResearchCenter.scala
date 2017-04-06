@@ -9,14 +9,23 @@ class ResearchCenter() extends Building() {
   sprite            = global.sprites("researchCenter")
   maxLevel          = 1 
   var targetUnlock  = "Fire"
- 
+  
+  var buttons = Map[String, Button](
+  	"DmgUpgrade" -> new UpgradeButton(this, "DmgUpgrade", new Area(Coords(420, 40), Coords(452, 72))),
+  	"HpUpgrade"  -> new UpgradeButton(this, "HpUpgrade",  new Area(Coords(453, 40), Coords(453 + 32, 40 + 32)))
+  )
+  
   /**
    * Research center cannot attack
    */
-  
-  
   def attack() = {}
   
+	
+	def onSelection() = {
+		World.buttons += buttons("DmgUpgrade")
+		World.buttons += buttons("HpUpgrade")
+	}
+	
   /**
    * typeOf is either unlock or upgrade
    */
@@ -29,7 +38,8 @@ class ResearchCenter() extends Building() {
 	  	if (global.gold >= upgrade("cost").asInstanceOf[Int]) {
 	  		upgrade("level") = upgrade("level").asInstanceOf[Int] + 1
 	  		global.gold -= upgrade("cost").asInstanceOf[Int]
-	  		World.instances.foreach(x => if (x.isInstanceOf[Building]) x.asInstanceOf[Building].update())
+	  		
+	  		World.instances.foreach(x => if (x.isInstanceOf[Building]) x.asInstanceOf[Building].update(str))
 	  	}
 	  	
   	} else if (typeOf == "unlock") {

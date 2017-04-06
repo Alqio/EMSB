@@ -15,3 +15,7 @@ class Coords(var x: Double, var y: Double) {
 	def ==(another: Coords) = this.x == another.x && this.y == another.y
 	
 }
+
+object Coords {
+	def apply(x: Double, y: Double) = new Coords(x,y)
+}

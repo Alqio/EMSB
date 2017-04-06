@@ -38,6 +38,10 @@ class SnowTower() extends Building() {
 		World.projectiles += i
   }
   
+  def onSelection() = {
+  	
+  }
+  
    /** 
    *  Upgrade the tower to a level. Can also be used to downgrade if needed
    *  @param level     The level to upgrade/downgrade

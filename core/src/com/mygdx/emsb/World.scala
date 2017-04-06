@@ -7,9 +7,10 @@ import collection.mutable.ArrayBuffer
  */
 object World{
   
-	val instances = ArrayBuffer[Instance]()
+	val instances   = ArrayBuffer[Instance]()
   val projectiles = ArrayBuffer[Projectile]()
-	
+	val buttons     = ArrayBuffer[Button]()
+  
 	def instanceAt(koordinaatit: Coords): Option[Instance] = {
     var instance: Option[Instance] = None
 		for (i <- instances) {
@@ -21,6 +22,15 @@ object World{
     instance
 	}
 	
+	def buttonAt(coordinates: Coords): Option[Button] = {
+		var button: Option[Button] = None
+		for (i <- buttons) {
+		  if (i.area.isInside(coordinates)) {
+		    button = Some(i) 
+		  }
+		}
+    button
+	}
 	
 	def updateWorld() = {
 		/** Execute the step event for all instances **/
@@ -31,6 +41,9 @@ object World{
 		
 		/** Move all alarms **/
 		instances.foreach(_.alarms.foreach(_.move()))	  
+		
+		/** Check all buttons if they are pressed **/
+		buttons.foreach(_.action())
 	}
 	 
 }
