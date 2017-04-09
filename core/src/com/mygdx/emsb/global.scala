@@ -73,7 +73,8 @@ object global{
     "fireTower"       -> new Sprite(new Texture("fireTower.png")),
     "snowBall1"       -> new Sprite(new Texture("snowBall1.png")),
     "snowBall2"       -> new Sprite(new Texture("snowBall2.png")),
-    "squareButton"    -> new Sprite(new Texture("squareButtonEmpty.png"))
+    "squareButton"    -> new Sprite(new Texture("squareButtonEmpty.png")),
+    "hpUp"  					-> new Sprite(new Texture("hpUp.png"))
   )
   
 }

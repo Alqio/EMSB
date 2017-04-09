@@ -19,3 +19,12 @@ class Area(val xy1: Coords, val xy2: Coords) {
 	
 	override def toString = xy1.toString + "\n" + xy2.toString
 }
+
+
+object Area {
+	
+	def apply(coords: Coords, width: Int, height: Int) = {
+		new Area(coords, Coords(coords.x + width, coords.y + height))
+	}
+
+}

@@ -10,9 +10,9 @@ class ResearchCenter() extends Building() {
   maxLevel          = 1 
   var targetUnlock  = "Fire"
   
-  var buttons = Map[String, Button](
-  	"DmgUpgrade" -> new UpgradeButton(this, "DmgUpgrade", new Area(Coords(420, 40), Coords(452, 72))),
-  	"HpUpgrade"  -> new UpgradeButton(this, "HpUpgrade",  new Area(Coords(453, 40), Coords(453 + 32, 40 + 32)))
+  var buttons = Map[String, Button]( // new Area(Coords(420, 40), Coords(452, 72))
+  	"DmgUpgrade" -> UpgradeButton(this, "DmgUpgrade", Area(Coords(420, 40), UpgradeButton.width, UpgradeButton.height)),
+  	"HpUpgrade"  -> UpgradeButton(this, "HpUpgrade",  Area(Coords(485, 40), UpgradeButton.width, UpgradeButton.height))
   )
   
   /**
