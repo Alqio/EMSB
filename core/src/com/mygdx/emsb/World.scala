@@ -23,7 +23,7 @@ object World{
 	}
 	
 	def areaIsFree(area: Area): Boolean = {
-		World.instances.filter(x => area.isInside(x.coords)).size == 0
+		World.instances.filter(x => area.isInside(x.hitArea) || x.hitArea.isInside(area)).size == 0
 	}
 	
 	def buttonAt(coordinates: Coords): Option[Button] = {
@@ -50,7 +50,7 @@ object World{
 		instances.foreach(_.alarms.foreach(_.move()))	  
 		
 		/** Check all buttons if they are pressed **/
-		buttons.foreach(_.action())
+		buttons.toVector.foreach(_.action())
 	}
 	 
 }

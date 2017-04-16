@@ -147,6 +147,6 @@ abstract class Instance() {
 		World.instances.remove(World.instances.indexOf(this))    
   }
   
-  override def toString = name + ": " + this.coords.toString + " HP: " + hp + "/" + maxHp + " dmg: " + this.dmg
+  override def toString = name + ": " + this.coords.toString + " HP: " + hp + "/" + maxHp + " dmg: " + this.dmg + ", AS: " + this.attackSpeed
   
 }

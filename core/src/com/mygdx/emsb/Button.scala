@@ -9,7 +9,7 @@ import com.badlogic.gdx.math.Vector3
 /**
  * @author alkiok1
  */
-abstract class Button(val area: Area) {
+abstract class Button(val area: Area, val target: String) {
   
 	var sprite: Sprite 
 	var icon: Sprite
@@ -57,7 +57,7 @@ abstract class Button(val area: Area) {
 }
 
 
-class UpgradeButton (val creator: Building, val target: String, area: Area) extends Button(area) {
+class UpgradeButton (val creator: Building, target: String, area: Area) extends Button(area, target) {
 	
 	var sprite = global.sprites("squareButton")
 	var icon = global.upgrades(target)("sprite").asInstanceOf[Sprite]
@@ -77,7 +77,29 @@ class UpgradeButton (val creator: Building, val target: String, area: Area) exte
 	}
 	
 }
-class BuildButton (val creator: Building, val target: String, area: Area) extends Button(area) {
+
+class UnlockButton (val creator: Building, target: String, area: Area, val snowTower: Boolean = false) extends Button(area, target) {
+	
+	var sprite = global.sprites("squareButton")
+	var icon = global.unlocks(target)("sprite").asInstanceOf[Sprite]
+	
+	def drawText(batch: SpriteBatch) = {
+		val text = global.unlocks(target)("text").asInstanceOf[String]
+		val cost = if (!snowTower) global.unlocks(target)("cost").asInstanceOf[Int] else global.unlocks(target)("buildCost").asInstanceOf[Int]
+		val pos = new Vector3(this.area.xy1.x.toFloat, this.area.xy2.y.toFloat + UpgradeButton.height,0)
+		global.font.draw(batch, text + "\nCost: " + cost, pos.x, pos.y)
+	}
+	
+	 
+	def action() = {
+		if (isPressed) {
+			creator.unlock("unlock", target)
+		}
+	}
+	
+}
+
+class BuildButton (val creator: Building, target: String, area: Area) extends Button(area, target) {
 	var sprite = global.sprites("squareButton")
 	var icon = global.buildables(target)("sprite").asInstanceOf[Sprite]
 	
@@ -91,6 +113,7 @@ class BuildButton (val creator: Building, val target: String, area: Area) extend
 	def action() = {
 		if (isPressed) {
 			global.building = Some(target)
+			println(global.building)
 			global.buildingSprite = Some(global.sprites(target))
 		}
 	}

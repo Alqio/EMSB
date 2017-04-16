@@ -10,16 +10,18 @@ class MainHouse extends Building {
   sprite      = global.sprites("mainHouse")
   name				= "Main house"  
 
-  var buttons = Map[String, Button]( // new Area(Coords(420, 40), Coords(452, 72))
-  	"snowTower"  -> new BuildButton(this, "snowTower", Area(Coords(420, 64), UpgradeButton.width, UpgradeButton.height))
+  var buttons = Map[String, Button]( 
+  	"snowTower"      -> new BuildButton(this, "snowTower", Area(Coords(420, 64), UpgradeButton.width, UpgradeButton.height)),
+  	"researchCenter" -> new BuildButton(this, "researchCenter", Area(Coords(484, 64), UpgradeButton.width, UpgradeButton.height))
   )  
   
 	def onSelection() = {
   	for (i <- buttons.values) {
   		World.buttons += i
-  	}  	
+  	}
   }
 	def unlock(typeOf: String, str: String) = {}
+	
 	def attack() = {
 		var i = new Snowball1(this)
 		World.projectiles += i		

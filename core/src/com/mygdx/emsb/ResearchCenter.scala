@@ -11,8 +11,12 @@ class ResearchCenter() extends Building() {
   var targetUnlock  = "Fire"
   
   var buttons = Map[String, Button]( // new Area(Coords(420, 40), Coords(452, 72))
-  	"DmgUpgrade" -> UpgradeButton(this, "DmgUpgrade", Area(Coords(420, 64), UpgradeButton.width, UpgradeButton.height)),
-  	"HpUpgrade"  -> UpgradeButton(this, "HpUpgrade",  Area(Coords(485, 64), UpgradeButton.width, UpgradeButton.height))
+  	"DmgUpgrade"   -> UpgradeButton(this, "DmgUpgrade", Area(Coords(420, 64), UpgradeButton.width, UpgradeButton.height)),
+  	"HpUpgrade"    -> UpgradeButton(this, "HpUpgrade",  Area(Coords(484, 64), UpgradeButton.width, UpgradeButton.height)),
+  	"ASUpgrade"    -> UpgradeButton(this, "ASUpgrade",  Area(Coords(548, 64), UpgradeButton.width, UpgradeButton.height)),
+  	"FireUnlock"   -> new UnlockButton(this, "Fire", Area(Coords(420, 128), UpgradeButton.width, UpgradeButton.height)),
+  	"IceUnlock"    -> new UnlockButton(this, "Ice", Area(Coords(484, 128), UpgradeButton.width, UpgradeButton.height)),
+  	"PoisonUnlock" -> new UnlockButton(this, "Poison", Area(Coords(548, 128), UpgradeButton.width, UpgradeButton.height))
   )
   
   /**
@@ -24,7 +28,13 @@ class ResearchCenter() extends Building() {
 	
 	def onSelection() = {
   	for (i <- buttons.values) {
-  		World.buttons += i
+  		
+  		if (!i.isInstanceOf[UnlockButton]) {
+  			World.buttons += i
+  		} else if (!global.unlocks(i.target)("unlocked").asInstanceOf[Boolean]) {
+  			World.buttons += i
+  		}
+  		
   	}
 	}
 	
@@ -45,6 +55,15 @@ class ResearchCenter() extends Building() {
 	  	}
 	  	
   	} else if (typeOf == "unlock") {
+  		val unlock = global.unlocks(str)
+  		println("Unlock: " + unlock)
+  		
+	  	if (global.gold >= unlock("cost").asInstanceOf[Int]) {
+	  		unlock("unlocked") = true
+	  		global.gold -= unlock("cost").asInstanceOf[Int]
+	  		global.updateUnlocked()
+	  		//World.buttons.toVector.foreach(x => if (x.isInstanceOf[UnlockButton] && x.target == str) World.buttons -= x)
+	  	}  		
   		
   	}
   }

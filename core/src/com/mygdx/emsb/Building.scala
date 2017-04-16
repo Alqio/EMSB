@@ -23,7 +23,8 @@ abstract class Building() extends Instance(){
   		case "HpUpgrade"  => {
   			this.maxHp *= global.buildingHpMultiplier
   			this.hp    *= global.buildingHpMultiplier
-  		}  		
+  		}
+  		case "ASUpgrade"  => this.attackSpeed = (this.attackSpeed * global.buildingASMultiplier).toInt
   	}
   }
   

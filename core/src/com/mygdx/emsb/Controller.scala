@@ -22,6 +22,7 @@ import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable
 import com.badlogic.gdx.scenes.scene2d.InputListener
+import com.badlogic.gdx.InputProcessor
 
 
 
@@ -48,14 +49,15 @@ class Controller extends ApplicationAdapter {
 	override def create() = {
 		font = global.font
 		shapeRenderer = new ShapeRenderer()
-		
+
 		//val generator: FreeTypeFontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("assets/fonts/04B_03__.TTF"))
+		
 		
 		tausta = new Sprite(new Texture(Gdx.files.internal("background.png")))
 		tausta.setPosition(0,0)
 		tausta.setSize(global.WIDTH, global.HEIGHT)
 		mountains = new Sprite(new Texture(Gdx.files.internal("bgMountain.png")))
-		mountains.setPosition(0,0)
+		mountains.setPosition(0,80)
 		mountains.setSize(2560, 720)
 		floor = new Sprite(new Texture(Gdx.files.internal("bgFloor.png")))
 		floor.setPosition(0,-220)
@@ -98,7 +100,7 @@ class Controller extends ApplicationAdapter {
 		if (global.building.isDefined) {
 			global.buildingSprite.get.setAlpha(0.5f)
 			global.buildingSprite.get.setPosition(Gdx.input.getX(), 200)
-			global.sprites("snowTower").draw(batch)
+	    global.buildingSprite.get.draw(batch)
 			global.buildingSprite.get.setAlpha(1f)
 		}
 		
@@ -127,6 +129,9 @@ class Controller extends ApplicationAdapter {
 	  	World.buttons.clear()
 	  	selected = None
 	  }
+	  if (selected.isEmpty) {
+	  	global.building = None
+	  }
 	  
 	  
 		World.updateWorld()
@@ -135,8 +140,8 @@ class Controller extends ApplicationAdapter {
 		batch.begin()
 		
 		draw()		
-		//val pos = new Vector3(Gdx.input.getX(),Gdx.input.getY(), 0)
-		//drawOutline("x: " + pos.x + "\ny: " + (Gdx.graphics.getHeight() - 1 - pos.y.toInt), pos.x.toInt, Gdx.graphics.getHeight() - 1 - pos.y.toInt, 1,Color.RED, font, batch)
+		val pos = new Vector3(Gdx.input.getX(),Gdx.input.getY(), 0)
+		drawOutline("x: " + pos.x + "\ny: " + (Gdx.graphics.getHeight() - 1 - pos.y.toInt), pos.x.toInt, Gdx.graphics.getHeight() - 1 - pos.y.toInt, 1,Color.RED, font, batch)
 		
 		val pos2 = new Vector3(20, global.HEIGHT - 20, 0)
 		drawOutline("Score: " + global.score + "\nGold:   " + global.gold, pos2.x.toInt, pos2.y.toInt, 1, Color.RED, font, batch)
@@ -156,10 +161,17 @@ class Controller extends ApplicationAdapter {
 	 * Build a new building
 	 */
 	def buildNewBuilding() = {
-		val buildning = new SnowTower()
-		buildning.coords = Coords(Gdx.input.getX(), 200)
-		World.instances += buildning
-		
+		if (global.gold >= global.buildables(global.building.get)("cost").asInstanceOf[Int]) {
+			
+			val buildning = global.building match {
+				case Some("snowTower")      => new SnowTower()
+				case Some("researchCenter") => new ResearchCenter()
+				case _ 											=> new SnowTower()
+			}
+			buildning.coords = Coords(Gdx.input.getX(), 200)
+			World.instances += buildning
+			global.gold -= global.buildables(global.building.get)("cost").asInstanceOf[Int]
+		}
 	}
 	
 	
@@ -174,16 +186,21 @@ class Controller extends ApplicationAdapter {
 			}
 		}
 		//Gdx.input.justTouched()
-		if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
+		//Gdx.input.isButtonPressed(Input.Buttons.LEFT)
+		if (Gdx.input.isButtonPressed(Input.Buttons.RIGHT)) {
+			selected = None
+			global.building = None
+			World.buttons.clear()
+		}
+		if (Gdx.input.justTouched() && !Gdx.input.isButtonPressed(Input.Buttons.RIGHT)) {
 			
 			/* If a button is pressed, don't change selection. 
 			 * Otherwise, change selected to either None if an empty location is pressed or an instance at that location
 			 */
 			if (World.buttonAt(new Coords(Gdx.input.getX(), global.HEIGHT - Gdx.input.getY())).isEmpty) {
-				
-				var tempSelected = World.instanceAt(new Coords(Gdx.input.getX(), global.HEIGHT - Gdx.input.getY()))
-				
+								
 				if (global.building.isEmpty) {
+					var tempSelected = World.instanceAt(new Coords(Gdx.input.getX(), global.HEIGHT - Gdx.input.getY()))
 				
 					//Delete all buttons
 					if (tempSelected != selected && selected.isDefined && selected.get.isInstanceOf[Building]) {
@@ -206,7 +223,6 @@ class Controller extends ApplicationAdapter {
 					}
 					 
 				} else {
-					
 					if (World.areaIsFree(Area(Coords(Gdx.input.getX(), 200), 
 							global.buildingSprite.get.getWidth().toInt, global.buildingSprite.get.getHeight().toInt))) {
 						buildNewBuilding()

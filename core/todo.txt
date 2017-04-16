@@ -35,3 +35,8 @@ Sitte finishaa button luokka ja sen testaaminen ja sit upgradet kans...
 6.4.17
 Sain buttonit vörkkimään, hype
 Laita tower kans tekemään niitä ja drawaa niille myös iconit ja tekstit
+
+
+
+
+projectilen sprite riippumaan jotenkin mikä tower sen ampuu, se voi osuessaan käynnistää alarmin, jota katotaan stepissä et onks se päällä ja sit tehää jotai :)))
