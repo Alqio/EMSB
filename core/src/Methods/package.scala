@@ -13,6 +13,12 @@ package object Methods {
 	 */
 	def intToBool(value: Int) = if (value == 1) true else false
 	
+	def irandomRange(min: Int, max: Int) = {
+		val rand = util.Random
+		val dist = math.abs(max - min)
+		min + rand.nextInt(dist)
+	}
+	
   def choose[T](eka: T, toka: T) = {
     if (util.Random.nextInt(2) == 0) eka else toka
   }

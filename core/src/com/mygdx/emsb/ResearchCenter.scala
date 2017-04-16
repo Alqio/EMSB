@@ -11,8 +11,8 @@ class ResearchCenter() extends Building() {
   var targetUnlock  = "Fire"
   
   var buttons = Map[String, Button]( // new Area(Coords(420, 40), Coords(452, 72))
-  	"DmgUpgrade" -> UpgradeButton(this, "DmgUpgrade", Area(Coords(420, 40), UpgradeButton.width, UpgradeButton.height)),
-  	"HpUpgrade"  -> UpgradeButton(this, "HpUpgrade",  Area(Coords(485, 40), UpgradeButton.width, UpgradeButton.height))
+  	"DmgUpgrade" -> UpgradeButton(this, "DmgUpgrade", Area(Coords(420, 64), UpgradeButton.width, UpgradeButton.height)),
+  	"HpUpgrade"  -> UpgradeButton(this, "HpUpgrade",  Area(Coords(485, 64), UpgradeButton.width, UpgradeButton.height))
   )
   
   /**
@@ -21,9 +21,11 @@ class ResearchCenter() extends Building() {
   def attack() = {}
   
 	
+	
 	def onSelection() = {
-		World.buttons += buttons("DmgUpgrade")
-		World.buttons += buttons("HpUpgrade")
+  	for (i <- buttons.values) {
+  		World.buttons += i
+  	}
 	}
 	
   /**

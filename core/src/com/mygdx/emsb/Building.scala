@@ -28,6 +28,7 @@ abstract class Building() extends Instance(){
   }
   
   def onSelection()
+  def unlock(typeOf: String, str: String)
   
   def step() = {
   	/** Set target */

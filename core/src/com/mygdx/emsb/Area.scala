@@ -11,6 +11,9 @@ class Area(val xy1: Coords, val xy2: Coords) {
 	def suurempiX = max(xy1.x, xy2.x)
 	def suurempiY = max(xy1.y, xy2.y)
 	
+	/**
+	 * Checks if a coordinate is inside this area
+	 */
 	def isInside(coords: Coords) = pienempiX <= coords.x && suurempiX >= coords.x && suurempiY >= coords.y && pienempiY <= coords.y
 	
 	def width = abs(xy1.x - xy2.x)

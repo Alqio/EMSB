@@ -9,14 +9,24 @@ import com.badlogic.gdx.math.Vector3
 /**
  * @author alkiok1
  */
-abstract class Button (val area: Area){
+abstract class Button(val area: Area) {
   
 	var sprite: Sprite 
 	var icon: Sprite
 	
+	
+	/**
+	 * Check whether the button has been pressed this step
+	 */
 	def isPressed = {
 		//println(new Coords(Gdx.input.getX(), global.HEIGHT - Gdx.input.getY()))
-		Gdx.input.justTouched() && this.area.isInside(new Coords(Gdx.input.getX(), global.HEIGHT - Gdx.input.getY()))
+		Gdx.input.justTouched() && hover
+	}
+	/**
+	 * Check whether the cursor is inside this button
+	 */
+	def hover = {
+		this.area.isInside(new Coords(Gdx.input.getX(), global.HEIGHT - Gdx.input.getY()))
 	}
 	
 	/**
@@ -28,22 +38,38 @@ abstract class Button (val area: Area){
 	
 	def height = this.area.height
 	
+	def drawText(batch: SpriteBatch)
 	
   /** Draw the instance */
   def draw(batch: SpriteBatch) = {
     val pos = new Vector3(this.area.xy1.x.toFloat, this.area.xy1.y.toFloat, 0)
     this.sprite.setPosition(pos.x, pos.y)
 		this.sprite.draw(batch)
-		this.icon.setPosition(pos.x, pos.y)
+		
+		this.icon.setPosition(pos.x + icon.getWidth()/2, pos.y + icon.getHeight()/2)
 		this.icon.draw(batch)
+		
+		if (hover) {
+			drawText(batch)
+		}
   }
 	
 }
-class UpgradeButton (val creator: ResearchCenter, val target: String, area: Area) extends Button(area) {
+
+
+class UpgradeButton (val creator: Building, val target: String, area: Area) extends Button(area) {
 	
 	var sprite = global.sprites("squareButton")
-	var icon = global.sprites("hpUp")
+	var icon = global.upgrades(target)("sprite").asInstanceOf[Sprite]
 	
+	def drawText(batch: SpriteBatch) = {
+		val text = global.upgrades(target)("text").asInstanceOf[String]
+		val cost = global.upgrades(target)("cost").asInstanceOf[Int]
+		val pos = new Vector3(this.area.xy1.x.toFloat, this.area.xy2.y.toFloat - UpgradeButton.height - 24,0)
+		global.font.draw(batch, text + "\nCost: " + cost, pos.x, pos.y)
+	}
+	
+	 
 	def action() = {
 		if (isPressed) {
 			creator.unlock("upgrade", target)
@@ -51,12 +77,31 @@ class UpgradeButton (val creator: ResearchCenter, val target: String, area: Area
 	}
 	
 }
+class BuildButton (val creator: Building, val target: String, area: Area) extends Button(area) {
+	var sprite = global.sprites("squareButton")
+	var icon = global.buildables(target)("sprite").asInstanceOf[Sprite]
+	
+	def drawText(batch: SpriteBatch) = {
+		val text = global.buildables(target)("text").asInstanceOf[String]
+		val cost = global.buildables(target)("cost").asInstanceOf[Int]
+		val pos = new Vector3(this.area.xy1.x.toFloat, this.area.xy2.y.toFloat - UpgradeButton.height - 24,0)
+		global.font.draw(batch, text + "\nCost: " + cost , pos.x, pos.y)
+	}	
+	
+	def action() = {
+		if (isPressed) {
+			global.building = Some(target)
+			global.buildingSprite = Some(global.sprites(target))
+		}
+	}
+}
+
 object UpgradeButton {
 	
 	def width = global.sprites("squareButton").getWidth.toInt
 	def height = global.sprites("squareButton").getHeight.toInt
 	
-	def apply(creator: ResearchCenter, target: String, area: Area) = {
+	def apply(creator: Building, target: String, area: Area) = {
 		new UpgradeButton(creator, target, area)
 	}
 	

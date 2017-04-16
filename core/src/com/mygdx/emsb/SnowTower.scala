@@ -24,6 +24,10 @@ class SnowTower() extends Building() {
   sprite      = global.sprites("snowTower")
   name				= "Snow tower"
   
+  var buttons = Map[String, Button]( // new Area(Coords(420, 40), Coords(452, 72))
+  	//"FireTower" -> UpgradeButton(this, "fireTower", Area(Coords(420, 64), UpgradeButton.width, UpgradeButton.height)),
+  	//"IceTower"  -> UpgradeButton(this, "iceTower",  Area(Coords(485, 64), UpgradeButton.width, UpgradeButton.height))
+  )  
   
   /**
    * This method will be called only if
@@ -37,9 +41,13 @@ class SnowTower() extends Building() {
 		var i = choose(new Snowball1(this), new Snowball2(this))
 		World.projectiles += i
   }
+  def unlock(typeOf: String, str: String) = {}
+
   
   def onSelection() = {
-  	
+  	for (i <- buttons.values) {
+  		World.buttons += i
+  	}
   }
   
    /** 

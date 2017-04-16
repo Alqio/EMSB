@@ -22,6 +22,10 @@ object World{
     instance
 	}
 	
+	def areaIsFree(area: Area): Boolean = {
+		World.instances.filter(x => area.isInside(x.coords)).size == 0
+	}
+	
 	def buttonAt(coordinates: Coords): Option[Button] = {
 		var button: Option[Button] = None
 		for (i <- buttons) {
@@ -32,6 +36,9 @@ object World{
     button
 	}
 	
+	/**
+	 * Update the world. Move all instances and projectiles, execute their step events, move alarms and check button events.
+	 */
 	def updateWorld() = {
 		/** Execute the step event for all instances **/
 		instances.toVector.foreach(_.step())

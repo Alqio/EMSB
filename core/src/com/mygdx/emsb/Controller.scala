@@ -38,26 +38,34 @@ class Controller extends ApplicationAdapter {
 	var selected: Option[Instance]    = None
 	var shapeRenderer: ShapeRenderer  = null
 	private var tausta: Sprite        = null
+	private var mountains: Sprite 		= null
+	private var floor: Sprite					= null
 	var firstDraw: Boolean            = true
 	private var stage: Stage					= null
 	var skin: Skin										= null
 	var squareButton: Texture 				= _
 	
 	override def create() = {
-		
-		font = new BitmapFont()
-		font.setColor(Color.RED)
-		
+		font = global.font
 		shapeRenderer = new ShapeRenderer()
 		
 		//val generator: FreeTypeFontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("assets/fonts/04B_03__.TTF"))
 		
-		tausta = new Sprite(new Texture(Gdx.files.internal("bg1.png")))
+		tausta = new Sprite(new Texture(Gdx.files.internal("background.png")))
 		tausta.setPosition(0,0)
 		tausta.setSize(global.WIDTH, global.HEIGHT)
+		mountains = new Sprite(new Texture(Gdx.files.internal("bgMountain.png")))
+		mountains.setPosition(0,0)
+		mountains.setSize(2560, 720)
+		floor = new Sprite(new Texture(Gdx.files.internal("bgFloor.png")))
+		floor.setPosition(0,-220)
+		floor.setSize(1280,420)
 		
 		batch = new SpriteBatch()
 		
+		
+		val mainHouse = new MainHouse()
+		mainHouse.coords = Coords(640, 200)
 		
 		var yks = new Vihuy()
 		var toka = new Vihuy()
@@ -69,7 +77,7 @@ class Controller extends ApplicationAdapter {
 		torniToka.coords = new Coords(900, 200)
 		toka.coords = new Coords(720, 200)
 		
-		
+		World.instances += mainHouse
 		World.instances += yks
 		World.instances += toka
 		World.instances += torni
@@ -80,11 +88,19 @@ class Controller extends ApplicationAdapter {
 	
 	def draw() = {
 	  tausta.draw(batch)
+	  mountains.draw(batch)
+	  floor.draw(batch)
 		World.instances.foreach(_.draw(batch))
 		World.projectiles.foreach(_.draw(batch))
 		World.buttons.foreach(_.draw(batch))
 		
-		//World.instances.foreach(println)
+		//World.instances.foreach(println) 
+		if (global.building.isDefined) {
+			global.buildingSprite.get.setAlpha(0.5f)
+			global.buildingSprite.get.setPosition(Gdx.input.getX(), 200)
+			global.sprites("snowTower").draw(batch)
+			global.buildingSprite.get.setAlpha(1f)
+		}
 		
 	}
 	
@@ -100,10 +116,12 @@ class Controller extends ApplicationAdapter {
 	
 	/** The game loop */
 	override def render() = {
+		/**
+		 * Clear the screen
+		 */
 	  Gdx.gl.glClearColor(0.5f, 0f, 0.3f, 1)
 	  Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
 	  
-	  //println(selected)
 	  
 	  if (selected.isDefined && selected.get.position.distanceToPoint(new Coords(Gdx.input.getX(), global.HEIGHT - Gdx.input.getY())) > 550) {
 	  	World.buttons.clear()
@@ -114,12 +132,11 @@ class Controller extends ApplicationAdapter {
 		World.updateWorld()
 		handleInput()
 	  
-	  
 		batch.begin()
 		
 		draw()		
-		val pos = new Vector3(Gdx.input.getX(),Gdx.input.getY(), 0)
-		drawOutline("x: " + pos.x + "\ny: " + (Gdx.graphics.getHeight() - 1 - pos.y.toInt), pos.x.toInt, Gdx.graphics.getHeight() - 1 - pos.y.toInt, 1,Color.RED, font, batch)
+		//val pos = new Vector3(Gdx.input.getX(),Gdx.input.getY(), 0)
+		//drawOutline("x: " + pos.x + "\ny: " + (Gdx.graphics.getHeight() - 1 - pos.y.toInt), pos.x.toInt, Gdx.graphics.getHeight() - 1 - pos.y.toInt, 1,Color.RED, font, batch)
 		
 		val pos2 = new Vector3(20, global.HEIGHT - 20, 0)
 		drawOutline("Score: " + global.score + "\nGold:   " + global.gold, pos2.x.toInt, pos2.y.toInt, 1, Color.RED, font, batch)
@@ -131,7 +148,18 @@ class Controller extends ApplicationAdapter {
 	}
 	
 	override def dispose() = {
+		//global.sprites.values.toVector.foreach(_.dispose())
 		batch.dispose()
+	}
+	
+	/**
+	 * Build a new building
+	 */
+	def buildNewBuilding() = {
+		val buildning = new SnowTower()
+		buildning.coords = Coords(Gdx.input.getX(), 200)
+		World.instances += buildning
+		
 	}
 	
 	
@@ -145,8 +173,8 @@ class Controller extends ApplicationAdapter {
 				selected.get.asInstanceOf[SnowTower].upgrade(math.min(torni.get.level + 1, torni.get.maxLevel))
 			}
 		}
-		
-		if (Gdx.input.justTouched()) {
+		//Gdx.input.justTouched()
+		if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
 			
 			/* If a button is pressed, don't change selection. 
 			 * Otherwise, change selected to either None if an empty location is pressed or an instance at that location
@@ -155,24 +183,38 @@ class Controller extends ApplicationAdapter {
 				
 				var tempSelected = World.instanceAt(new Coords(Gdx.input.getX(), global.HEIGHT - Gdx.input.getY()))
 				
-				//Delete all buttons
-				if (tempSelected != selected && selected.isDefined && selected.get.isInstanceOf[ResearchCenter]) {
-					World.buttons.clear()
+				if (global.building.isEmpty) {
+				
+					//Delete all buttons
+					if (tempSelected != selected && selected.isDefined && selected.get.isInstanceOf[Building]) {
+						World.buttons.clear()
+						global.building = None
+					}
+					
+					selected = tempSelected
+					
+					if (selected.isDefined && !selected.get.isInstanceOf[Building]) {
+						selected = None
+						global.building = None
+					}
+						
+					
+					println("Selected: " + selected)
+					
+					if (selected.isDefined) {
+						selected.get.asInstanceOf[Building].onSelection()
+					}
+					 
+				} else {
+					
+					if (World.areaIsFree(Area(Coords(Gdx.input.getX(), 200), 
+							global.buildingSprite.get.getWidth().toInt, global.buildingSprite.get.getHeight().toInt))) {
+						buildNewBuilding()
+					} else {
+						//play sound??
+					}
+					
 				}
-				
-				selected = tempSelected
-				
-				if (selected.isDefined && !selected.get.isInstanceOf[Building])
-					selected = None
-				
-				println("Selected: " + selected)
-				
-				if (selected.isDefined && selected.get.isInstanceOf[ResearchCenter]) {
-					var asCenter = selected.get.asInstanceOf[ResearchCenter]
-					asCenter.onSelection()
-				}
-				
-				
 			}
 		}
 		
@@ -180,7 +222,9 @@ class Controller extends ApplicationAdapter {
 	
 	
 	/**
-	 * @param str String
+	 * @param str the text
+	 * @param x the x location
+	 * @param y the y location
 	 */
 	def drawOutline(str: String, x: Int, y: Int, width: Int, c: Color, font: BitmapFont, batch: SpriteBatch): Unit = {
 		font.setColor(Color.BLACK)
