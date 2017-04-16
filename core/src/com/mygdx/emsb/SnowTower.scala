@@ -51,7 +51,7 @@ class SnowTower() extends Building() {
 	  		case "Poison" => this.upgrade(3)
 	  		case _ 				=> println("Unknown upgrade type: " + str)
 	  	}
-	  	//World.buttons.clear()
+	  	World.buttons.clear()
   	}
   }
 

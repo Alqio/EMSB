@@ -61,6 +61,8 @@ class ResearchCenter() extends Building() {
 	  	if (global.gold >= unlock("cost").asInstanceOf[Int]) {
 	  		unlock("unlocked") = true
 	  		global.gold -= unlock("cost").asInstanceOf[Int]
+	  		World.buttons.clear()
+	  		this.onSelection()
 	  		global.updateUnlocked()
 	  		//World.buttons.toVector.foreach(x => if (x.isInstanceOf[UnlockButton] && x.target == str) World.buttons -= x)
 	  	}  		
