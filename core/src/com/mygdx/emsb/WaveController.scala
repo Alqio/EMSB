@@ -8,14 +8,16 @@ import Methods._
 class WaveController {
   var wave = 0
   var enemyCount = 0
-  var maxEnemyCount = 5 + wave * 5
+  var maxEnemyCount = 15 + wave * 5
   val rand = util.Random
   var waves = Buffer[Wave]()
   var finished = false
   var enemies = Array("sukka")
   
-  waves += new Wave(1, Array("vihuy"), 60)
+  waves += new Wave(0, Array("-"), 10)
+  waves += new Wave(1, Array("saks"), 30)
   waves += new Wave(2, Array("vihuy", "saks"), 60)
+  waves += new Wave(3, Array("vihuy", "saks"), 20)
   
   val alarm = Array.fill(12)(new WaveAlarm(0))
   
@@ -23,17 +25,19 @@ class WaveController {
   	finished = false
   	wave += 1
   	enemies = waves(wave).enemies
-  	maxEnemyCount = 5 + wave * 5
+  	maxEnemyCount = 10 + wave * 5
+  	enemyCount = 0
+  	alarm(0).time = 60
+  	alarm(1).time = math.max(300 - 10 * wave, 10)
   }
   
   def spawn() = {
-  	println("nyt spawnattiin")
   	val enemy: Instance = enemies(rand.nextInt(enemies.size)) match {
   		case "vihuy"  => new Vihuy()
-  		case "saks" 	=> new Vihuy()
+  		case "saks" 	=> new Saks()
   		case _ 				=> new Vihuy()
   	}
-  	enemy.coords = new Coords(choose(-30, global.WIDTH + 30), global.spawnHeight)
+  	enemy.coords = new Coords(choose(-30 + irandomRange(-30, 0), global.WIDTH + 30 + irandomRange(0, 30)), global.spawnHeight)
   	enemyCount += 1
   	World.instances += enemy
   }

@@ -2,7 +2,7 @@ package com.mygdx.emsb
 
 class MainHouse extends Building {
 	
-  maxHp       = 500.0 * global.buildingHpMultiplier
+  maxHp       = 200.0 * global.buildingHpMultiplier
   hp          = maxHp
   dmg         = 0.5   * global.buildingDmgMultiplier
   range       = 300
@@ -23,6 +23,7 @@ class MainHouse extends Building {
 	def unlock(typeOf: String, str: String) = {}
 	
 	def attack() = {
+		sndShoot.play(0.5f)
 		var i = new Snowball1(this)
 		World.projectiles += i		
 	}

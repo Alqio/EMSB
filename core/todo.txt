@@ -3,11 +3,11 @@
 
 Unit tests here mby?
 
-- sounds
+- sounds DONE
 - hp bar DONE
 - upgrade valikko DONE
-- spawner
-- waves
+- spawner DONE
+- waves DONE
 - menu
 - tower upgrades (ei voi valita vielä 6.4.17) DONE
 	- fire

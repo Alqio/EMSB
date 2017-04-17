@@ -40,6 +40,7 @@ class SnowTower() extends Building() {
    * alarm(0) will be set to attack speed and then this method will be called
    */
   def attack() = {
+  	sndShoot.play(0.5f)
 		var i = level match {
 			case 0 => new Snowball1(this)
 			case 1 => new Snowball2(this)

@@ -4,6 +4,11 @@ import com.badlogic.gdx.graphics.g2d.Sprite
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.graphics.Color
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter
+import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.graphics.g2d.SpriteBatch
+import com.badlogic.gdx.audio._
 
 
 import collection.mutable.LinkedHashMap
@@ -23,14 +28,23 @@ object global {
   val spawnHeight						= 200
   val poisonDamage					= 0.02
   var score                 = 0
-  var gold                  = 10000
+  var gold                  = 120
   var playerName            = "Sukka Mehuttaja"
 	val WIDTH                 = 1280
 	val HEIGHT                = 720  
-	val font 									= new BitmapFont()
   var building: Option[String] = None
   var buildingSprite: Option[Sprite] = None
-	font.setColor(Color.RED)
+  
+  //Create fonts
+	val generator: FreeTypeFontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/04B_03__.TTF"))
+	val parameter: FreeTypeFontParameter = new FreeTypeFontParameter()
+	parameter.size = 24
+	
+  val font = generator.generateFont(parameter)
+	generator.dispose()
+	
+	parameter.characters = FreeTypeFontGenerator.DEFAULT_CHARS
+	
 	
   /**
    * A list of all sprites in the game. They are all loaded when the game starts, and they can then be disposed of later. 
@@ -56,6 +70,15 @@ object global {
     "asUp" 							 -> new Sprite(new Texture("attackSpeedIcon.png")),
     "healthBar" 				 -> new Sprite(new Texture("healthBar.png"))
   )	
+  val musics = Map[String, Music](
+  	"background" -> Gdx.audio.newMusic(Gdx.files.internal("sounds/sndBg.mp3"))
+  )
+  
+  val sounds = Map[String, Sound](
+  	"enemyDeath" -> Gdx.audio.newSound(Gdx.files.internal("sounds/sndHit.wav")),
+  	"towerShoot" -> Gdx.audio.newSound(Gdx.files.internal("sounds/sndShoot.wav")),
+  	"saksDeath"  -> Gdx.audio.newSound(Gdx.files.internal("sounds/sndSaksDeath.wav"))
+  )
 	
 	/**
 	 * Unlocked map represents unlocked upgrades.
@@ -120,12 +143,12 @@ object global {
  
   val buildables = LinkedHashMap[String, Map[String, Any]] (
   	"snowTower" -> Map[String, Any] (
-  		"cost"    -> 50,
+  		"cost"    -> 15,
   		"text" 		-> "An attack tower",
   		"sprite"  -> global.sprites("snowTowerIcon")
   	),
   	"researchCenter" -> Map[String, Any] (
-  		"cost"    -> 75,
+  		"cost"    -> 25,
   		"text"    -> "A research center, that can upgrade your buildings",
   		"sprite"  -> global.sprites("researchCenterIcon")
   	)
@@ -137,5 +160,30 @@ object global {
   
   var unlocked = (Array(0,1,2,3) zip unlocks.values.map(x => x("unlocked").asInstanceOf[Boolean])).toMap
   println(unlocked)  
+  
+  /**
+   * Draw a text with an outline
+	 * @param str the text
+	 * @param x the x location
+	 * @param y the y location
+	 * @param width the width of the outline
+	 * @param c color of the text
+	 * @param font the font that will be used in the draw
+	 * @param the batch that will be used
+	 */
+	def drawOutline(str: String, x: Int, y: Int, width: Int, c: Color, font: BitmapFont, batch: SpriteBatch): Unit = {
+		font.setColor(Color.BLACK)
+		font.draw(batch, str, x - width, y - width)
+		font.draw(batch, str, x + width, y - width)
+		font.draw(batch, str, x - width, y + width)
+		font.draw(batch, str, x + width, y + width)
+		font.draw(batch, str, x, y + width)
+		font.draw(batch, str, x, y - width)
+		font.draw(batch, str, x - width, y)
+		font.draw(batch, str, x + width, y)
+		font.setColor(c)
+		font.draw(batch, str, x, y)
+
+	}
   
 }

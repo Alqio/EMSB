@@ -10,7 +10,7 @@ abstract class Building() extends Instance(){
   val upgrades = Map[String, Array[Any]]()
   var level = 0
   var maxLevel = 3
-  
+  var sndShoot = global.sounds("towerShoot")
   
   /**
    * This method updates the building's hp and damage when they have been upgraded in researchCenter.
@@ -49,6 +49,7 @@ abstract class Building() extends Instance(){
   	 *  */
   	if (this.target.isDefined && this.canAttack) {
 		  this.alarms(0).time += attackSpeed
+		  
 		  attack()
   	}
     

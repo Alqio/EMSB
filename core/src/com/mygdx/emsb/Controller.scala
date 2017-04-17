@@ -24,19 +24,16 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable
 import com.badlogic.gdx.scenes.scene2d.InputListener
 import com.badlogic.gdx.InputProcessor
 import com.badlogic.gdx.graphics.FPSLogger
-
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter
+import com.badlogic.gdx.audio._
 
 
 import collection.mutable.Buffer
 
 class Controller extends ApplicationAdapter {
 	var batch: SpriteBatch            = _
-	var img: Texture                  = null
-	var spr: Sprite                   = null
-	var rot                           = 0
 	var font: BitmapFont              = null
-	var cam: OrthographicCamera       = null
-	var rotationSpeed                 = 1f
 	var selected: Option[Instance]    = None
 	var shapeRenderer: ShapeRenderer  = null
 	private var tausta: Sprite        = null
@@ -44,18 +41,18 @@ class Controller extends ApplicationAdapter {
 	private var floor: Sprite					= null
 	var firstDraw: Boolean            = true
 	private var stage: Stage					= null
-	var skin: Skin										= null
 	var squareButton: Texture 				= _
 	var fpsLogger: FPSLogger					= null
 	var spawner: WaveController				= null
+	var backgroundMusic: Music 				= null
+	var camera: Camera								= null
 	
 	override def create() = {
 		font 					= global.font
 		shapeRenderer = new ShapeRenderer()
 		fpsLogger 		= new FPSLogger()
 		spawner 			=	new WaveController()
-		//val generator: FreeTypeFontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("assets/fonts/04B_03__.TTF"))
-		
+		camera 				= new Camera()
 		
 		tausta = new Sprite(new Texture(Gdx.files.internal("background.png")))
 		tausta.setPosition(0,0)
@@ -67,33 +64,20 @@ class Controller extends ApplicationAdapter {
 		floor.setPosition(0,-220)
 		floor.setSize(1280,420)
 		
+		backgroundMusic = global.musics("background")
+		backgroundMusic.setLooping(true)
+		backgroundMusic.setVolume(0.5f)
+		if (!backgroundMusic.isPlaying()) backgroundMusic.play()
+		
 		batch = new SpriteBatch()
 		
 		
 		val mainHouse = new MainHouse()
-		mainHouse.coords = Coords(640, 200)
+		mainHouse.coords = Coords(640 - 32, 200)
+		World.instances += mainHouse
 		
 		//Start the waves
-		spawner.alarm(0).time = 120
-		spawner.alarm(1).time = 300
 		spawner.startWave()
-		
-//		var yks = new Vihuy()
-//		var toka = new Vihuy()
-//		var torni = new SnowTower()
-//		var torniToka = new ResearchCenter()
-//		
-//		yks.coords = new Coords(-20,200)
-//		torni.coords = new Coords(350, 200)
-//		torniToka.coords = new Coords(900, 200)
-//		toka.coords = new Coords(750, 200)
-		
-		World.instances += mainHouse
-//		World.instances += yks
-//		World.instances += toka
-//		World.instances += torni
-//		World.instances += torniToka
-		
 		
 	}
 	
@@ -118,7 +102,6 @@ class Controller extends ApplicationAdapter {
 	def drawShapes() = {
 	  shapeRenderer.setColor(Color.RED);
 		shapeRenderer.begin(ShapeType.Line)
-		//selected.foreach(i => shapeRenderer.circle(i.position.x.toFloat, i.position.y.toFloat, i.range))
 		selected.foreach(i => shapeRenderer.rect(i.coords.x.toFloat, i.coords.y.toFloat, i.sprite.getWidth(), i.sprite.getHeight()))
 		selected.foreach(i => shapeRenderer.rect(i.coords.x.toFloat - 1, i.coords.y.toFloat - 1, i.sprite.getWidth() + 2, i.sprite.getHeight() + 2))
 		shapeRenderer.end()		
@@ -141,13 +124,19 @@ class Controller extends ApplicationAdapter {
 	  
 	  spawner.step()
 		World.updateWorld()
+		camera.move()
 		handleInput()
 	  
 		batch.begin()
 		
 		draw()
 		val pos2 = new Vector3(20, global.HEIGHT - 20, 0)
-		drawOutline("Score: " + global.score + "\nGold:   " + global.gold, pos2.x.toInt, pos2.y.toInt, 1, Color.RED, font, batch)
+		global.drawOutline("Score: " + global.score + "\nGold:   " + global.gold, pos2.x.toInt, pos2.y.toInt, 1, Color.RED, font, batch)
+		
+		if (spawner.finished) {
+			val pos = new Vector3(520, 360, 0)
+			global.drawOutline("Press 'SPACE' to continue", pos.x.toInt, pos.y.toInt, 1, Color.WHITE, font, batch)
+		}
 		
 		batch.end()
 		
@@ -155,8 +144,13 @@ class Controller extends ApplicationAdapter {
 	
 	}
 	
+	/**
+	 * Dispose of the resources that were used in the game.
+	 */
 	override def dispose() = {
-		//global.sprites.values.toVector.foreach(_.dispose())
+		global.sprites.values.toVector.foreach(_.getTexture().dispose())
+		global.sounds.values.toVector.foreach(_.dispose())
+		global.musics.values.toVector.foreach(_.dispose())
 		batch.dispose()
 	}
 	
@@ -248,26 +242,6 @@ class Controller extends ApplicationAdapter {
 		
 	}
 	
-	
-	/**
-	 * @param str the text
-	 * @param x the x location
-	 * @param y the y location
-	 */
-	def drawOutline(str: String, x: Int, y: Int, width: Int, c: Color, font: BitmapFont, batch: SpriteBatch): Unit = {
-		font.setColor(Color.BLACK)
-		font.draw(batch, str, x - width, y - width)
-		font.draw(batch, str, x + width, y - width)
-		font.draw(batch, str, x - width, y + width)
-		font.draw(batch, str, x + width, y + width)
-		font.draw(batch, str, x, y + width)
-		font.draw(batch, str, x, y - width)
-		font.draw(batch, str, x - width, y)
-		font.draw(batch, str, x + width, y)
-		font.setColor(c)
-		font.draw(batch, str, x, y)
-
-	}
 }
 
 

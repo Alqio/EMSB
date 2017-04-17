@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.math.Vector3
-
+import com.badlogic.gdx.graphics.Color
 /**
  * @author alkiok1
  */
@@ -66,7 +66,8 @@ class UpgradeButton (val creator: Building, target: String, area: Area) extends 
 		val text = global.upgrades(target)("text").asInstanceOf[String]
 		val cost = global.upgrades(target)("cost").asInstanceOf[Int]
 		val pos = new Vector3(this.area.xy1.x.toFloat, this.area.xy2.y.toFloat - UpgradeButton.height - 24,0)
-		global.font.draw(batch, text + "\nCost: " + cost, pos.x, pos.y)
+		//global.font.draw(batch, text + "\nCost: " + cost, pos.x, pos.y)
+		global.drawOutline(text + "\nCost: " + cost,  pos.x.toInt, pos.y.toInt, 1, Color.RED, global.font, batch)
 	}
 	
 	 
@@ -87,7 +88,9 @@ class UnlockButton (val creator: Building, target: String, area: Area, val snowT
 		val text = global.unlocks(target)("text").asInstanceOf[String]
 		val cost = if (!snowTower) global.unlocks(target)("cost").asInstanceOf[Int] else global.unlocks(target)("buildCost").asInstanceOf[Int]
 		val pos = new Vector3(this.area.xy1.x.toFloat, this.area.xy2.y.toFloat + UpgradeButton.height,0)
-		global.font.draw(batch, text + "\nCost: " + cost, pos.x, pos.y)
+		//global.font.draw(batch, text + "\nCost: " + cost, pos.x, pos.y)
+		global.drawOutline(text + "\nCost: " + cost,  pos.x.toInt, pos.y.toInt, 1, Color.RED, global.font, batch)
+		
 	}
 	
 	 
@@ -107,7 +110,7 @@ class BuildButton (val creator: Building, target: String, area: Area) extends Bu
 		val text = global.buildables(target)("text").asInstanceOf[String]
 		val cost = global.buildables(target)("cost").asInstanceOf[Int]
 		val pos = new Vector3(this.area.xy1.x.toFloat, this.area.xy2.y.toFloat - UpgradeButton.height - 24,0)
-		global.font.draw(batch, text + "\nCost: " + cost , pos.x, pos.y)
+		global.drawOutline(text + "\nCost: " + cost,  pos.x.toInt, pos.y.toInt, 1, Color.RED, global.font, batch)
 	}	
 	
 	def action() = {

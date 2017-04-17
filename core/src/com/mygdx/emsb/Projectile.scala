@@ -65,12 +65,7 @@ class Projectile(val creator: Instance, val spritePath: String) {
 	  		this.move()
 	  		if (this.target.get.isHitBy(this)) {
 	  			
-	  			target.get.takeDmg(dmg)
-	  			if (this.typeOf == "ice") {
-	  				target.get.alarms(1).time = 60
-	  			} else if (this.typeOf == "poison") {
-	  				target.get.alarms(2).time = 60
-	  			}
+	  			target.get.takeDmg(this)
 	  			World.projectiles.remove(World.projectiles.indexOf(this))
 	  			this.sprite.getTexture().dispose()
 	  		}

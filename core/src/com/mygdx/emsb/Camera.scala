@@ -11,13 +11,20 @@ import com.badlogic.gdx.graphics.g2d.Sprite
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.math.MathUtils
 
-object Camera {
-  val WIDTH = 2560
-  val HEIGHT = 720
-  
-  var cam: OrthographicCamera = null
-  var batch: SpriteBatch = null
-  
-  
-  
+class Camera {
+	val WIDTH = 2560
+	val HEIGHT = 720
+	var movSpeed = 2
+
+	def move() = {
+		if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+			World.instances.foreach(i => i.coords.x -= movSpeed)
+			World.projectiles.foreach(_.coords.x -= movSpeed)
+		}
+		if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+			World.instances.foreach(i => i.coords.x += movSpeed)
+			World.projectiles.foreach(_.coords.x += movSpeed)
+		}
+	}
+
 }

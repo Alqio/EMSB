@@ -7,8 +7,6 @@ import Methods._
  */
 abstract class Character() extends Instance() {
   
-  var spd: Double = 0
-  
   //Includes directions
   var realSpdX: Double = 0
   var realSpdY: Double = spd
