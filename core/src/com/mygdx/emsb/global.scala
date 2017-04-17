@@ -200,4 +200,11 @@ object global {
 
 	}
   
+  /**
+   * The death of the player
+   */
+  def death() = {
+  	println("vituiks meni")
+  }
+  
 }

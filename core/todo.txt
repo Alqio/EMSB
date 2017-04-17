@@ -22,7 +22,16 @@ Unit tests here mby?
 	- esim healausnopeus
 	- attack speed
 
-
+17.4.2017, mitä vielä jäljellä:
+- pisteet mysql?
+- kuoleminen
+- ulkopuolisten tiedostojen lataus
+- lisää vihuja
+- uus musiikki
+- menu
+- camera (konsultoi pyryä)
+- bosseja?
+	- ainaki evil miguli ois kiva, mut mitenköhän toimii?
 
 24.3.17 18:19
 Jatka seuraavaks selectionia, laita jonnekin näkymään upgradevaihtoehdot ja sillein et niit voi joko painaa, tai sit valita näppiksellä

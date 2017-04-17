@@ -161,6 +161,9 @@ abstract class Instance() {
 			global.score += this.asInstanceOf[EnemyUnit].scoreGain
 			global.gold += this.asInstanceOf[EnemyUnit].goldGain
 			this.sprite.getTexture().dispose()
+		
+		} else if (this.isInstanceOf[MainHouse]) {
+			global.death()
 		}
 		World.instances.remove(World.instances.indexOf(this))
 	}
