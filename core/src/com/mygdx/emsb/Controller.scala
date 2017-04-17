@@ -78,6 +78,9 @@ class Controller extends ApplicationAdapter {
 		
 		//Start the waves
 		spawner.startWave()
+		val yks = new Saks()
+		yks.coords = new Coords(230, 200)
+		//World.instances += yks
 		
 	}
 	
@@ -116,7 +119,7 @@ class Controller extends ApplicationAdapter {
 	  Gdx.gl.glClearColor(0.5f, 0f, 0.3f, 1)
 	  Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
 	  
-	  fpsLogger.log()
+	  //fpsLogger.log()
 
 	  if (selected.isEmpty) {
 	  	global.building = None
@@ -132,6 +135,8 @@ class Controller extends ApplicationAdapter {
 		draw()
 		val pos2 = new Vector3(20, global.HEIGHT - 20, 0)
 		global.drawOutline("Score: " + global.score + "\nGold:   " + global.gold, pos2.x.toInt, pos2.y.toInt, 1, Color.RED, font, batch)
+		val pos3 = new Vector3(Gdx.input.getX(), 720 - Gdx.input.getY(), 0)
+	  global.drawOutline("x: " + pos3.x + "\ny: " + pos3.y, pos3.x.toInt, pos3.y.toInt, 1, Color.RED, font, batch)
 		
 		if (spawner.finished) {
 			val pos = new Vector3(520, 360, 0)
@@ -163,6 +168,7 @@ class Controller extends ApplicationAdapter {
 			val buildning = global.building match {
 				case Some("snowTower")      => new SnowTower()
 				case Some("researchCenter") => new ResearchCenter()
+				case Some("barracks")       => new Barracks()
 				case _ 											=> new SnowTower()
 			}
 			buildning.coords = Coords(Gdx.input.getX(), global.spawnHeight)

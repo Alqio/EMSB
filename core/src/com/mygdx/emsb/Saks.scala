@@ -4,14 +4,14 @@ import com.badlogic.gdx.graphics.g2d.Sprite
 
 class Saks() extends EnemyUnit() {
   
-	maxHp      = 14
+	maxHp      = 5
 	hp         = maxHp
   spd        = 0.6
   realSpdX   = spd
   dmg        = 1.8
   range      = 20
   name       = "Saks"
-  goldGain   = 2
+  goldGain   = 5
   scoreGain  = 2
   
   //Normal enemies can't load the sprite from global.sprites because then the sprite couldn't be flipped depending on the direction.

@@ -15,6 +15,7 @@ class Alarm (var time: Int, val actor: Instance) {
 		}
 		
 	}
+	override def toString = "Alarm time: " + this.time + ", creator: " + this.actor
 }
 
 class WaveAlarm (var time: Int) {

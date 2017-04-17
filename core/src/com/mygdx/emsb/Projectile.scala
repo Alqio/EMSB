@@ -96,6 +96,11 @@ case class Snowball4(override val creator: Instance) extends Projectile(creator,
   typeOf = "poison"
   
 }
+case class Fireball(override val creator: Instance) extends Projectile(creator, "fireBall.png") {
+	spd = 10
+	typeOf = "enemyFireball"
+}
+
 /**
 image_angle
 spd

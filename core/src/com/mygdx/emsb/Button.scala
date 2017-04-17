@@ -55,8 +55,6 @@ abstract class Button(val area: Area, val target: String) {
   }
 	
 }
-
-
 class UpgradeButton (val creator: Building, target: String, area: Area) extends Button(area, target) {
 	
 	var sprite = global.sprites("squareButton")
@@ -65,7 +63,7 @@ class UpgradeButton (val creator: Building, target: String, area: Area) extends 
 	def drawText(batch: SpriteBatch) = {
 		val text = global.upgrades(target)("text").asInstanceOf[String]
 		val cost = global.upgrades(target)("cost").asInstanceOf[Int]
-		val pos = new Vector3(this.area.xy1.x.toFloat, this.area.xy2.y.toFloat - UpgradeButton.height - 24,0)
+		val pos = new Vector3(this.area.xy1.x.toFloat, this.area.xy2.y.toFloat - UpgradeButton.height - 12,0)
 		//global.font.draw(batch, text + "\nCost: " + cost, pos.x, pos.y)
 		global.drawOutline(text + "\nCost: " + cost,  pos.x.toInt, pos.y.toInt, 1, Color.RED, global.font, batch)
 	}
@@ -88,7 +86,6 @@ class UnlockButton (val creator: Building, target: String, area: Area, val snowT
 		val text = global.unlocks(target)("text").asInstanceOf[String]
 		val cost = if (!snowTower) global.unlocks(target)("cost").asInstanceOf[Int] else global.unlocks(target)("buildCost").asInstanceOf[Int]
 		val pos = new Vector3(this.area.xy1.x.toFloat, this.area.xy2.y.toFloat + UpgradeButton.height,0)
-		//global.font.draw(batch, text + "\nCost: " + cost, pos.x, pos.y)
 		global.drawOutline(text + "\nCost: " + cost,  pos.x.toInt, pos.y.toInt, 1, Color.RED, global.font, batch)
 		
 	}
@@ -109,18 +106,36 @@ class BuildButton (val creator: Building, target: String, area: Area) extends Bu
 	def drawText(batch: SpriteBatch) = {
 		val text = global.buildables(target)("text").asInstanceOf[String]
 		val cost = global.buildables(target)("cost").asInstanceOf[Int]
-		val pos = new Vector3(this.area.xy1.x.toFloat, this.area.xy2.y.toFloat - UpgradeButton.height - 24,0)
+		val pos = new Vector3(this.area.xy1.x.toFloat, this.area.xy2.y.toFloat - UpgradeButton.height - 12,0)
 		global.drawOutline(text + "\nCost: " + cost,  pos.x.toInt, pos.y.toInt, 1, Color.RED, global.font, batch)
 	}	
 	
 	def action() = {
 		if (isPressed) {
 			global.building = Some(target)
-			println(global.building)
 			global.buildingSprite = Some(global.sprites(target))
 		}
 	}
 }
+
+class BarracksButton (val creator: Building, target: String, area: Area) extends Button(area, target) {
+	var sprite = global.sprites("squareButton")
+	var icon   = global.upgrades(target)("sprite").asInstanceOf[Sprite]//global.buildables(target)("sprite").asInstanceOf[Sprite]
+	
+	def drawText(batch: SpriteBatch) = {
+		val text = global.upgrades(target)("text").asInstanceOf[String]
+		val cost = global.upgrades(target)("cost").asInstanceOf[Int]
+		val pos = new Vector3(this.area.xy1.x.toFloat, this.area.xy2.y.toFloat - UpgradeButton.height - 12,0)
+		global.drawOutline(text + "\nCost: " + cost,  pos.x.toInt, pos.y.toInt, 1, Color.RED, global.font, batch)
+	}	
+	
+	def action() = {
+		if (isPressed) {
+			creator.unlock("spawn",target)
+		}
+	}
+}
+
 
 object UpgradeButton {
 	

@@ -68,7 +68,10 @@ object global {
     "fireTowerIcon"  		 -> new Sprite(new Texture("fireTowerIcon.png")),
     "researchCenterIcon" -> new Sprite(new Texture("researchCenterIcon.png")),
     "asUp" 							 -> new Sprite(new Texture("attackSpeedIcon.png")),
-    "healthBar" 				 -> new Sprite(new Texture("healthBar.png"))
+    "healthBar" 				 -> new Sprite(new Texture("healthBar.png")),
+    "barracks" 					 -> new Sprite(new Texture("barracks.png")),
+    "infantryIcon"       -> new Sprite(new Texture("infantryIcon.png")),
+    "barracksIcon"       -> new Sprite(new Texture("barracksIcon.png"))
   )	
   val musics = Map[String, Music](
   	"background" -> Gdx.audio.newMusic(Gdx.files.internal("sounds/sndBg.mp3"))
@@ -77,7 +80,8 @@ object global {
   val sounds = Map[String, Sound](
   	"enemyDeath" -> Gdx.audio.newSound(Gdx.files.internal("sounds/sndHit.wav")),
   	"towerShoot" -> Gdx.audio.newSound(Gdx.files.internal("sounds/sndShoot.wav")),
-  	"saksDeath"  -> Gdx.audio.newSound(Gdx.files.internal("sounds/sndSaksDeath.wav"))
+  	"saksDeath"  -> Gdx.audio.newSound(Gdx.files.internal("sounds/sndSaksDeath.wav")),
+  	"infantryDeath" -> Gdx.audio.newSound(Gdx.files.internal("sounds/sndInfantryDeath.wav"))
   )
 	
 	/**
@@ -138,6 +142,11 @@ object global {
   		"cost"  -> 50,
   		"text"  -> "Upgrade the attack speed of all attack towers.",
   		"sprite"-> global.sprites("asUp")
+  	),
+  	"Infantry" -> Map[String, Any] (
+  		"cost"  -> 20,
+  		"text"  -> "Summon three (3) friendly infantry units.",
+  		"sprite" -> global.sprites("infantryIcon")
   	)
   )
  
@@ -151,6 +160,11 @@ object global {
   		"cost"    -> 25,
   		"text"    -> "A research center, that can upgrade your buildings",
   		"sprite"  -> global.sprites("researchCenterIcon")
+  	),
+  	"barracks" -> Map[String, Any] (
+  		"cost"    -> 25,
+  		"text"    -> "A barracks that can produce friendly units.",
+  		"sprite"  -> global.sprites("barracksIcon")
   	)
   	
   )

@@ -114,6 +114,7 @@ abstract class Instance() {
 			for (ins <- enemies) {
 				if (ins != this && this.coords.distanceToPoint(ins.coords) < dist) {
 					nearest = ins
+					dist = this.coords.distanceToPoint(nearest.coords)
 				}
 			}
 

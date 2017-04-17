@@ -18,6 +18,12 @@ package object Methods {
 		val dist = math.abs(max - min)
 		min + rand.nextInt(dist)
 	}
+
+	def randomRange(min: Double, max: Double) = {
+		val rand = util.Random
+		val dist = math.abs(max - min)
+		math.min(min + rand.nextDouble,max)
+	}
 	
   def choose[T](eka: T, toka: T) = {
     if (util.Random.nextInt(2) == 0) eka else toka

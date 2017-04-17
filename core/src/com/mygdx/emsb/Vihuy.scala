@@ -11,6 +11,7 @@ class Vihuy() extends EnemyUnit() {
   dmg        = 1.0
   range      = 20
   name       = "Vihuy"
+  goldGain   = 2
   
   //Normal enemies can't load the sprite from global.sprites because then the sprite couldn't be flipped depending on the direction.
   sprite   = new Sprite(new Texture("vihuy.png"))

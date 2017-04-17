@@ -21,9 +21,11 @@ abstract class Character() extends Instance() {
   	this.realSpdX = spd
   }
   
+  def setTarget() = this.target = this.instanceNearest()
+  
   def step() = {
   	
-  	this.target = this.instanceNearest()
+  	this.setTarget()
   	
   	if (this.alarms(1).time > 0) {
   		this.realSpdX = spd * 0.5
@@ -47,10 +49,11 @@ abstract class Character() extends Instance() {
   			this.sprite.flip(true, false)
   			direction = 180
   		}
-  	  
     	if (canAttack) {
-  		  this.alarms(0).time += attackSpeed
-  		  attack()
+    		if (this.alarms(0).time <= 0) {
+  		  	this.alarms(0).time += attackSpeed
+  		  	attack()
+    		}
     	} else {
     		this.move()
     	}
@@ -58,7 +61,7 @@ abstract class Character() extends Instance() {
   	
   }
 
-  def canAttack: Boolean = this.alarms(0).time == -1 && this.target.get.hitArea.isInside(new Coords(this.attackPoint, this.position.y))
+  def canAttack: Boolean = this.target.get.hitArea.isInside(new Coords(this.attackPoint, this.position.y))
   
   /**
    * This method will be called only if
@@ -76,10 +79,10 @@ abstract class Character() extends Instance() {
    *  Returns true if move was successfull, else false
    *  */
   def move() = {
-    
-  	if (place_free(this.position.x.toInt + (this.realSpdX.toInt + this.sprite.getWidth().toInt/2) * suunta, this.position.y.toInt + this.realSpdY.toInt + 5) && this.target.isDefined) {
+    //btw, ei toimi :)))
+  	if (place_free(this.position.x.toInt + (this.realSpdX.toInt + this.sprite.getWidth().toInt/2) * suunta, this.position.y.toInt + this.realSpdY.toInt) && this.target.isDefined) {
   		this.coords.x += this.realSpdX * suunta
-  		this.coords.y += (if (this.coords.y < this.target.get.coords.y) this.realSpdY else -1*this.realSpdX)
+  		this.coords.y += (if (this.coords.y < this.target.get.coords.y) this.realSpdY else -1*this.realSpdY)
   		true
   	} else {
   	  false
