@@ -21,7 +21,8 @@ abstract class Instance() {
   
   var suunta = 1 //1 = oikea, -1 = vasen
   val solid = false
-  var sprite: Sprite = new Sprite(new Texture("vihuy.png"))
+  var sprite: Sprite = global.sprites("vihuy")
+  val healthBar: Sprite = global.sprites("healthBar")
   var target: Option[Instance] = this.instanceNearest()
   var projectile: Option[Projectile] = None
   var name = "sukka mehu"
@@ -46,20 +47,20 @@ abstract class Instance() {
   for (i <- alarms) {
   	this.alarmActions += i -> placeholder
   }
-  //The alarm(0) represents attack for each instance
-  // Set the alarm(0) to attack for each instance.
-//  this.alarmActions(this.alarms(0)) = () => {
-//  	attack()
-//  	this.alarms(0).time += attackSpeed
-//  }
-  
+  //alarm 0 is for attacking
+  //alarm 1 ice effect
+  //alarm 2 poison
   
   /** Draw the instance */
   def draw(batch: SpriteBatch) = {
     val pos = new Vector3(this.coords.x.toFloat, this.coords.y.toFloat, 0)
     this.sprite.setPosition(pos.x, pos.y)
 		this.sprite.draw(batch)
-	
+		
+		val hpRatio = this.hp/this.maxHp
+		this.healthBar.setSize(this.sprite.getWidth() * hpRatio.toFloat, this.healthBar.getHeight())
+		this.healthBar.setPosition(pos.x, pos.y + this.sprite.getHeight())
+		this.healthBar.draw(batch)
   }
   
   /**
@@ -143,6 +144,7 @@ abstract class Instance() {
   	if (this.isInstanceOf[EnemyUnit]) {
   		global.score += this.asInstanceOf[EnemyUnit].scoreGain
   		global.gold  += this.asInstanceOf[EnemyUnit].goldGain
+  		this.sprite.getTexture().dispose()
   	}
 		World.instances.remove(World.instances.indexOf(this))    
   }

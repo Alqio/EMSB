@@ -32,6 +32,15 @@ abstract class Building() extends Instance(){
   def unlock(typeOf: String, str: String)
   
   def step() = {
+  	
+  	if (this.hp < this.maxHp) {
+  		this.hp += global.buildingRepairSpeed
+  		if (this.hp > this.maxHp) {
+  			this.hp = this.maxHp
+  		}
+  	}
+  	
+  	
   	/** Set target */
   	this.target = this.instanceNearest()
   	

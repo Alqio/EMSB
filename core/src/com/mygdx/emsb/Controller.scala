@@ -23,6 +23,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable
 import com.badlogic.gdx.scenes.scene2d.InputListener
 import com.badlogic.gdx.InputProcessor
+import com.badlogic.gdx.graphics.FPSLogger
 
 
 
@@ -45,11 +46,14 @@ class Controller extends ApplicationAdapter {
 	private var stage: Stage					= null
 	var skin: Skin										= null
 	var squareButton: Texture 				= _
+	var fpsLogger: FPSLogger					= null
+	var spawner: WaveController				= null
 	
 	override def create() = {
-		font = global.font
+		font 					= global.font
 		shapeRenderer = new ShapeRenderer()
-
+		fpsLogger 		= new FPSLogger()
+		spawner 			=	new WaveController()
 		//val generator: FreeTypeFontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("assets/fonts/04B_03__.TTF"))
 		
 		
@@ -69,21 +73,26 @@ class Controller extends ApplicationAdapter {
 		val mainHouse = new MainHouse()
 		mainHouse.coords = Coords(640, 200)
 		
-		var yks = new Vihuy()
-		var toka = new Vihuy()
-		var torni = new SnowTower()
-		var torniToka = new ResearchCenter()
+		//Start the waves
+		spawner.alarm(0).time = 120
+		spawner.alarm(1).time = 300
+		spawner.startWave()
 		
-		yks.coords = new Coords(120,200)
-		torni.coords = new Coords(350, 200)
-		torniToka.coords = new Coords(900, 200)
-		toka.coords = new Coords(720, 200)
+//		var yks = new Vihuy()
+//		var toka = new Vihuy()
+//		var torni = new SnowTower()
+//		var torniToka = new ResearchCenter()
+//		
+//		yks.coords = new Coords(-20,200)
+//		torni.coords = new Coords(350, 200)
+//		torniToka.coords = new Coords(900, 200)
+//		toka.coords = new Coords(750, 200)
 		
 		World.instances += mainHouse
-		World.instances += yks
-		World.instances += toka
-		World.instances += torni
-		World.instances += torniToka
+//		World.instances += yks
+//		World.instances += toka
+//		World.instances += torni
+//		World.instances += torniToka
 		
 		
 	}
@@ -124,25 +133,19 @@ class Controller extends ApplicationAdapter {
 	  Gdx.gl.glClearColor(0.5f, 0f, 0.3f, 1)
 	  Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
 	  
-	  
-	  if (selected.isDefined && selected.get.position.distanceToPoint(new Coords(Gdx.input.getX(), global.HEIGHT - Gdx.input.getY())) > 550) {
-	  	World.buttons.clear()
-	  	selected = None
-	  }
+	  fpsLogger.log()
+
 	  if (selected.isEmpty) {
 	  	global.building = None
 	  }
 	  
-	  
+	  spawner.step()
 		World.updateWorld()
 		handleInput()
 	  
 		batch.begin()
 		
-		draw()		
-		val pos = new Vector3(Gdx.input.getX(),Gdx.input.getY(), 0)
-		drawOutline("x: " + pos.x + "\ny: " + (Gdx.graphics.getHeight() - 1 - pos.y.toInt), pos.x.toInt, Gdx.graphics.getHeight() - 1 - pos.y.toInt, 1,Color.RED, font, batch)
-		
+		draw()
 		val pos2 = new Vector3(20, global.HEIGHT - 20, 0)
 		drawOutline("Score: " + global.score + "\nGold:   " + global.gold, pos2.x.toInt, pos2.y.toInt, 1, Color.RED, font, batch)
 		
@@ -168,7 +171,7 @@ class Controller extends ApplicationAdapter {
 				case Some("researchCenter") => new ResearchCenter()
 				case _ 											=> new SnowTower()
 			}
-			buildning.coords = Coords(Gdx.input.getX(), 200)
+			buildning.coords = Coords(Gdx.input.getX(), global.spawnHeight)
 			World.instances += buildning
 			global.gold -= global.buildables(global.building.get)("cost").asInstanceOf[Int]
 		}
@@ -185,13 +188,22 @@ class Controller extends ApplicationAdapter {
 				selected.get.asInstanceOf[SnowTower].upgrade(math.min(torni.get.level + 1, torni.get.maxLevel))
 			}
 		}
-		//Gdx.input.justTouched()
-		//Gdx.input.isButtonPressed(Input.Buttons.LEFT)
+		/**
+		 * Start a new wave if the previous one was finished.
+		 */
+		
+		if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+			if (spawner.finished) {
+				spawner.startWave()
+			}
+		}
+		
 		if (Gdx.input.isButtonPressed(Input.Buttons.RIGHT)) {
 			selected = None
 			global.building = None
 			World.buttons.clear()
 		}
+		
 		if (Gdx.input.justTouched() && !Gdx.input.isButtonPressed(Input.Buttons.RIGHT)) {
 			
 			/* If a button is pressed, don't change selection. 
@@ -223,7 +235,7 @@ class Controller extends ApplicationAdapter {
 					}
 					 
 				} else {
-					if (World.areaIsFree(Area(Coords(Gdx.input.getX(), 200), 
+					if (World.areaIsFree(Area(Coords(Gdx.input.getX(), global.spawnHeight), 
 							global.buildingSprite.get.getWidth().toInt, global.buildingSprite.get.getHeight().toInt))) {
 						buildNewBuilding()
 					} else {
@@ -279,5 +291,13 @@ class Controller extends ApplicationAdapter {
 	  })
 	  
 		stage.addActor(button)
+		
+		
+		
+				val pos = new Vector3(Gdx.input.getX(),Gdx.input.getY(), 0)
+		drawOutline("x: " + pos.x + "\ny: " + (Gdx.graphics.getHeight() - 1 - pos.y.toInt), pos.x.toInt, Gdx.graphics.getHeight() - 1 - pos.y.toInt, 1,Color.RED, font, batch)
+	
+		
+		
 		*/
 

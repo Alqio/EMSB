@@ -11,6 +11,10 @@ object World{
   val projectiles = ArrayBuffer[Projectile]()
 	val buttons     = ArrayBuffer[Button]()
   
+	def enemies = {
+		this.instances.filter(x => x.isInstanceOf[EnemyUnit])
+	}
+	
 	def instanceAt(koordinaatit: Coords): Option[Instance] = {
     var instance: Option[Instance] = None
 		for (i <- instances) {

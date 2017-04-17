@@ -16,11 +16,11 @@ class SnowTower() extends Building() {
   
   
   maxLevel    = this.upgrades("names").size
-  maxHp       = 100.0 * global.buildingHpMultiplier
+  maxHp       = 20.0 * global.buildingHpMultiplier
   hp          = maxHp
   dmg         = 1.0   * global.buildingDmgMultiplier
   range       = 250
-  attackSpeed = 5
+  attackSpeed = 55
   sprite      = global.sprites("snowTower")
   name				= "Snow tower"
   
@@ -29,6 +29,7 @@ class SnowTower() extends Building() {
   	"IceTower"     -> new UnlockButton(this, "Ice",  Area(Coords(484, 64), UpgradeButton.width, UpgradeButton.height), true),
   	"PoisonTower"  -> new UnlockButton(this, "Poison",  Area(Coords(548, 64), UpgradeButton.width, UpgradeButton.height), true)
   )
+  
   
   /**
    * This method will be called only if
@@ -39,7 +40,12 @@ class SnowTower() extends Building() {
    * alarm(0) will be set to attack speed and then this method will be called
    */
   def attack() = {
-		var i = choose(new Snowball1(this), new Snowball2(this))
+		var i = level match {
+			case 0 => new Snowball1(this)
+			case 1 => new Snowball2(this)
+			case 2 => new Snowball3(this)
+			case 3 => new Snowball4(this)
+		}
 		World.projectiles += i
   }
   

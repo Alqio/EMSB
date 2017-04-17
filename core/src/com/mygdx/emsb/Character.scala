@@ -19,16 +19,36 @@ abstract class Character() extends Instance() {
   
   var direction = 0 // 0 - 360
   
+  this.alarmActions(this.alarms(1)) = () => {
+  	this.realSpdX = spd
+  }
   
   def step() = {
   	
   	this.target = this.instanceNearest()
   	
+  	if (this.alarms(1).time > 0) {
+  		this.realSpdX = spd * 0.5
+  	}
+  	if (this.alarms(2).time > 0) {
+  		this.hp -= global.poisonDamage
+  		if (this.hp <= 0)
+  			die()
+  	}
+  	
   	if (target.isDefined) {
   	  
   	  if (this.coords.x < this.target.get.position.x) suunta = 1 else suunta = -1
-  		this.attackPoint = this.position.x + suunta * range  
-  	  //this.sprite.flip(intToBool(suunta), false)
+  		this.attackPoint = this.position.x + suunta * range
+  		
+  		
+  		if (suunta == 1 && direction != 0 ) {
+  	  	this.sprite.flip(true, false)
+  	  	direction = 0
+  		} else if (suunta == -1 && direction != 180) {
+  			this.sprite.flip(true, false)
+  			direction = 180
+  		}
   	  
     	if (canAttack) {
   		  this.alarms(0).time += attackSpeed
@@ -37,6 +57,7 @@ abstract class Character() extends Instance() {
     		this.move()
     	}
   	}
+  	
   }
 
   def canAttack: Boolean = this.alarms(0).time == -1 && this.target.get.hitArea.isInside(new Coords(this.attackPoint, this.position.y))
@@ -68,8 +89,9 @@ abstract class Character() extends Instance() {
   }
   
   
-  /** checks if the place in coordinates (x,y) is free (it doesn't contain a SOLID object)
-   *  **/
+  /**
+   *  checks if the place in coordinates (x,y) is free (it doesn't contain a SOLID object)
+   *  */
   def place_free(x: Int, y: Int): Boolean = {
   	val newCoords = new Coords(x, y)
   	

@@ -17,8 +17,11 @@ object global {
   var buildingHpLevel       = 1
   var buildingASMultiplier  = 0.8
   var buildingASLevel  			= 1
+  var buildingRepairSpeed   = 0.001
+  var buildingRepairLevel	  = 1
   
-  
+  val spawnHeight						= 200
+  val poisonDamage					= 0.02
   var score                 = 0
   var gold                  = 10000
   var playerName            = "Sukka Mehuttaja"
@@ -40,7 +43,7 @@ object global {
     "fireTower"     	   -> new Sprite(new Texture("fireTower.png")),
     "iceTower"       	   -> new Sprite(new Texture("iceTower.png")),
     "poisonTower"    	   -> new Sprite(new Texture("poisonTower.png")),
-    "snowBall1"     	   -> new Sprite(new Texture("snowBall1.png")),
+    "snowBall1"     	   -> new Sprite(new Texture("testi.png")),
     "snowBall2"    		   -> new Sprite(new Texture("snowBall2.png")),
     "squareButton" 	     -> new Sprite(new Texture("squareButtonEmpty.png")),
     "hpUp"  						 -> new Sprite(new Texture("hpUp.png")),
@@ -50,7 +53,8 @@ object global {
     "poisonTowerIcon"  	 -> new Sprite(new Texture("poisonTowerIcon.png")),
     "fireTowerIcon"  		 -> new Sprite(new Texture("fireTowerIcon.png")),
     "researchCenterIcon" -> new Sprite(new Texture("researchCenterIcon.png")),
-    "asUp" 							 -> new Sprite(new Texture("attackSpeedIcon.png"))
+    "asUp" 							 -> new Sprite(new Texture("attackSpeedIcon.png")),
+    "healthBar" 				 -> new Sprite(new Texture("healthBar.png"))
   )	
 	
 	/**

@@ -16,16 +16,23 @@ import math._
  
 class Projectile(val creator: Instance, val spritePath: String) {
 	
-  val sprite = global.sprites(spritePath)
+	//global.sprites(spritePath)
+	
+  val sprite = new Sprite(new Texture(spritePath))
+  //sprite.set(global.sprites("snowBall1"))
+  this.sprite.setOriginCenter()
   var spd = 4.0
   val dmg = this.creator.dmg
+  var alpha: Double = 0
+  var typeOf = "normal"
   
   var coords = new Coords(this.creator.position.x, this.creator.position.y)
   //println(coords)
   var target = this.creator.target
   
   def move() = {
-  	var alpha = atan(abs(this.target.get.position.y - this.coords.y)/abs(this.target.get.position.x - this.coords.x))
+  	alpha = atan(abs(this.target.get.position.y - this.coords.y)/abs(this.target.get.position.x - this.coords.x))
+  	//println(this + ": " + alpha* 360 / math.Pi)
   	this.coords.x += (if (this.coords.x < this.target.get.position.x) cos(alpha)* spd else -1 * cos(alpha) * spd)
   	this.coords.y += (if (this.coords.y <= this.target.get.position.y) sin(alpha) * spd else -1 * sin(alpha) * spd)
   	
@@ -37,7 +44,11 @@ class Projectile(val creator: Instance, val spritePath: String) {
   def draw(batch: SpriteBatch) = {
     
     val pos = new Vector3(this.coords.x.toFloat, this.coords.y.toFloat, 0)
-    
+    if (this.target.isDefined && this.coords.x > this.target.get.position.x)
+    	this.sprite.setRotation((alpha* 360 / math.Pi).toFloat)
+    else 
+    	this.sprite.setRotation((alpha* 360 / math.Pi * -1).toFloat)
+   // this.sprite.rotate((alpha* 360 / math.Pi).toFloat)
     this.sprite.setPosition(pos.x, pos.y)
 		this.sprite.draw(batch)
   }
@@ -53,28 +64,43 @@ class Projectile(val creator: Instance, val spritePath: String) {
 	  	if (World.projectiles.contains(this) && this.target.isDefined && World.instances.contains(this.target.get)) {
 	  		this.move()
 	  		if (this.target.get.isHitBy(this)) {
-	  			target.get.takeDmg(dmg)
-	  			World.projectiles.remove(World.projectiles.indexOf(this))
 	  			
+	  			target.get.takeDmg(dmg)
+	  			if (this.typeOf == "ice") {
+	  				target.get.alarms(1).time = 60
+	  			} else if (this.typeOf == "poison") {
+	  				target.get.alarms(2).time = 60
+	  			}
+	  			World.projectiles.remove(World.projectiles.indexOf(this))
+	  			this.sprite.getTexture().dispose()
 	  		}
 	  	}
   	}
   }
   
-  override def toString = "Projectile at: " + this.coords.toString  + ",    Index: " + World.projectiles.indexOf(this)
+  override def toString = "Projectile at: " + this.coords.toString
   
   
 }
 
-case class Snowball1(override val creator: Instance) extends Projectile(creator, "snowBall1") {
-  spd = 5
-  
-}
-case class Snowball2(override val creator: Instance) extends Projectile(creator, "snowBall2") {
+case class Snowball1(override val creator: Instance) extends Projectile(creator, "snowBall1.png") {
   spd = 8
   
 }
-
+case class Snowball2(override val creator: Instance) extends Projectile(creator, "snowBall4.png") {
+  spd = 16
+  typeOf = "ice"
+}
+case class Snowball3(override val creator: Instance) extends Projectile(creator, "snowBall3.png") {
+  spd = 8
+  typeOf = "fire"
+  
+}
+case class Snowball4(override val creator: Instance) extends Projectile(creator, "snowBall6.png") {
+  spd = 10
+  typeOf = "poison"
+  
+}
 /**
 image_angle
 spd

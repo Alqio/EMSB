@@ -4,15 +4,16 @@ import com.badlogic.gdx.graphics.g2d.Sprite
 
 class Vihuy() extends EnemyUnit() {
   
-	maxHp      = 10
+	maxHp      = 1
 	hp         = maxHp
-  spd        = 1.0
+  spd        = 1
   realSpdX   = spd
   dmg        = 1.0
   range      = 20
   name       = "Vihuy"
-
-  sprite = global.sprites("vihuy")
-  sprite.setSize(32f, 32f)
+  
+  //Normal enemies can't load the sprite from global.sprites because then the sprite couldn't be flipped depending on the direction.
+  sprite = new Sprite(new Texture("vihuy.png"))
+	//global.sprites("vihuy")
 
 }

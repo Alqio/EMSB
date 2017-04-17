@@ -4,21 +4,21 @@
 Unit tests here mby?
 
 - sounds
-- hp bar
-- upgrade valikko
+- hp bar DONE
+- upgrade valikko DONE
 - spawner
 - waves
 - menu
-- tower upgrades (ei voi valita vielä 6.4.17)
+- tower upgrades (ei voi valita vielä 6.4.17) DONE
 	- fire
 	- ice
 	- poison
 - camera (siirrä ne hitto vaa manuaalisesti, valitse kaikki Worldin jutut ja siirrät niitä)
 - damagen teko vihuille (se on ny jotenki alarmeissa ja stepissä, korjaa ku ehit :) SnowTower tekee sen aika jännästi atm, kokeile muokata molempiin joku yhteinen tapa) DONE
 - vihujen kuoleminen DONE 
-- fiksumpi buttonien luonti
-- tornien hp:n parantuminen 
-- Lisää vaihtoehtoja researchCenteriin
+- fiksumpi buttonien luonti DONE
+- tornien hp:n parantuminen DONE
+- Lisää vaihtoehtoja researchCenteriin DONE PUOLIKS
 	- esim healausnopeus
 	- attack speed
 
