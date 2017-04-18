@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite
 
 class Saks() extends EnemyUnit() {
   
-	maxHp      = 5
+	maxHp      = 3
 	hp         = maxHp
   spd        = 0.6
   realSpdX   = spd

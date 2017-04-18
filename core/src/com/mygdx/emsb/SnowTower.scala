@@ -9,8 +9,8 @@ class SnowTower() extends Building() {
   
   
   upgrades += "names"  -> Array("Normal", "Ice", "Fire", "Poison")
-  upgrades += "damage" -> Array(1.0, 3.0, 4.5, 3.0)
-  upgrades += "maxHp"  -> Array(100, 150, 150, 150)
+  upgrades += "damage" -> Array(1.0, 3.0, 4.5, 1.5)
+  upgrades += "maxHp"  -> Array(20, 50, 40, 45)
   upgrades += "sprite" -> Array(global.sprites("snowTower"), global.sprites("iceTower"), global.sprites("fireTower"), global.sprites("poisonTower"))
   
   
@@ -58,6 +58,7 @@ class SnowTower() extends Building() {
 	  		case "Poison" => this.upgrade(3)
 	  		case _ 				=> println("Unknown upgrade type: " + str)
 	  	}
+	  	global.gold -= global.unlocks(str)("buildCost").asInstanceOf[Int]
 	  	World.buttons.clear()
   	}
   }
@@ -94,8 +95,7 @@ class SnowTower() extends Building() {
 	        case _ =>
 	      }
     	}
-	    
-    this.level = level
+   	  this.level = level
   	}
   }  
   

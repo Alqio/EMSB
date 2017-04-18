@@ -27,6 +27,7 @@ object World{
 	}
 	
 	def areaIsFree(area: Area): Boolean = {
+		//val solidit = World.instances.filter(x => x.solid)
 		World.instances.filter(x => area.isInside(x.hitArea) || x.hitArea.isInside(area)).size == 0
 	}
 	

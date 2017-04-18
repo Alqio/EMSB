@@ -4,7 +4,7 @@ class ResearchCenter() extends Building() {
   
 	dmg               = 0
   name              = "Research center"
-  hp                = 150
+  hp                = 50
   maxHp             = hp
   sprite            = global.sprites("researchCenter")
   maxLevel          = 1 

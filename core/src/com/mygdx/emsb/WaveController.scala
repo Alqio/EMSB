@@ -15,10 +15,11 @@ class WaveController {
   var enemies = Array("sukka")
   
   waves += new Wave(0, Array("-"), 10)
-  waves += new Wave(1, Array("vihuy", "cannibal"), 30)
+  waves += new Wave(1, Array("vihuy"), 30)
   waves += new Wave(2, Array("vihuy", "saks"), 60)
-  waves += new Wave(3, Array("vihuy", "saks", "magi"), 20)
-  
+  waves += new Wave(3, Array("vihuy", "saks", "cannibal"), 20)
+  waves += new Wave(3, Array("saks", "beafire", "magi"), 20)
+  waves += new Wave(3, Array("vihuy", "saks", "cannibal", "beafire", "magi"), 20)
   val alarm = Array.fill(12)(new WaveAlarm(0))
   
   def startWave() = {
@@ -37,6 +38,7 @@ class WaveController {
   		case "saks" 		=> new Saks()
   		case "magi" 	  => new Magi()
   		case "cannibal" => new Cannibal()
+  		case "beafire"  => new Beafire()
   		case _ 					=> new Vihuy()
   	}
   	enemy.coords = new Coords(choose(-30 + irandomRange(-30, 0), global.WIDTH + 30 + irandomRange(0, 30)), global.spawnHeight)

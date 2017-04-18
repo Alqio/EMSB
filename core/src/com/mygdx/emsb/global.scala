@@ -26,7 +26,7 @@ object global {
   var buildingRepairLevel	  = 1
   
   val spawnHeight						= 200
-  val poisonDamage					= 0.02
+  val poisonDamage					= 0.04
   var score                 = 0
   var gold                  = 120
   var playerName            = "Sukka Mehuttaja"
@@ -102,21 +102,21 @@ object global {
 		),
     "Ice"   -> Map[String, Any](
 			"unlocked"  -> false,
-			"cost"      -> 200,
+			"cost"      -> 100,
 			"text"  	  -> "An ice tower, that slows enemies",
 			"sprite"    -> global.sprites("iceTowerIcon"),
 			"buildCost" -> 60
 		),
     "Fire"    -> Map[String, Any](
 			"unlocked"  -> false,
-			"cost"      -> 200,
+			"cost"      -> 100,
 			"text"		  -> "A fire tower that uses fire projectiles to deal extra damage",
 			"sprite"    -> global.sprites("fireTowerIcon"),
 			"buildCost" -> 60
 		),
     "Poison" -> Map[String, Any](
 			"unlocked"  -> false,
-			"cost"      -> 200,
+			"cost"      -> 100,
 			"text" 		  -> "A poison tower that deals damage over time",
 			"sprite"    -> global.sprites("poisonTowerIcon"),
 			"buildCost" -> 60

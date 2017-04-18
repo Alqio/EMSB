@@ -22,7 +22,11 @@ class Magi() extends EnemyUnit() {
 	//global.sprites("vihuy")
 	
 	override def attack() = {
-  	var i = new Fireball(this)
-  	World.projectiles += i
+		if (this.coords.distanceToPoint(target.get.coords) > 20) {
+  		var i = new Fireball(this)
+  		World.projectiles += i
+		} else {
+			target.get.takeDmg(dmg/4)
+		}
   }
 }
