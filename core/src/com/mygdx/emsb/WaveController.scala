@@ -15,7 +15,7 @@ class WaveController {
   var enemies = Array("sukka")
   
   waves += new Wave(0, Array("-"), 10)
-  waves += new Wave(1, Array("vihuy"), 30)
+  waves += new Wave(1, Array("vihuy", "cannibal"), 30)
   waves += new Wave(2, Array("vihuy", "saks"), 60)
   waves += new Wave(3, Array("vihuy", "saks", "magi"), 20)
   
@@ -33,10 +33,11 @@ class WaveController {
   
   def spawn() = {
   	val enemy: Instance = enemies(rand.nextInt(enemies.size)) match {
-  		case "vihuy"  => new Vihuy()
-  		case "saks" 	=> new Saks()
-  		case "magi"   => new Magi()
-  		case _ 				=> new Vihuy()
+  		case "vihuy"	  => new Vihuy()
+  		case "saks" 		=> new Saks()
+  		case "magi" 	  => new Magi()
+  		case "cannibal" => new Cannibal()
+  		case _ 					=> new Vihuy()
   	}
   	enemy.coords = new Coords(choose(-30 + irandomRange(-30, 0), global.WIDTH + 30 + irandomRange(0, 30)), global.spawnHeight)
   	enemyCount += 1

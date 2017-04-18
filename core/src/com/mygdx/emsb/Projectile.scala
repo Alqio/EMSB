@@ -22,12 +22,12 @@ class Projectile(val creator: Instance, val spritePath: String) {
   //sprite.set(global.sprites("snowBall1"))
   this.sprite.setOriginCenter()
   var spd = 4.0
+  var rot = 0
   val dmg = this.creator.dmg
   var alpha: Double = 0
   var typeOf = "normal"
   
   var coords = new Coords(this.creator.position.x, this.creator.position.y)
-  //println(coords)
   var target = this.creator.target
   
   def move() = {
@@ -44,10 +44,14 @@ class Projectile(val creator: Instance, val spritePath: String) {
   def draw(batch: SpriteBatch) = {
     
     val pos = new Vector3(this.coords.x.toFloat, this.coords.y.toFloat, 0)
-    if (this.target.isDefined && this.coords.x > this.target.get.position.x)
-    	this.sprite.setRotation((alpha* 360 / math.Pi).toFloat)
-    else 
-    	this.sprite.setRotation((alpha* 360 / math.Pi * -1).toFloat)
+    if (rot == 0) {
+	    if (this.target.isDefined && this.coords.x > this.target.get.position.x)
+	    	this.sprite.setRotation((alpha* 360 / math.Pi).toFloat)
+	    else 
+	    	this.sprite.setRotation((alpha* 360 / math.Pi * -1).toFloat)
+    } else {
+    	this.sprite.rotate(rot)
+    }
    // this.sprite.rotate((alpha* 360 / math.Pi).toFloat)
     this.sprite.setPosition(pos.x, pos.y)
 		this.sprite.draw(batch)
@@ -99,6 +103,11 @@ case class Snowball4(override val creator: Instance) extends Projectile(creator,
 case class Fireball(override val creator: Instance) extends Projectile(creator, "fireBall.png") {
 	spd = 10
 	typeOf = "enemyFireball"
+}
+case class Bone(override val creator: Instance) extends Projectile(creator, "bone.png") {
+	spd = 15
+	typeOf = "bone"
+	rot = 30
 }
 
 /**
