@@ -15,7 +15,7 @@ class WaveController {
   var enemies = Array("sukka")
   
   waves += new Wave(0, Array("-"), 10)
-  waves += new Wave(1, Array("vihuy"), 30)
+  waves += new Wave(1, Array("bungo"), 30)
   waves += new Wave(2, Array("vihuy", "saks"), 60)
   waves += new Wave(3, Array("vihuy", "saks", "cannibal"), 20)
   waves += new Wave(3, Array("saks", "beafire", "magi"), 20)
@@ -39,6 +39,7 @@ class WaveController {
   		case "magi" 	  => new Magi()
   		case "cannibal" => new Cannibal()
   		case "beafire"  => new Beafire()
+  		case "bungo"    => new Bungo()
   		case _ 					=> new Vihuy()
   	}
   	enemy.coords = new Coords(choose(-30 + irandomRange(-30, 0), global.WIDTH + 30 + irandomRange(0, 30)), global.spawnHeight)

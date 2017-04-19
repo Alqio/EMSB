@@ -78,10 +78,11 @@ object global {
   )
   
   val sounds = Map[String, Sound](
-  	"enemyDeath" -> Gdx.audio.newSound(Gdx.files.internal("sounds/sndHit.wav")),
-  	"towerShoot" -> Gdx.audio.newSound(Gdx.files.internal("sounds/sndShoot.wav")),
-  	"saksDeath"  -> Gdx.audio.newSound(Gdx.files.internal("sounds/sndSaksDeath.wav")),
-  	"infantryDeath" -> Gdx.audio.newSound(Gdx.files.internal("sounds/sndInfantryDeath.wav"))
+  	"enemyDeath"    -> Gdx.audio.newSound(Gdx.files.internal("sounds/sndHit.wav")),
+  	"towerShoot"    -> Gdx.audio.newSound(Gdx.files.internal("sounds/sndShoot.wav")),
+  	"saksDeath"     -> Gdx.audio.newSound(Gdx.files.internal("sounds/sndSaksDeath.wav")),
+  	"infantryDeath" -> Gdx.audio.newSound(Gdx.files.internal("sounds/sndInfantryDeath.wav")),
+  	"bungoDeath"    -> Gdx.audio.newSound(Gdx.files.internal("sounds/sndBungoDeath.wav"))
   )
 	
 	/**
