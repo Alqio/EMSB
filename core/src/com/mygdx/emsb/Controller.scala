@@ -30,6 +30,7 @@ import com.badlogic.gdx.audio._
 
 
 import collection.mutable.Buffer
+import com.mygdx.instances._
 
 class Controller extends ApplicationAdapter {
 	var batch: SpriteBatch            = _
@@ -53,6 +54,7 @@ class Controller extends ApplicationAdapter {
 		fpsLogger 		= new FPSLogger()
 		spawner 			=	new WaveController()
 		camera 				= new Camera()
+		global.camera = camera
 		
 		tausta = new Sprite(new Texture(Gdx.files.internal("background.png")))
 		tausta.setPosition(0,0)
@@ -88,9 +90,12 @@ class Controller extends ApplicationAdapter {
 	  tausta.draw(batch)
 	  mountains.draw(batch)
 	  floor.draw(batch)
+	  
 		World.instances.foreach(_.draw(batch))
 		World.projectiles.foreach(_.draw(batch))
 		World.buttons.foreach(_.draw(batch))
+		
+		
 		
 		//World.instances.foreach(println) 
 		if (global.building.isDefined) {
@@ -132,12 +137,23 @@ class Controller extends ApplicationAdapter {
 	  
 		batch.begin()
 		
+		global.mouseX = Gdx.input.getX() + camera.coords.x.toInt
+		global.mouseY = 720 - Gdx.input.getY()+ camera.coords.y.toInt
+		
+		global.mouseViewX = Gdx.input.getX()
+		global.mouseViewY = 720 - Gdx.input.getY()
+		
 		draw()
+		
 		val pos2 = new Vector3(20, global.HEIGHT - 20, 0)
 		global.drawOutline("Score: " + global.score + "\nGold:   " + global.gold, pos2.x.toInt, pos2.y.toInt, 1, Color.RED, font, batch)
-		val pos3 = new Vector3(Gdx.input.getX(), 720 - Gdx.input.getY(), 0)
-	  global.drawOutline("x: " + pos3.x + "\ny: " + pos3.y, pos3.x.toInt, pos3.y.toInt, 1, Color.RED, font, batch)
 		
+		//val pos3 = new Vector3(Gdx.input.getX(), 720 - Gdx.input.getY(), 0)
+		val pos3 = new Vector3(global.mouseX, global.mouseY, 0)
+	  val drawPos = new Vector3(global.mouseViewX, global.mouseViewY,0)
+	  global.drawOutline("WorldX: " + pos3.x + "\nWorldY: " + pos3.y + "\nView X: " + drawPos.x + "\nView Y: " + drawPos.y, drawPos.x.toInt, drawPos.y.toInt, 1, Color.RED, font, batch)
+		
+	  
 		if (spawner.finished) {
 			val pos = new Vector3(520, 360, 0)
 			global.drawOutline("Press 'SPACE' to continue", pos.x.toInt, pos.y.toInt, 1, Color.WHITE, font, batch)
@@ -169,6 +185,7 @@ class Controller extends ApplicationAdapter {
 				case Some("snowTower")      => new SnowTower()
 				case Some("researchCenter") => new ResearchCenter()
 				case Some("barracks")       => new Barracks()
+				case Some("wall")         	=> new Wall()
 				case _ 											=> new SnowTower()
 			}
 			buildning.coords = Coords(Gdx.input.getX(), global.spawnHeight)

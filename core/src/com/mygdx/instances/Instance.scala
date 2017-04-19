@@ -1,15 +1,17 @@
-package com.mygdx.emsb
+package com.mygdx.instances
 
 import com.badlogic.gdx.graphics.g2d.Sprite
-import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
-import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.math.Vector3
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType
 import com.badlogic.gdx.audio._
-
 import scala.collection.mutable.Map
+import com.mygdx.emsb.Alarm
+import com.mygdx.emsb.Area
+import com.mygdx.emsb.Coords
+import com.mygdx.emsb.Projectile
+import com.mygdx.emsb.World
+import com.mygdx.emsb.global
+
 
 /**
  * @author alkiok1
@@ -57,12 +59,12 @@ abstract class Instance() {
 	/** Draw the instance */
 	def draw(batch: SpriteBatch) = {
 		val pos = new Vector3(this.coords.x.toFloat, this.coords.y.toFloat, 0)
-		this.sprite.setPosition(pos.x, pos.y)
+		this.sprite.setPosition(pos.x - global.camera.coords.x.toFloat, pos.y)
 		this.sprite.draw(batch)
-
+		
 		val hpRatio = this.hp / this.maxHp
 		this.healthBar.setSize(this.sprite.getWidth() * hpRatio.toFloat, this.healthBar.getHeight())
-		this.healthBar.setPosition(pos.x, pos.y + this.sprite.getHeight())
+		this.healthBar.setPosition(pos.x - global.camera.coords.x.toFloat, pos.y + this.sprite.getHeight())
 		this.healthBar.draw(batch)
 	}
 

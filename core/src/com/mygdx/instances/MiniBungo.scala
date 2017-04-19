@@ -1,6 +1,9 @@
-package com.mygdx.emsb
+package com.mygdx.instances
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.Sprite
+
+import com.mygdx.emsb.global
+import com.mygdx.emsb.World
 
 class MiniBungo() extends EnemyUnit() {
   
@@ -8,8 +11,8 @@ class MiniBungo() extends EnemyUnit() {
 	hp         = maxHp
   spd        = 2.5
   realSpdX   = spd
-  dmg        = 1.0
-  range      = 20
+  dmg        = 0.5
+  range      = 10
   name       = "Mini bungo"
   goldGain   = 1
   
@@ -17,5 +20,16 @@ class MiniBungo() extends EnemyUnit() {
   sprite   = new Sprite(new Texture("miniBungo.png"))
 	deathSound = Some(global.sounds("bungoDeath"))
 	
+	override def setTarget() = {
+		val j = World.instances.filter(x => x.isInstanceOf[MainHouse])
+		if (j.size != 0)
+			target = Some(j.last)
+		else 
+			target = None
+	}
+	override def move() = {
+  	this.coords.x += this.realSpdX * suunta
+  	true
+	}
 	
 }

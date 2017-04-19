@@ -14,16 +14,15 @@ import com.badlogic.gdx.math.MathUtils
 class Camera {
 	val WIDTH = 2560
 	val HEIGHT = 720
-	var movSpeed = 2
-
+	var movSpeed = 4
+	var coords = Coords(0,0)
+	
 	def move() = {
 		if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-			World.instances.foreach(i => i.coords.x -= movSpeed)
-			World.projectiles.foreach(_.coords.x -= movSpeed)
+			coords.x -= movSpeed
 		}
 		if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-			World.instances.foreach(i => i.coords.x += movSpeed)
-			World.projectiles.foreach(_.coords.x += movSpeed)
+			coords.x += movSpeed
 		}
 	}
 

@@ -1,7 +1,7 @@
-package com.mygdx.emsb
+package com.mygdx.instances
 
-import com.badlogic.gdx.graphics.g2d.Sprite
 import collection.mutable.Map
+import com.mygdx.emsb.global
 
 abstract class Building() extends Instance(){
   override val solid = true

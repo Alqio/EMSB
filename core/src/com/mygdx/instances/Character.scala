@@ -1,6 +1,10 @@
-package com.mygdx.emsb
+package com.mygdx.instances
 
 import Methods._
+
+import com.mygdx.emsb.Coords
+import com.mygdx.emsb.World
+import com.mygdx.emsb.global
 
 /**
  * @author alkiok1

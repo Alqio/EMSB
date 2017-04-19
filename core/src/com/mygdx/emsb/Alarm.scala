@@ -1,5 +1,7 @@
 package com.mygdx.emsb
 
+import com.mygdx.instances.Instance
+
 /**
  * @author alkiok1
  */

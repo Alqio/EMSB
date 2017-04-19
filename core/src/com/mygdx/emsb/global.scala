@@ -17,13 +17,13 @@ import collection.mutable.Map
 object global {
   
   var buildingDmgMultiplier = 1.2
-  var buildingDmgLevel      = 1
+  var buildingDmgLevel      = 0
   var buildingHpMultiplier  = 1.2
-  var buildingHpLevel       = 1
+  var buildingHpLevel       = 0
   var buildingASMultiplier  = 0.8
-  var buildingASLevel  			= 1
+  var buildingASLevel  			= 0
   var buildingRepairSpeed   = 0.001
-  var buildingRepairLevel	  = 1
+  var buildingRepairLevel	  = 0
   
   val spawnHeight						= 200
   val poisonDamage					= 0.04
@@ -34,6 +34,12 @@ object global {
 	val HEIGHT                = 720  
   var building: Option[String] = None
   var buildingSprite: Option[Sprite] = None
+  
+  var camera: Camera 				= null
+  var mouseX								= 0
+  var mouseY								= 0
+  var mouseViewX						= 0
+  var mouseViewY						= 0
   
   //Create fonts
 	val generator: FreeTypeFontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/04B_03__.TTF"))
@@ -71,7 +77,9 @@ object global {
     "healthBar" 				 -> new Sprite(new Texture("healthBar.png")),
     "barracks" 					 -> new Sprite(new Texture("barracks.png")),
     "infantryIcon"       -> new Sprite(new Texture("infantryIcon.png")),
-    "barracksIcon"       -> new Sprite(new Texture("barracksIcon.png"))
+    "barracksIcon"       -> new Sprite(new Texture("barracksIcon.png")),
+    "wallIcon"       		 -> new Sprite(new Texture("wallIcon.png")),
+    "wall"    					 -> new Sprite(new Texture("wall.png"))
   )	
   val musics = Map[String, Music](
   	"background" -> Gdx.audio.newMusic(Gdx.files.internal("sounds/sndBg.mp3"))
@@ -166,15 +174,24 @@ object global {
   		"cost"    -> 25,
   		"text"    -> "A barracks that can produce friendly units.",
   		"sprite"  -> global.sprites("barracksIcon")
+  	),
+  	"wall" -> Map[String, Any] (
+  		"cost"    -> 30,
+  		"text"    -> "A wall that blocks enemies.",
+  		"sprite"  -> global.sprites("wallIcon")
   	)
   	
   )
+  
+  /**
+   * Update the unlocked list. (actually remake it)
+   */
   def updateUnlocked() = {
   	unlocked = (Array(0,1,2,3) zip unlocks.values.map(x => x("unlocked").asInstanceOf[Boolean])).toMap
   }
   
   var unlocked = (Array(0,1,2,3) zip unlocks.values.map(x => x("unlocked").asInstanceOf[Boolean])).toMap
-  println(unlocked)  
+  //println(unlocked)  
   
   /**
    * Draw a text with an outline

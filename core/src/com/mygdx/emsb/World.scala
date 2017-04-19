@@ -1,6 +1,8 @@
 package com.mygdx.emsb
 
 import collection.mutable.ArrayBuffer
+import com.mygdx.instances.Instance
+import com.mygdx.instances.EnemyUnit
 
 /**
  * @author alkiok1

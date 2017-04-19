@@ -1,9 +1,11 @@
-package com.mygdx.emsb
-import com.badlogic.gdx.graphics.Texture
+package com.mygdx.instances
+
 import com.badlogic.gdx.graphics.g2d.Sprite
 import collection.mutable.Map
-
 import Methods._
+import com.mygdx.emsb._
+import com.mygdx.emsb.World
+import com.mygdx.emsb.global
 
 class SnowTower() extends Building() {
   
@@ -16,9 +18,9 @@ class SnowTower() extends Building() {
   
   
   maxLevel    = this.upgrades("names").size
-  maxHp       = 20.0 * global.buildingHpMultiplier
+  maxHp       = 20.0 * math.pow(global.buildingHpMultiplier,global.buildingHpLevel)
   hp          = maxHp
-  dmg         = 1.0   * global.buildingDmgMultiplier
+  dmg         = 1.0  * math.pow(global.buildingDmgMultiplier, global.buildingDmgLevel)
   range       = 250
   attackSpeed = 55
   sprite      = global.sprites("snowTower")

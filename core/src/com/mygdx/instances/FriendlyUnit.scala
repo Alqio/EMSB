@@ -1,4 +1,4 @@
-package com.mygdx.emsb
+package com.mygdx.instances
 
 class FriendlyUnit extends Character{
   override val side = "friendly"

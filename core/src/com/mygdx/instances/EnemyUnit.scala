@@ -1,4 +1,5 @@
-package com.mygdx.emsb
+package com.mygdx.instances
+
 /**
  * @author alkiok1
  */

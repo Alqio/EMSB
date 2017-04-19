@@ -1,10 +1,19 @@
-package com.mygdx.emsb
+package com.mygdx.instances
+
+
+import com.mygdx.emsb.BarracksButton
+import com.mygdx.emsb.Button
+import com.mygdx.emsb.Coords
+import com.mygdx.emsb.UpgradeButton
+import com.mygdx.emsb.World
+import com.mygdx.emsb.global
+import com.mygdx.emsb.Area
 
 class Barracks() extends Building(){
 	
 	dmg               = 0
   name              = "Barracks"
-  hp                = 100
+  hp                = 100 * math.pow(global.buildingHpMultiplier,global.buildingHpLevel)
   maxHp             = hp
   sprite            = global.sprites("barracks")
   maxLevel          = 1 

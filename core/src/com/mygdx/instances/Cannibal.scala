@@ -1,7 +1,10 @@
-package com.mygdx.emsb
+package com.mygdx.instances
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.Sprite
 import Methods.randomRange
+import com.mygdx.emsb.global
+import com.mygdx.emsb.World
+import com.mygdx.emsb.Bone
 
 class Cannibal() extends EnemyUnit(){
   

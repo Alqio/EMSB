@@ -1,10 +1,18 @@
-package com.mygdx.emsb
+package com.mygdx.instances
+
+import com.mygdx.emsb.Button
+import com.mygdx.emsb.UnlockButton
+import com.mygdx.emsb.UpgradeButton
+import com.mygdx.emsb.World
+import com.mygdx.emsb.global
+import com.mygdx.emsb.Coords
+import com.mygdx.emsb.Area
 
 class ResearchCenter() extends Building() {
   
 	dmg               = 0
   name              = "Research center"
-  hp                = 50
+  hp                = 50 * math.pow(global.buildingHpMultiplier,global.buildingHpLevel)
   maxHp             = hp
   sprite            = global.sprites("researchCenter")
   maxLevel          = 1 

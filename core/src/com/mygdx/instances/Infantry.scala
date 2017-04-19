@@ -1,6 +1,8 @@
-package com.mygdx.emsb
+package com.mygdx.instances
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.Sprite
+import com.mygdx.emsb.global
+
 
 class Infantry() extends FriendlyUnit(){
   maxHp      = 1

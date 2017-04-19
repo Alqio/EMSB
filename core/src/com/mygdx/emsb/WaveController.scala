@@ -2,6 +2,14 @@ package com.mygdx.emsb
 
 import collection.mutable.Buffer
 import Methods._
+import com.mygdx.instances.Vihuy
+import com.mygdx.instances.Instance
+import com.mygdx.instances.Bungo
+import com.mygdx.instances.Cannibal
+import com.mygdx.instances.Beafire
+import com.mygdx.instances.Magi
+import com.mygdx.instances.Saks
+
 /**
  * @author alkiok1
  */
@@ -15,11 +23,13 @@ class WaveController {
   var enemies = Array("sukka")
   
   waves += new Wave(0, Array("-"), 10)
-  waves += new Wave(1, Array("bungo"), 30)
-  waves += new Wave(2, Array("vihuy", "saks"), 60)
+  waves += new Wave(1, Array("vihuy"), 30)
+  waves += new Wave(2, Array("vihuy", "vihuy", "vihuy", "saks"), 60)
   waves += new Wave(3, Array("vihuy", "saks", "cannibal"), 20)
-  waves += new Wave(3, Array("saks", "beafire", "magi"), 20)
-  waves += new Wave(3, Array("vihuy", "saks", "cannibal", "beafire", "magi"), 20)
+  waves += new Wave(4, Array("saks", "beafire", "magi"), 20)
+  waves += new Wave(5, Array("vihuy", "saks", "cannibal", "beafire", "magi"), 20)
+  waves += new Wave(6, Array("bungo"), 20)
+  
   val alarm = Array.fill(12)(new WaveAlarm(0))
   
   def startWave() = {

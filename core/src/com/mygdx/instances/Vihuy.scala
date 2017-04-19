@@ -1,21 +1,21 @@
-package com.mygdx.emsb
+package com.mygdx.instances
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.Sprite
+import com.mygdx.emsb.global
 
-class Saks() extends EnemyUnit() {
+class Vihuy() extends EnemyUnit() {
   
-	maxHp      = 3
+	maxHp      = 1
 	hp         = maxHp
-  spd        = 0.6
+  spd        = 1
   realSpdX   = spd
-  dmg        = 1.8
+  dmg        = 1.0
   range      = 20
-  name       = "Saks"
-  goldGain   = 5
-  scoreGain  = 2
+  name       = "Vihuy"
+  goldGain   = 2
   
   //Normal enemies can't load the sprite from global.sprites because then the sprite couldn't be flipped depending on the direction.
-  sprite   = new Sprite(new Texture("saks.png"))
+  sprite   = new Sprite(new Texture("vihuy.png"))
 	deathSound = Some(global.sounds("saksDeath"))
 	//global.sprites("vihuy")
 

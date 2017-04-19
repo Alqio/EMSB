@@ -9,6 +9,8 @@ import com.badlogic.gdx.math.Vector3
 
 
 import math._
+import com.mygdx.instances.Instance
+
 /**
  * @author alkiok1
  * val coords: Coords, var direction: Int, var dmg: Int, val spritePath: String, var friendly: Boolean, ctrl: Controller
@@ -53,7 +55,7 @@ class Projectile(val creator: Instance, val spritePath: String) {
     	this.sprite.rotate(rot)
     }
    // this.sprite.rotate((alpha* 360 / math.Pi).toFloat)
-    this.sprite.setPosition(pos.x, pos.y)
+    this.sprite.setPosition(pos.x - global.camera.coords.x.toFloat, pos.y)
 		this.sprite.draw(batch)
   }
   

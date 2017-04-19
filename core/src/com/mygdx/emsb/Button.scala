@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.math.Vector3
 import com.badlogic.gdx.graphics.Color
+import com.mygdx.instances.Building
+
 /**
  * @author alkiok1
  */
