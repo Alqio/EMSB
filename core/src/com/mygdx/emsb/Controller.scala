@@ -91,7 +91,7 @@ class Controller extends ApplicationAdapter {
 	  mountains.draw(batch)
 	  floor.draw(batch)
 	  
-		World.instances.foreach(_.draw(batch))
+		World.instances.foreach(x => if (x.coords.x >= camera.x - 20 && x.coords.x <= camera.x + camera.camWidth + 20) x.draw(batch))
 		World.projectiles.foreach(_.draw(batch))
 		World.buttons.foreach(_.draw(batch))
 		
@@ -172,6 +172,7 @@ class Controller extends ApplicationAdapter {
 		global.sprites.values.toVector.foreach(_.getTexture().dispose())
 		global.sounds.values.toVector.foreach(_.dispose())
 		global.musics.values.toVector.foreach(_.dispose())
+		global.font.dispose()
 		batch.dispose()
 	}
 	

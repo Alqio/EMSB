@@ -18,7 +18,7 @@ class SnowTower() extends Building() {
   
   
   maxLevel    = this.upgrades("names").size
-  maxHp       = 20.0 * math.pow(global.buildingHpMultiplier,global.buildingHpLevel)
+  maxHp       = 25.0 * math.pow(global.buildingHpMultiplier,global.buildingHpLevel)
   hp          = maxHp
   dmg         = 1.0  * math.pow(global.buildingDmgMultiplier, global.buildingDmgLevel)
   range       = 250

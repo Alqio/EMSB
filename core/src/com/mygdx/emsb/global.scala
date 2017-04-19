@@ -32,6 +32,8 @@ object global {
   var playerName            = "Sukka Mehuttaja"
 	val WIDTH                 = 1280
 	val HEIGHT                = 720  
+	val minX									= -800
+	val maxX									= WIDTH + 800
   var building: Option[String] = None
   var buildingSprite: Option[Sprite] = None
   

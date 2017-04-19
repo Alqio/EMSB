@@ -12,7 +12,7 @@ class Cannibal() extends EnemyUnit(){
 	hp          = maxHp
   spd         = 1.3
   realSpdX    = spd
-  dmg         = 12
+  dmg         = 5
   attackSpeed = (20 * randomRange(0.8,1.2)).toInt
   range       = (200 * randomRange(0.8,1.2)).toInt
   name        = "Cannibal"

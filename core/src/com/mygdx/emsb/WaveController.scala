@@ -32,6 +32,9 @@ class WaveController {
   
   val alarm = Array.fill(12)(new WaveAlarm(0))
   
+  /**
+   * Start a new wave
+   */
   def startWave() = {
   	finished = false
   	wave += 1
@@ -42,6 +45,9 @@ class WaveController {
   	alarm(1).time = math.max(300 - 10 * wave, 10)
   }
   
+  /**
+   * Spawn an random enemy unit at a random position. (~-30 or room width + ~30)
+   */
   def spawn() = {
   	val enemy: Instance = enemies(rand.nextInt(enemies.size)) match {
   		case "vihuy"	  => new Vihuy()
@@ -52,7 +58,7 @@ class WaveController {
   		case "bungo"    => new Bungo()
   		case _ 					=> new Vihuy()
   	}
-  	enemy.coords = new Coords(choose(-30 + irandomRange(-30, 0), global.WIDTH + 30 + irandomRange(0, 30)), global.spawnHeight)
+  	enemy.coords = new Coords(choose(global.minX -30 + irandomRange(-30, 0), global.maxX + 30 + irandomRange(0, 30)), global.spawnHeight)
   	enemyCount += 1
   	World.instances += enemy
   }

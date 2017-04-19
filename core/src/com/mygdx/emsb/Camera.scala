@@ -12,16 +12,17 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.math.MathUtils
 
 class Camera {
-	val WIDTH = 2560
-	val HEIGHT = 720
-	var movSpeed = 4
+	val camWidth = 1280
+	val camHeight = 720
+	var movSpeed = 8
 	var coords = Coords(0,0)
 	
+	
 	def move() = {
-		if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+		if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && x > global.minX) {
 			coords.x -= movSpeed
 		}
-		if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+		if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && x < global.maxX - camWidth) {
 			coords.x += movSpeed
 		}
 	}

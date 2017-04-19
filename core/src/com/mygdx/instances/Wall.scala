@@ -6,13 +6,13 @@ import com.mygdx.emsb.Snowball1
 import com.mygdx.emsb.World
 
 class Wall() extends Building(){
-	maxHp 			= 200
+	maxHp 			= 120
 	hp					= maxHp
   dmg         = 0
   range       = 3
   attackSpeed = 0
   sprite      = global.sprites("wall")
-  name				= "Wall"  
+  name				= "Wall"
 
   
 	def onSelection() = {}
