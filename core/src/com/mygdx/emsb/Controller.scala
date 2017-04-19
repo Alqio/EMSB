@@ -110,8 +110,8 @@ class Controller extends ApplicationAdapter {
 	def drawShapes() = {
 	  shapeRenderer.setColor(Color.RED);
 		shapeRenderer.begin(ShapeType.Line)
-		selected.foreach(i => shapeRenderer.rect(i.coords.x.toFloat, i.coords.y.toFloat, i.sprite.getWidth(), i.sprite.getHeight()))
-		selected.foreach(i => shapeRenderer.rect(i.coords.x.toFloat - 1, i.coords.y.toFloat - 1, i.sprite.getWidth() + 2, i.sprite.getHeight() + 2))
+		selected.foreach(i => shapeRenderer.rect(i.coords.x.toFloat - global.camera.x , i.coords.y.toFloat, i.sprite.getWidth(), i.sprite.getHeight()))
+		selected.foreach(i => shapeRenderer.rect(i.coords.x.toFloat - 1 - global.camera.x, i.coords.y.toFloat - 1, i.sprite.getWidth() + 2, i.sprite.getHeight() + 2))
 		shapeRenderer.end()		
 	}
 	
@@ -188,7 +188,7 @@ class Controller extends ApplicationAdapter {
 				case Some("wall")         	=> new Wall()
 				case _ 											=> new SnowTower()
 			}
-			buildning.coords = Coords(Gdx.input.getX(), global.spawnHeight)
+			buildning.coords = Coords(global.mouseX, global.spawnHeight)
 			World.instances += buildning
 			global.gold -= global.buildables(global.building.get)("cost").asInstanceOf[Int]
 		}
@@ -229,7 +229,7 @@ class Controller extends ApplicationAdapter {
 			if (World.buttonAt(new Coords(Gdx.input.getX(), global.HEIGHT - Gdx.input.getY())).isEmpty) {
 								
 				if (global.building.isEmpty) {
-					var tempSelected = World.instanceAt(new Coords(Gdx.input.getX(), global.HEIGHT - Gdx.input.getY()))
+					var tempSelected = World.instanceAt(new Coords(global.mouseX, global.mouseY))
 				
 					//Delete all buttons
 					if (tempSelected != selected && selected.isDefined && selected.get.isInstanceOf[Building]) {
@@ -252,7 +252,7 @@ class Controller extends ApplicationAdapter {
 					}
 					 
 				} else {
-					if (World.areaIsFree(Area(Coords(Gdx.input.getX(), global.spawnHeight), 
+					if (World.areaIsFree(Area(Coords(global.mouseX, global.spawnHeight), 
 							global.buildingSprite.get.getWidth().toInt, global.buildingSprite.get.getHeight().toInt))) {
 						buildNewBuilding()
 					} else {

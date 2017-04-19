@@ -25,5 +25,8 @@ class Camera {
 			coords.x += movSpeed
 		}
 	}
+	
+	def x = this.coords.x.toFloat
+	def y = this.coords.y.toFloat
 
 }

@@ -8,7 +8,7 @@ import com.mygdx.emsb.Bone
 
 class Cannibal() extends EnemyUnit(){
   
-	maxHp       = 3
+	maxHp       = 2
 	hp          = maxHp
   spd         = 1.3
   realSpdX    = spd
