@@ -10,6 +10,7 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.audio._
 import com.badlogic.gdx.graphics.g2d.GlyphLayout
+import com.mygdx.instances.MainHouse
 
 import collection.mutable.LinkedHashMap
 import collection.mutable.Map
@@ -28,7 +29,7 @@ object global {
   val spawnHeight						= 200
   val poisonDamage					= 0.04
   var score                 = 0
-  var gold                  = 120
+  var gold                  = 125
   var playerName            = "Sukka Mehuttaja"
 	val WIDTH                 = 1280
 	val HEIGHT                = 720  
@@ -44,6 +45,8 @@ object global {
   var mouseY								= 0
   var mouseViewX						= 0
   var mouseViewY						= 0
+  //Volume is either 1f or 0f, 0f meaning the game is muted
+  var volume								= 1f
   
   //Create fonts
 	val generator: FreeTypeFontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/04B_03__.TTF"))
@@ -110,7 +113,7 @@ object global {
 	 * If it has unlocked for example fire tower (level 3), it is "snowTower" -> Array(1, 3)
 	 * 
 	 */
-	val unlocks = LinkedHashMap[String, Map[String, Any]](
+	var unlocks = LinkedHashMap[String, Map[String, Any]](
 		"Normal" -> Map[String, Any](
 			"unlocked" -> true,
 			"cost"     -> 0,
@@ -168,7 +171,7 @@ object global {
   	),
   	"Abaji" -> Map[String, Any] (
   		"cost"  -> 20,
-  		"text"  -> "Summon one (1) Äbäji to fight for you.",
+  		"text"  -> "Summon one (1) Abaji to fight for you.",
   		"sprite" -> global.sprites("abajiIcon")
   	)
   )
@@ -205,7 +208,41 @@ object global {
   }
   
   var unlocked = (Array(0,1,2,3) zip unlocks.values.map(x => x("unlocked").asInstanceOf[Boolean])).toMap
-  //println(unlocked)  
+  
+  
+  
+  /**
+   * Reset the game stats (gold etc.)
+   */
+  def reset() = {
+  	score 								= 0
+  	gold  								= 120
+	  buildingDmgLevel      = 0
+	  buildingHpLevel       = 0
+	  buildingASLevel  			= 0
+	  buildingRepairLevel	  = 0
+  	upgrades("HpUpgrade")("level") = buildingHpLevel
+  	upgrades("ASUpgrade")("level") = buildingASLevel
+  	upgrades("DmgUpgrade")("level") = buildingDmgLevel
+  	updateUnlocked()
+  	World.instances.clear()
+  	World.buttons.clear()
+  	World.projectiles.clear()
+  	ctrl.init()
+
+		unlocks.values.foreach(i => i("unlocked") = false)
+  	
+		if (ctrl.backgroundMusic.isPlaying()) {
+			ctrl.backgroundMusic.stop()		
+		}
+		if (ctrl.menuMusic.isPlaying()) {
+			ctrl.menuMusic.stop()		
+		}  	
+  	ctrl.menuMusic.play()
+		val mainHouse = new MainHouse()
+		mainHouse.coords = Coords(640 - 48, 200)
+		World.instances += mainHouse  	
+  }
   
   /**
    * Draw a text with an outline
@@ -256,6 +293,8 @@ object global {
    */
   def death() = {
   	println("vituiks meni")
+  	global.state = new DeathState(ctrl)
+  	ctrl.selected = None
   }
   
 }

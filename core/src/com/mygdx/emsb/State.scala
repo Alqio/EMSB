@@ -4,11 +4,20 @@ import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.g2d.Sprite
 import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.graphics.Color
 
 abstract class State(val name: String, val ctrl: Controller) {
 	
   def draw(batch: SpriteBatch)
   def step()
+}
+
+class DeathState(override val ctrl: Controller) extends State("DeathState", ctrl) {
+	def step() = {}
+	
+	def draw(batch: SpriteBatch) = {
+		global.drawOutline("You lost!\nPress 'SPACE' to return to main menu", 320, 340, 1, Color.WHITE, global.font, batch)
+	}
 }
 
 class MenuState(override val ctrl: Controller) extends State("MenuState", ctrl) {

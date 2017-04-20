@@ -140,7 +140,7 @@ abstract class Instance() {
 	def takeDmg(p: Projectile) = {
 		this.hp -= p.dmg
 		if (hitSound.isDefined) {
-			hitSound.get.play(0.2f)
+			hitSound.get.play(0.2f * global.volume)
 		}
 		if (this.hp <= 0) {
 			die()
@@ -158,7 +158,7 @@ abstract class Instance() {
 	}
 
 	def die() = {
-		if (this.deathSound.isDefined) deathSound.get.play(0.5f)
+		if (this.deathSound.isDefined) deathSound.get.play(0.5f * global.volume)
 		if (this.isInstanceOf[EnemyUnit]) {
 			global.score += this.asInstanceOf[EnemyUnit].scoreGain
 			global.gold += this.asInstanceOf[EnemyUnit].goldGain

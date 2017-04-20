@@ -23,18 +23,26 @@ Unit tests here mby?
 	- attack speed
 
 17.4.2017, mitä vielä jäljellä:
-- pisteet mysql? NOPE
-- kuoleminen PAKKO
-- ulkopuolisten tiedostojen lataus WIP
+- kuoleminen DONE 
+- ulkopuolisten tiedostojen lataus DONE
 - lisää vihuja
 	- börssy(?)
 	- joku lentävä
 - parallax tausta
 - uus musiikki
 - menu
+	- Ehkä viel HELP?
 - camera (konsultoi pyryä) DONE
 - bosseja?
 	- ainaki evil miguli ois kiva, mut mitenköhän toimii?
+
+- tärkeitä:
+	- taustat kuolemalle ja menulle
+	- kuolemisääni
+	- lisää vihuja
+	- help valikko
+	- miguli
+
 
 24.3.17 18:19
 Jatka seuraavaks selectionia, laita jonnekin näkymään upgradevaihtoehdot ja sillein et niit voi joko painaa, tai sit valita näppiksellä

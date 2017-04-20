@@ -92,13 +92,13 @@ class Controller extends ApplicationAdapter {
 		
 		menuMusic = global.musics("menu")
 		menuMusic.setLooping(true)
-		menuMusic.setVolume(0.4f)
+		menuMusic.setVolume(0.25f * global.volume)
 		
 		menuMusic.play()
 		
 		backgroundMusic = global.musics("background")
 		backgroundMusic.setLooping(true)
-		backgroundMusic.setVolume(0.5f)
+		backgroundMusic.setVolume(0.5f * global.volume)
 		
 		batch = new SpriteBatch()
 		
@@ -109,7 +109,8 @@ class Controller extends ApplicationAdapter {
 	}
 	
 	def init() = {
-		spawner 			=	new WaveController(filePath)
+		spawner =	new WaveController(filePath)
+		
 		if (menuMusic.isPlaying) {
 			menuMusic.stop()
 		}
@@ -152,7 +153,7 @@ class Controller extends ApplicationAdapter {
 		camera.move()
 		if (global.state.name == "FightState")
 			handleFightInput()
-	  
+	  handleInput()
 		batch.begin()
 		
 		global.mouseX = Gdx.input.getX() + camera.coords.x.toInt
@@ -181,8 +182,8 @@ class Controller extends ApplicationAdapter {
 		}
 		
 		batch.end()
-		
-		drawShapes()
+		if (global.state.name == "FightState")
+			drawShapes()
 	
 	}
 	
@@ -216,7 +217,22 @@ class Controller extends ApplicationAdapter {
 			global.gold -= global.buildables(global.building.get)("cost").asInstanceOf[Int]
 		}
 	}
-	
+	def handleInput() = {
+		if (global.state.name == "DeathState") {
+			if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+				global.reset()
+				global.state = new MenuState(this)
+			}
+		}
+		if (Gdx.input.isKeyJustPressed(Input.Keys.M)) {
+			if (global.volume == 0f) 
+				global.volume = 1f
+			else
+				global.volume = 0f
+			menuMusic.setVolume(0.25f * global.volume)
+			backgroundMusic.setVolume(0.5f * global.volume)
+		}
+	}
 	
 	def handleFightInput() = {
 		

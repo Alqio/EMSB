@@ -84,29 +84,29 @@ class Projectile(val creator: Instance, val spritePath: String) {
   
 }
 
-case class Snowball1(override val creator: Instance) extends Projectile(creator, "snowBall1.png") {
+case class Snowball1(override val creator: Instance) extends Projectile(creator, "images/snowBall1.png") {
   spd = 8
   
 }
-case class Snowball2(override val creator: Instance) extends Projectile(creator, "snowBall4.png") {
+case class Snowball2(override val creator: Instance) extends Projectile(creator, "images/snowBall4.png") {
   spd = 16
   typeOf = "ice"
 }
-case class Snowball3(override val creator: Instance) extends Projectile(creator, "snowBall3.png") {
+case class Snowball3(override val creator: Instance) extends Projectile(creator, "images/snowBall3.png") {
   spd = 8
   typeOf = "fire"
   
 }
-case class Snowball4(override val creator: Instance) extends Projectile(creator, "snowBall6.png") {
+case class Snowball4(override val creator: Instance) extends Projectile(creator, "images/snowBall6.png") {
   spd = 10
   typeOf = "poison"
   
 }
-case class Fireball(override val creator: Instance) extends Projectile(creator, "fireBall.png") {
+case class Fireball(override val creator: Instance) extends Projectile(creator, "images/fireBall.png") {
 	spd = 10
 	typeOf = "enemyFireball"
 }
-case class Bone(override val creator: Instance) extends Projectile(creator, "bone.png") {
+case class Bone(override val creator: Instance) extends Projectile(creator, "images/bone.png") {
 	spd = 15
 	typeOf = "bone"
 	rot = 30
