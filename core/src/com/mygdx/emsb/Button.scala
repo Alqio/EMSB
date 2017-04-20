@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.math.Vector3
 import com.badlogic.gdx.graphics.Color
 import com.mygdx.instances.Building
-
+import com.badlogic.gdx.graphics.g2d.GlyphLayout
 /**
  * @author alkiok1
  */
@@ -60,13 +60,18 @@ abstract class Button(val area: Area, val target: String) {
 	
 }
 
-import com.badlogic.gdx.graphics.g2d.GlyphLayout
-class MenuButton(target: String, area: Area) extends Button(area, target) {
+
+class MenuButton(text: String, area: Area) extends Button(area, text) {
 	
 	var sprite = global.sprites("menuButton")
 	var icon   = global.sprites("menuButton")
+	var hoverSprite = global.sprites("menuButtonHover")
 	
-	val layout: GlyphLayout = new GlyphLayout(global.font, target);
+	global.font.setColor(Color.RED)
+	val layout: GlyphLayout = new GlyphLayout(global.font, text);
+	global.font.setColor(Color.BLACK)
+	val layoutBG: GlyphLayout = new GlyphLayout(global.font, text)
+	
 	
 	val fontX: Float = (this.area.xy1.x + (MenuButton.width - layout.width) / 2).toFloat
 	val fontY: Float = (this.area.xy1.y + (MenuButton.height + layout.height) / 2).toFloat
@@ -79,13 +84,48 @@ class MenuButton(target: String, area: Area) extends Button(area, target) {
     val pos = new Vector3(this.area.xy1.x.toFloat, this.area.xy1.y.toFloat, 0)
     this.sprite.setPosition(pos.x, pos.y)
 		this.sprite.draw(batch)
-		
-		this.icon.setPosition(pos.x + icon.getWidth()/2, pos.y + icon.getHeight()/2)
-		this.icon.draw(batch)		
-		global.font.draw(batch, layout, fontX, fontY);	
+		global.drawOutline(layout, layoutBG, fontX.toInt, fontY.toInt, 1, global.font, batch)
 	}
 }
-
+class StartButton(area: Area) extends MenuButton("Normal", area) {
+	override def action() = {
+		if (hover) {
+			sprite = hoverSprite
+		} else {
+			sprite = icon
+		}
+		if (isPressed) {
+			global.state = new FightState(global.ctrl)
+			global.ctrl.init()
+		}
+	}
+}
+class ExitButton(area: Area) extends MenuButton("Quit", area) {
+	override def action() = {
+		if (hover) {
+			sprite = hoverSprite
+		} else {
+			sprite = icon
+		}
+		if (isPressed) {
+			Gdx.app.exit()
+		}
+	}
+}
+class LoadButton(area: Area) extends MenuButton("Custom", area) {
+	override def action() = {
+		if (hover) {
+			sprite = hoverSprite
+		} else {
+			sprite = icon
+		}
+		if (isPressed) {
+			global.ctrl.filePath = "waves/waves.txt"
+			global.state = new FightState(global.ctrl)
+			global.ctrl.init()
+		}
+	}
+}
 
 class UpgradeButton (val creator: Building, target: String, area: Area) extends Button(area, target) {
 	

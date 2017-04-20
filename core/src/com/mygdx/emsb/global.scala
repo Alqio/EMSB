@@ -9,7 +9,7 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFont
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.audio._
-
+import com.badlogic.gdx.graphics.g2d.GlyphLayout
 
 import collection.mutable.LinkedHashMap
 import collection.mutable.Map
@@ -37,8 +37,8 @@ object global {
   var building: Option[String] = None
   var buildingSprite: Option[Sprite] = None
   
-  var state									= "menu"
-  
+  var ctrl: Controller			= null
+  var state: State 					= null
   var camera: Camera 				= null
   var mouseX								= 0
   var mouseY								= 0
@@ -84,10 +84,13 @@ object global {
     "barracksIcon"       -> new Sprite(new Texture("barracksIcon.png")),
     "wallIcon"       		 -> new Sprite(new Texture("wallIcon.png")),
     "wall"    					 -> new Sprite(new Texture("wall.png")),
-    "menuButton" 				 -> new Sprite(new Texture("menuButton.png"))
-  )	
+    "menuButton" 				 -> new Sprite(new Texture("menuButton.png")),
+    "menuButtonHover"    -> new Sprite(new Texture("menuButtonHover.png")),
+    "logo" 							 -> new Sprite(new Texture("logo.png"))
+   )	
   val musics = Map[String, Music](
-  	"background" -> Gdx.audio.newMusic(Gdx.files.internal("sounds/sndBg.mp3"))
+  	"background" -> Gdx.audio.newMusic(Gdx.files.internal("sounds/sndBg.mp3")),
+  	"menu"       -> Gdx.audio.newMusic(Gdx.files.internal("sounds/sndMenu.wav"))
   )
   
   val sounds = Map[String, Sound](
@@ -222,7 +225,26 @@ object global {
 		font.draw(batch, str, x, y)
 
 	}
-  
+  /**
+   * Draw a text with an outline
+	 * @param layout the GlyphLayout
+	 * @param x the x location
+	 * @param y the y location
+	 * @param width the width of the outline
+	 * @param font the font that will be used in the draw
+	 * @param the batch that will be used
+	 */  
+	def drawOutline(layout: GlyphLayout, layoutBG: GlyphLayout, x: Int, y: Int, width: Int, font: BitmapFont, batch: SpriteBatch): Unit = {
+		font.draw(batch, layoutBG, x - width, y - width)
+		font.draw(batch, layoutBG, x + width, y - width)
+		font.draw(batch, layoutBG, x - width, y + width)
+		font.draw(batch, layoutBG, x + width, y + width)
+		font.draw(batch, layoutBG, x, y + width)
+		font.draw(batch, layoutBG, x, y - width)
+		font.draw(batch, layoutBG, x - width, y)
+		font.draw(batch, layoutBG, x + width, y)
+		font.draw(batch, layout, x, y)
+	}  
   /**
    * The death of the player
    */

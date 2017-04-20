@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.g2d.Sprite
 import com.badlogic.gdx.graphics.g2d.BitmapFont
+import com.badlogic.gdx.graphics.g2d.GlyphLayout
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.math.MathUtils;
@@ -14,10 +15,6 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Vector3
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType
-import com.badlogic.gdx.scenes.scene2d.Stage
-import com.badlogic.gdx.utils.viewport.ScreenViewport
-import com.badlogic.gdx.scenes.scene2d.ui.Skin
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable
 import com.badlogic.gdx.scenes.scene2d.InputListener
@@ -36,25 +33,41 @@ class Controller extends ApplicationAdapter {
 	var font: BitmapFont              = _
 	var selected: Option[Instance]    = None
 	var shapeRenderer: ShapeRenderer  = _
-	private var tausta: Sprite        = _
-	private var mountains: Sprite 		= _
-	private var floor: Sprite					= _
 	var firstDraw: Boolean            = true
-	private var stage: Stage					= _
 	var squareButton: Texture 				= _
 	var fpsLogger: FPSLogger					= _
 	var spawner: WaveController				= _
 	var backgroundMusic: Music 				= _
+	var menuMusic: Music 							= _
 	var camera: Camera								= _
-	var state: State									= _
+	
+	var logo: Sprite									= _
+	var tausta: Sprite        				= _
+	var mountains: Sprite 						= _
+	var floor: Sprite									= _
+	var filePath: String 							= ""
+	
+	var textLayout1: GlyphLayout      = _
+	var textLayout2: GlyphLayout      = _
+	var fontCoordinates 							= (0f, 0f)
 	override def create() = {
+		global.font.setColor(Color.WHITE)
+		textLayout1 = new GlyphLayout(global.font, "Press 'SPACE' to continue");
+		global.font.setColor(Color.BLACK)
+		textLayout2 = new GlyphLayout(global.font, "Press 'SPACE' to continue")
+		
+		
+		val fontX: Float = (640 - (textLayout1.width/2)).toFloat
+		val fontY: Float = 440f
+		fontCoordinates = (fontX, fontY)
 		font 					= global.font
 		shapeRenderer = new ShapeRenderer()
 		fpsLogger 		= new FPSLogger()
-		spawner 			=	new WaveController("waves/wave1s.txt")
+		spawner 			=	new WaveController(filePath)
 		camera 				= new Camera()
 		global.camera = camera
-		
+		global.ctrl   = this
+		global.state  = new MenuState(this)
 		
 		tausta = new Sprite(new Texture(Gdx.files.internal("background.png")))
 		tausta.setPosition(0,0)
@@ -68,30 +81,42 @@ class Controller extends ApplicationAdapter {
 		floor.setPosition(0,-220)
 		floor.setSize(1280,420)
 		
+		logo = global.sprites("logo")
+		logo.setOriginCenter()
+		logo.setPosition(0, 470)
+		//logo.setSize(1280, 256)
+		
+		menuMusic = global.musics("menu")
+		menuMusic.setLooping(true)
+		menuMusic.setVolume(0.4f)
+		
+		menuMusic.play()
+		
 		backgroundMusic = global.musics("background")
 		backgroundMusic.setLooping(true)
 		backgroundMusic.setVolume(0.5f)
-		if (!backgroundMusic.isPlaying()) backgroundMusic.play()
 		
 		batch = new SpriteBatch()
 		
 		val mainHouse = new MainHouse()
-		mainHouse.coords = Coords(640 - 32, 200)
+		mainHouse.coords = Coords(640 - 48, 200)
 		World.instances += mainHouse
 		
-		state = new FightState(tausta, mountains, floor, batch)
-
-		//Start the waves
-		spawner.startWave()
-		val yks = new Saks()
-		yks.coords = new Coords(230, 200)
-		//World.instances += yks
-		
+	}
+	
+	def init() = {
+		spawner 			=	new WaveController(filePath)
+		if (menuMusic.isPlaying) {
+			menuMusic.stop()
+		}
+		if (!backgroundMusic.isPlaying()) {
+			backgroundMusic.play()		
+		}
 	}
 	
 	def draw() = {
 		
-		state.draw()
+		global.state.draw(batch)
 
 	}
 	
@@ -119,9 +144,10 @@ class Controller extends ApplicationAdapter {
 	  }
 	  
 	  spawner.step()
-		state.step()
+		global.state.step()
 		camera.move()
-		handleFightInput()
+		if (global.state.name == "FightState")
+			handleFightInput()
 	  
 		batch.begin()
 		
@@ -133,7 +159,7 @@ class Controller extends ApplicationAdapter {
 		
 		draw()
 		
-		if (state.name == "FightState") {
+		if (global.state.name == "FightState") {
 			val pos2 = new Vector3(20, global.HEIGHT - 20, 0)
 			global.drawOutline("Score: " + global.score + "\nGold:   " + global.gold, pos2.x.toInt, pos2.y.toInt, 1, Color.RED, font, batch)
 			
@@ -145,7 +171,8 @@ class Controller extends ApplicationAdapter {
 		  
 			if (spawner.finished) {
 				val pos = new Vector3(520, 360, 0)
-				global.drawOutline("Press 'SPACE' to continue", pos.x.toInt, pos.y.toInt, 1, Color.WHITE, font, batch)
+				//global.drawOutline("Press 'SPACE' to continue", pos.x.toInt, pos.y.toInt, 1, Color.WHITE, font, batch)
+				global.drawOutline(textLayout1, textLayout2, fontCoordinates._1.toInt, fontCoordinates._2.toInt, 1, font, batch)
 			}
 		}
 		

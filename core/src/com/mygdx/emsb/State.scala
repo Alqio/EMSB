@@ -5,22 +5,33 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.g2d.Sprite
 import com.badlogic.gdx.Gdx
 
-abstract class State(val name: String) {
+abstract class State(val name: String, val ctrl: Controller) {
 	
-  def draw()
+  def draw(batch: SpriteBatch)
   def step()
 }
 
-class FightState(val tausta: Sprite, val mountains: Sprite, val floor: Sprite, val batch: SpriteBatch) extends State("FightState") {
+class MenuState(override val ctrl: Controller) extends State("MenuState", ctrl) {
+
+	def draw(batch: SpriteBatch) = {
+		ctrl.logo.draw(batch)
+		Menu.buttons.foreach(_.draw(batch))
+	}
+	def step() = {
+		Menu.updateMenu()
+	}
+}
+
+class FightState(override val ctrl: Controller) extends State("FightState", ctrl) {
 	
 	def create() = {
 		
 	}
 	
-	def draw() = {
-	  tausta.draw(batch)
-	  mountains.draw(batch)
-	  floor.draw(batch)	
+	def draw(batch: SpriteBatch) = {
+	  ctrl.tausta.draw(batch)
+	  ctrl.mountains.draw(batch)
+	  ctrl.floor.draw(batch)	
 		World.instances.foreach(x => if (x.coords.x >= global.camera.x - 20 && x.coords.x <= global.camera.x + global.camera.camWidth + 20) x.draw(batch))
 		World.projectiles.foreach(_.draw(batch))
 		World.buttons.foreach(_.draw(batch))
