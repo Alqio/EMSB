@@ -29,7 +29,7 @@ Unit tests here mby?
 - lisää vihuja
 - uus musiikki
 - menu
-- camera (konsultoi pyryä)
+- camera (konsultoi pyryä) DONE
 - bosseja?
 	- ainaki evil miguli ois kiva, mut mitenköhän toimii?
 

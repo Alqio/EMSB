@@ -1,0 +1,5 @@
+jou
+wave: 1
+enemies: vihuy, saks
+speed: 30
+
