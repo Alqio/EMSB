@@ -18,7 +18,6 @@ import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.utils.viewport.ScreenViewport
 import com.badlogic.gdx.scenes.scene2d.ui.Skin
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton
-import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable
 import com.badlogic.gdx.scenes.scene2d.InputListener
@@ -34,34 +33,37 @@ import com.mygdx.instances._
 
 class Controller extends ApplicationAdapter {
 	var batch: SpriteBatch            = _
-	var font: BitmapFont              = null
+	var font: BitmapFont              = _
 	var selected: Option[Instance]    = None
-	var shapeRenderer: ShapeRenderer  = null
-	private var tausta: Sprite        = null
-	private var mountains: Sprite 		= null
-	private var floor: Sprite					= null
+	var shapeRenderer: ShapeRenderer  = _
+	private var tausta: Sprite        = _
+	private var mountains: Sprite 		= _
+	private var floor: Sprite					= _
 	var firstDraw: Boolean            = true
-	private var stage: Stage					= null
+	private var stage: Stage					= _
 	var squareButton: Texture 				= _
-	var fpsLogger: FPSLogger					= null
-	var spawner: WaveController				= null
-	var backgroundMusic: Music 				= null
-	var camera: Camera								= null
-	
+	var fpsLogger: FPSLogger					= _
+	var spawner: WaveController				= _
+	var backgroundMusic: Music 				= _
+	var camera: Camera								= _
+	var state: State									= _
 	override def create() = {
 		font 					= global.font
 		shapeRenderer = new ShapeRenderer()
 		fpsLogger 		= new FPSLogger()
-		spawner 			=	new WaveController()
+		spawner 			=	new WaveController("waves/wave1s.txt")
 		camera 				= new Camera()
 		global.camera = camera
+		
 		
 		tausta = new Sprite(new Texture(Gdx.files.internal("background.png")))
 		tausta.setPosition(0,0)
 		tausta.setSize(global.WIDTH, global.HEIGHT)
+		
 		mountains = new Sprite(new Texture(Gdx.files.internal("bgMountain.png")))
 		mountains.setPosition(0,80)
 		mountains.setSize(2560, 720)
+		
 		floor = new Sprite(new Texture(Gdx.files.internal("bgFloor.png")))
 		floor.setPosition(0,-220)
 		floor.setSize(1280,420)
@@ -73,11 +75,12 @@ class Controller extends ApplicationAdapter {
 		
 		batch = new SpriteBatch()
 		
-		
 		val mainHouse = new MainHouse()
 		mainHouse.coords = Coords(640 - 32, 200)
 		World.instances += mainHouse
 		
+		state = new FightState(tausta, mountains, floor, batch)
+
 		//Start the waves
 		spawner.startWave()
 		val yks = new Saks()
@@ -87,24 +90,9 @@ class Controller extends ApplicationAdapter {
 	}
 	
 	def draw() = {
-	  tausta.draw(batch)
-	  mountains.draw(batch)
-	  floor.draw(batch)
-	  
-		World.instances.foreach(x => if (x.coords.x >= camera.x - 20 && x.coords.x <= camera.x + camera.camWidth + 20) x.draw(batch))
-		World.projectiles.foreach(_.draw(batch))
-		World.buttons.foreach(_.draw(batch))
 		
-		
-		
-		//World.instances.foreach(println) 
-		if (global.building.isDefined) {
-			global.buildingSprite.get.setAlpha(0.5f)
-			global.buildingSprite.get.setPosition(Gdx.input.getX(), 200)
-	    global.buildingSprite.get.draw(batch)
-			global.buildingSprite.get.setAlpha(1f)
-		}
-		
+		state.draw()
+
 	}
 	
 	def drawShapes() = {
@@ -131,9 +119,9 @@ class Controller extends ApplicationAdapter {
 	  }
 	  
 	  spawner.step()
-		World.updateWorld()
+		state.step()
 		camera.move()
-		handleInput()
+		handleFightInput()
 	  
 		batch.begin()
 		
@@ -145,18 +133,20 @@ class Controller extends ApplicationAdapter {
 		
 		draw()
 		
-		val pos2 = new Vector3(20, global.HEIGHT - 20, 0)
-		global.drawOutline("Score: " + global.score + "\nGold:   " + global.gold, pos2.x.toInt, pos2.y.toInt, 1, Color.RED, font, batch)
-		
-		//val pos3 = new Vector3(Gdx.input.getX(), 720 - Gdx.input.getY(), 0)
-		val pos3 = new Vector3(global.mouseX, global.mouseY, 0)
-	  val drawPos = new Vector3(global.mouseViewX, global.mouseViewY,0)
-	  global.drawOutline("WorldX: " + pos3.x + "\nWorldY: " + pos3.y + "\nView X: " + drawPos.x + "\nView Y: " + drawPos.y, drawPos.x.toInt, drawPos.y.toInt, 1, Color.RED, font, batch)
-		
-	  
-		if (spawner.finished) {
-			val pos = new Vector3(520, 360, 0)
-			global.drawOutline("Press 'SPACE' to continue", pos.x.toInt, pos.y.toInt, 1, Color.WHITE, font, batch)
+		if (state.name == "FightState") {
+			val pos2 = new Vector3(20, global.HEIGHT - 20, 0)
+			global.drawOutline("Score: " + global.score + "\nGold:   " + global.gold, pos2.x.toInt, pos2.y.toInt, 1, Color.RED, font, batch)
+			
+			//val pos3 = new Vector3(Gdx.input.getX(), 720 - Gdx.input.getY(), 0)
+			val pos3 = new Vector3(global.mouseX, global.mouseY, 0)
+		  val drawPos = new Vector3(global.mouseViewX, global.mouseViewY,0)
+		  global.drawOutline("WorldX: " + pos3.x + "\nWorldY: " + pos3.y + "\nView X: " + drawPos.x + "\nView Y: " + drawPos.y, drawPos.x.toInt, drawPos.y.toInt, 1, Color.RED, font, batch)
+			
+		  
+			if (spawner.finished) {
+				val pos = new Vector3(520, 360, 0)
+				global.drawOutline("Press 'SPACE' to continue", pos.x.toInt, pos.y.toInt, 1, Color.WHITE, font, batch)
+			}
 		}
 		
 		batch.end()
@@ -196,7 +186,7 @@ class Controller extends ApplicationAdapter {
 	}
 	
 	
-	def handleInput() = {
+	def handleFightInput() = {
 		
 		
 		if (Gdx.input.isKeyJustPressed(Input.Keys.Q)) {

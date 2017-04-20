@@ -37,6 +37,8 @@ object global {
   var building: Option[String] = None
   var buildingSprite: Option[Sprite] = None
   
+  var state									= "menu"
+  
   var camera: Camera 				= null
   var mouseX								= 0
   var mouseY								= 0
@@ -81,7 +83,8 @@ object global {
     "infantryIcon"       -> new Sprite(new Texture("infantryIcon.png")),
     "barracksIcon"       -> new Sprite(new Texture("barracksIcon.png")),
     "wallIcon"       		 -> new Sprite(new Texture("wallIcon.png")),
-    "wall"    					 -> new Sprite(new Texture("wall.png"))
+    "wall"    					 -> new Sprite(new Texture("wall.png")),
+    "menuButton" 				 -> new Sprite(new Texture("menuButton.png"))
   )	
   val musics = Map[String, Music](
   	"background" -> Gdx.audio.newMusic(Gdx.files.internal("sounds/sndBg.mp3"))

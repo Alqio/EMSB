@@ -42,7 +42,9 @@ abstract class Button(val area: Area, val target: String) {
 	
 	def drawText(batch: SpriteBatch)
 	
-  /** Draw the instance */
+  /** 
+   *  Draw the button 
+   *  */
   def draw(batch: SpriteBatch) = {
     val pos = new Vector3(this.area.xy1.x.toFloat, this.area.xy1.y.toFloat, 0)
     this.sprite.setPosition(pos.x, pos.y)
@@ -57,6 +59,34 @@ abstract class Button(val area: Area, val target: String) {
   }
 	
 }
+
+import com.badlogic.gdx.graphics.g2d.GlyphLayout
+class MenuButton(target: String, area: Area) extends Button(area, target) {
+	
+	var sprite = global.sprites("menuButton")
+	var icon   = global.sprites("menuButton")
+	
+	val layout: GlyphLayout = new GlyphLayout(global.font, target);
+	
+	val fontX: Float = (this.area.xy1.x + (MenuButton.width - layout.width) / 2).toFloat
+	val fontY: Float = (this.area.xy1.y + (MenuButton.height + layout.height) / 2).toFloat
+	
+	def action() = {}
+	
+	def drawText(batch: SpriteBatch) = {}
+	
+	override def draw(batch: SpriteBatch) = {
+    val pos = new Vector3(this.area.xy1.x.toFloat, this.area.xy1.y.toFloat, 0)
+    this.sprite.setPosition(pos.x, pos.y)
+		this.sprite.draw(batch)
+		
+		this.icon.setPosition(pos.x + icon.getWidth()/2, pos.y + icon.getHeight()/2)
+		this.icon.draw(batch)		
+		global.font.draw(batch, layout, fontX, fontY);	
+	}
+}
+
+
 class UpgradeButton (val creator: Building, target: String, area: Area) extends Button(area, target) {
 	
 	var sprite = global.sprites("squareButton")
@@ -148,4 +178,13 @@ object UpgradeButton {
 		new UpgradeButton(creator, target, area)
 	}
 	
+}
+
+object MenuButton {
+	def width = global.sprites("menuButton").getWidth.toInt
+	def height = global.sprites("menuButton").getHeight.toInt
+	
+	def apply(target: String, area: Area) = {
+		new MenuButton(target, area)
+	}	
 }

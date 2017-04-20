@@ -13,7 +13,7 @@ import com.mygdx.instances.Saks
 /**
  * @author alkiok1
  */
-class WaveController {
+class WaveController(val file: String = "") {
   var wave = 0
   var enemyCount = 0
   var maxEnemyCount = 15 + wave * 5
@@ -22,6 +22,8 @@ class WaveController {
   var finished = true
   var enemies = Array("sukka")
   
+  //If the waves are not loaded from file, use default waves.
+
   waves += new Wave(0, Array("-"), 10)
   waves += new Wave(1, Array("vihuy"), 30)
   waves += new Wave(2, Array("vihuy", "vihuy", "vihuy", "saks"), 60)
@@ -29,6 +31,16 @@ class WaveController {
   waves += new Wave(4, Array("saks", "beafire", "magi"), 20)
   waves += new Wave(5, Array("vihuy", "saks", "cannibal", "beafire", "magi"), 20)
   waves += new Wave(6, Array("bungo"), 20)
+  
+  if (file != "") {
+  	val loader = new WaveLoader(file)
+  	val loadedWaves = loader.getWaves()
+  	if (loadedWaves.size > 1) {
+  		waves = loadedWaves
+  	}
+  }
+  println(waves.mkString("\n"))
+  
   
   val alarm = Array.fill(12)(new WaveAlarm(0))
   
@@ -94,4 +106,7 @@ class WaveController {
   
 }
 
-class Wave (val number: Int, val enemies: Array[String], var spawnSpeed: Int)
+class Wave (val number: Int, val enemies: Array[String], var spawnSpeed: Int) {
+	
+	override def toString = "Wave(" + number + "): " + enemies.mkString(", ") + " ... with spawnSpeed of " + spawnSpeed
+}

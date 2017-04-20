@@ -1,0 +1,12 @@
+jou
+wave: 1
+enemies: bungo
+speed: 30
+
+wave: 2
+enemies: saks, magi
+speed: 20
+jou
+wave: 3
+enemies: cannibal, saks, magi
+speed: 10
