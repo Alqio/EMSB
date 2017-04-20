@@ -60,33 +60,34 @@ object global {
    * A list of all sprites in the game. They are all loaded when the game starts, and they can then be disposed of later. 
    */
   val sprites = Map[String, Sprite](
-    "vihuy"          		 -> new Sprite(new Texture("vihuy.png")),
-    "researchCenter"	   -> new Sprite(new Texture("researchCenter.png")),
-    "mainHouse" 				 -> new Sprite(new Texture("mainHouse.png")),
-    "snowTower"    		   -> new Sprite(new Texture("snowTower.png")),
-    "fireTower"     	   -> new Sprite(new Texture("fireTower.png")),
-    "iceTower"       	   -> new Sprite(new Texture("iceTower.png")),
-    "poisonTower"    	   -> new Sprite(new Texture("poisonTower.png")),
-    "snowBall1"     	   -> new Sprite(new Texture("testi.png")),
-    "snowBall2"    		   -> new Sprite(new Texture("snowBall2.png")),
-    "squareButton" 	     -> new Sprite(new Texture("squareButtonEmpty.png")),
-    "hpUp"  						 -> new Sprite(new Texture("hpUp.png")),
-    "dmgUp"							 -> new Sprite(new Texture("dmgUp.png")),
-    "snowTowerIcon"  		 -> new Sprite(new Texture("snowTowerIcon.png")),
-    "iceTowerIcon"  		 -> new Sprite(new Texture("iceTowerIcon.png")),
-    "poisonTowerIcon"  	 -> new Sprite(new Texture("poisonTowerIcon.png")),
-    "fireTowerIcon"  		 -> new Sprite(new Texture("fireTowerIcon.png")),
-    "researchCenterIcon" -> new Sprite(new Texture("researchCenterIcon.png")),
-    "asUp" 							 -> new Sprite(new Texture("attackSpeedIcon.png")),
-    "healthBar" 				 -> new Sprite(new Texture("healthBar.png")),
-    "barracks" 					 -> new Sprite(new Texture("barracks.png")),
-    "infantryIcon"       -> new Sprite(new Texture("infantryIcon.png")),
-    "barracksIcon"       -> new Sprite(new Texture("barracksIcon.png")),
-    "wallIcon"       		 -> new Sprite(new Texture("wallIcon.png")),
-    "wall"    					 -> new Sprite(new Texture("wall.png")),
-    "menuButton" 				 -> new Sprite(new Texture("menuButton.png")),
-    "menuButtonHover"    -> new Sprite(new Texture("menuButtonHover.png")),
-    "logo" 							 -> new Sprite(new Texture("logo.png"))
+    "vihuy"          		 -> new Sprite(new Texture("images/vihuy.png")),
+    "researchCenter"	   -> new Sprite(new Texture("images/researchCenter.png")),
+    "mainHouse" 				 -> new Sprite(new Texture("images/mainHouse.png")),
+    "snowTower"    		   -> new Sprite(new Texture("images/snowTower.png")),
+    "fireTower"     	   -> new Sprite(new Texture("images/fireTower.png")),
+    "iceTower"       	   -> new Sprite(new Texture("images/iceTower.png")),
+    "poisonTower"    	   -> new Sprite(new Texture("images/poisonTower.png")),
+    "snowBall1"     	   -> new Sprite(new Texture("images/testi.png")),
+    "snowBall2"    		   -> new Sprite(new Texture("images/snowBall2.png")),
+    "squareButton" 	     -> new Sprite(new Texture("images/squareButtonEmpty.png")),
+    "hpUp"  						 -> new Sprite(new Texture("images/hpUp.png")),
+    "dmgUp"							 -> new Sprite(new Texture("images/dmgUp.png")),
+    "snowTowerIcon"  		 -> new Sprite(new Texture("images/snowTowerIcon.png")),
+    "iceTowerIcon"  		 -> new Sprite(new Texture("images/iceTowerIcon.png")),
+    "poisonTowerIcon"  	 -> new Sprite(new Texture("images/poisonTowerIcon.png")),
+    "fireTowerIcon"  		 -> new Sprite(new Texture("images/fireTowerIcon.png")),
+    "researchCenterIcon" -> new Sprite(new Texture("images/researchCenterIcon.png")),
+    "asUp" 							 -> new Sprite(new Texture("images/attackSpeedIcon.png")),
+    "healthBar" 				 -> new Sprite(new Texture("images/healthBar.png")),
+    "barracks" 					 -> new Sprite(new Texture("images/barracks.png")),
+    "infantryIcon"       -> new Sprite(new Texture("images/infantryIcon.png")),
+    "barracksIcon"       -> new Sprite(new Texture("images/barracksIcon.png")),
+    "wallIcon"       		 -> new Sprite(new Texture("images/wallIcon.png")),
+    "wall"    					 -> new Sprite(new Texture("images/wall.png")),
+    "menuButton" 				 -> new Sprite(new Texture("images/menuButton.png")),
+    "menuButtonHover"    -> new Sprite(new Texture("images/menuButtonHover.png")),
+    "logo" 							 -> new Sprite(new Texture("images/logo.png")),
+    "abajiIcon" 				 -> new Sprite(new Texture("images/abajiIcon.png"))
    )	
   val musics = Map[String, Music](
   	"background" -> Gdx.audio.newMusic(Gdx.files.internal("sounds/sndBg.mp3")),
@@ -164,6 +165,11 @@ object global {
   		"cost"  -> 20,
   		"text"  -> "Summon three (3) friendly infantry units.",
   		"sprite" -> global.sprites("infantryIcon")
+  	),
+  	"Abaji" -> Map[String, Any] (
+  		"cost"  -> 20,
+  		"text"  -> "Summon one (1) Äbäji to fight for you.",
+  		"sprite" -> global.sprites("abajiIcon")
   	)
   )
  

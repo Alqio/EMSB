@@ -19,13 +19,20 @@ class Barracks() extends Building(){
   maxLevel          = 1 
     
   var buttons = Map[String, Button]( 
-  	"Infantry"   -> new BarracksButton(this, "Infantry", Area(Coords(420, 64), UpgradeButton.width, UpgradeButton.height))
+  	"Infantry"   -> new BarracksButton(this, "Infantry", Area(Coords(420 + 64 , 92), UpgradeButton.width, UpgradeButton.height)),
+  	"Abaji"   	 -> new BarracksButton(this, "Abaji", Area(Coords(420 + 64 + 64 , 92), UpgradeButton.width, UpgradeButton.height))
   )
   	
 	def spawn(what: String) = {
-		for (i <- 0 until 3) {
-			var j = new Infantry()
-			j.coords = new Coords(this.coords.x - 12 + 12 * i, this.coords.y)
+		if (what == "Infantry") {
+			for (i <- 0 until 3) {
+				var j = new Infantry()
+				j.coords = new Coords(this.coords.x - 12 + 12 * i, this.coords.y)
+				World.instances += j
+			}
+		} else if (what == "Abaji") {
+			var j = new Abaji()
+			j.coords = new Coords(this.coords.x - 12 + 12, this.coords.y)
 			World.instances += j
 		}
 	}

@@ -21,7 +21,7 @@ class Cannibal() extends EnemyUnit(){
   var canThrow = true
   
   //Normal enemies can't load the sprite from global.sprites because then the sprite couldn't be flipped depending on the direction.
-  sprite   = new Sprite(new Texture("cannibal.png"))
+  sprite   = new Sprite(new Texture("images/cannibal.png"))
 	//var sprite2 = new Sprite(new Texture("cannibal2.png"))
 	deathSound = Some(global.sounds("enemyDeath"))
 	

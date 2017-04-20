@@ -27,9 +27,9 @@ class SnowTower() extends Building() {
   name				= "Snow tower"
   
   var buttons = Map[String, Button]( 
-  	"FireTower"    -> new UnlockButton(this, "Fire", Area(Coords(420, 64), UpgradeButton.width, UpgradeButton.height), true),
-  	"IceTower"     -> new UnlockButton(this, "Ice",  Area(Coords(484, 64), UpgradeButton.width, UpgradeButton.height), true),
-  	"PoisonTower"  -> new UnlockButton(this, "Poison",  Area(Coords(548, 64), UpgradeButton.width, UpgradeButton.height), true)
+  	"FireTower"    -> new UnlockButton(this, "Fire", Area(Coords(420, 92), UpgradeButton.width, UpgradeButton.height), true),
+  	"IceTower"     -> new UnlockButton(this, "Ice",  Area(Coords(484, 92), UpgradeButton.width, UpgradeButton.height), true),
+  	"PoisonTower"  -> new UnlockButton(this, "Poison",  Area(Coords(548, 92), UpgradeButton.width, UpgradeButton.height), true)
   )
   
   

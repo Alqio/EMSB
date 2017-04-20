@@ -21,7 +21,7 @@ class Bungo() extends EnemyUnit() {
   var spawned = false
   
   //Normal enemies can't load the sprite from global.sprites because then the sprite couldn't be flipped depending on the direction.
-  sprite   = new Sprite(new Texture("bungo.png"))
+  sprite   = new Sprite(new Texture("images/bungo.png"))
 	deathSound = Some(global.sounds("bungoDeath"))
 	
 	override def setTarget() = {

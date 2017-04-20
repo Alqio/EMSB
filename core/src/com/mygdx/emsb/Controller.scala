@@ -23,6 +23,7 @@ import com.badlogic.gdx.graphics.FPSLogger
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter
 import com.badlogic.gdx.audio._
+import com.badlogic.gdx.graphics.Pixmap
 
 
 import collection.mutable.Buffer
@@ -46,6 +47,7 @@ class Controller extends ApplicationAdapter {
 	var mountains: Sprite 						= _
 	var floor: Sprite									= _
 	var filePath: String 							= ""
+	var cursor: Pixmap								= _
 	
 	var textLayout1: GlyphLayout      = _
 	var textLayout2: GlyphLayout      = _
@@ -68,16 +70,18 @@ class Controller extends ApplicationAdapter {
 		global.camera = camera
 		global.ctrl   = this
 		global.state  = new MenuState(this)
+		cursor 				= new Pixmap(Gdx.files.internal("images/cursor.png"))
+		Gdx.graphics.setCursor(Gdx.graphics.newCursor(cursor, 0,0))
 		
-		tausta = new Sprite(new Texture(Gdx.files.internal("background.png")))
+		tausta = new Sprite(new Texture(Gdx.files.internal("images/background.png")))
 		tausta.setPosition(0,0)
 		tausta.setSize(global.WIDTH, global.HEIGHT)
 		
-		mountains = new Sprite(new Texture(Gdx.files.internal("bgMountain.png")))
+		mountains = new Sprite(new Texture(Gdx.files.internal("images/bgMountain.png")))
 		mountains.setPosition(0,80)
 		mountains.setSize(2560, 720)
 		
-		floor = new Sprite(new Texture(Gdx.files.internal("bgFloor.png")))
+		floor = new Sprite(new Texture(Gdx.files.internal("images/bgFloor.png")))
 		floor.setPosition(0,-220)
 		floor.setSize(1280,420)
 		
@@ -166,7 +170,7 @@ class Controller extends ApplicationAdapter {
 			//val pos3 = new Vector3(Gdx.input.getX(), 720 - Gdx.input.getY(), 0)
 			val pos3 = new Vector3(global.mouseX, global.mouseY, 0)
 		  val drawPos = new Vector3(global.mouseViewX, global.mouseViewY,0)
-		  global.drawOutline("WorldX: " + pos3.x + "\nWorldY: " + pos3.y + "\nView X: " + drawPos.x + "\nView Y: " + drawPos.y, drawPos.x.toInt, drawPos.y.toInt, 1, Color.RED, font, batch)
+		  //global.drawOutline("WorldX: " + pos3.x + "\nWorldY: " + pos3.y + "\nView X: " + drawPos.x + "\nView Y: " + drawPos.y, drawPos.x.toInt, drawPos.y.toInt, 1, Color.RED, font, batch)
 			
 		  
 			if (spawner.finished) {
@@ -190,6 +194,7 @@ class Controller extends ApplicationAdapter {
 		global.sounds.values.toVector.foreach(_.dispose())
 		global.musics.values.toVector.foreach(_.dispose())
 		global.font.dispose()
+		cursor.dispose()
 		batch.dispose()
 	}
 	

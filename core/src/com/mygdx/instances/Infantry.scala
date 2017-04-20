@@ -17,7 +17,7 @@ class Infantry() extends FriendlyUnit(){
   //def setTarget() = this.target = instanceNearest()
   
   //Normal enemies can't load the sprite from global.sprites because then the sprite couldn't be flipped depending on the direction.
-  sprite   = new Sprite(new Texture("infantry.png"))
+  sprite   = new Sprite(new Texture("images/infantry.png"))
 	deathSound = Some(global.sounds("infantryDeath"))
 	//global.sprites("vihuy")
 	override def place_free(x: Int, y: Int) = true

@@ -11,13 +11,13 @@ class MiniBungo() extends EnemyUnit() {
 	hp         = maxHp
   spd        = 2.5
   realSpdX   = spd
-  dmg        = 0.5
-  range      = 10
+  dmg        = 0.3
+  range      = 4
   name       = "Mini bungo"
   goldGain   = 1
   
   //Normal enemies can't load the sprite from global.sprites because then the sprite couldn't be flipped depending on the direction.
-  sprite   = new Sprite(new Texture("miniBungo.png"))
+  sprite   = new Sprite(new Texture("images/miniBungo.png"))
 	deathSound = Some(global.sounds("bungoDeath"))
 	
 	override def setTarget() = {

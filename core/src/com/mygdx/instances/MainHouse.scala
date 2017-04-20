@@ -20,10 +20,10 @@ class MainHouse extends Building {
   name				= "Main house"  
 
   var buttons = Map[String, Button]( 
-  	"snowTower"      -> new BuildButton(this, "snowTower", Area(Coords(420, 64), UpgradeButton.width, UpgradeButton.height)),
-  	"researchCenter" -> new BuildButton(this, "researchCenter", Area(Coords(484, 64), UpgradeButton.width, UpgradeButton.height)),
-  	"barracks"       -> new BuildButton(this, "barracks", Area(Coords(548, 64), UpgradeButton.width, UpgradeButton.height)),
-  	"wall"   				 -> new BuildButton(this, "wall", Area(Coords(612, 64), UpgradeButton.width, UpgradeButton.height))
+  	"snowTower"      -> new BuildButton(this, "snowTower", Area(Coords(420 + 64, 92), UpgradeButton.width, UpgradeButton.height)),
+  	"researchCenter" -> new BuildButton(this, "researchCenter", Area(Coords(484 + 64, 92), UpgradeButton.width, UpgradeButton.height)),
+  	"barracks"       -> new BuildButton(this, "barracks", Area(Coords(548 + 64, 92), UpgradeButton.width, UpgradeButton.height)),
+  	"wall"   				 -> new BuildButton(this, "wall", Area(Coords(612 + 64, 92), UpgradeButton.width, UpgradeButton.height))
   )  
   
 	def onSelection() = {

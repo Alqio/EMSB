@@ -21,7 +21,7 @@ class Magi() extends EnemyUnit() {
   scoreGain   = 5
   
   //Normal enemies can't load the sprite from global.sprites because then the sprite couldn't be flipped depending on the direction.
-  sprite   = new Sprite(new Texture("magi.png"))
+  sprite   = new Sprite(new Texture("images/magi.png"))
 	deathSound = Some(global.sounds("enemyDeath"))
 	//global.sprites("vihuy")
 	

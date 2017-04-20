@@ -157,12 +157,12 @@ class UnlockButton (val creator: Building, target: String, area: Area, val snowT
 	def drawText(batch: SpriteBatch) = {
 		val text = global.unlocks(target)("text").asInstanceOf[String]
 		val cost = if (!snowTower) global.unlocks(target)("cost").asInstanceOf[Int] else global.unlocks(target)("buildCost").asInstanceOf[Int]
-		val pos = new Vector3(this.area.xy1.x.toFloat, this.area.xy2.y.toFloat + UpgradeButton.height,0)
+		val pos = new Vector3(this.area.xy1.x.toFloat, this.area.xy2.y.toFloat  - UpgradeButton.height - 12,0)
 		global.drawOutline(text + "\nCost: " + cost,  pos.x.toInt, pos.y.toInt, 1, Color.RED, global.font, batch)
 		
 	}
 	
-	 
+	
 	def action() = {
 		if (isPressed) {
 			creator.unlock("unlock", target)
