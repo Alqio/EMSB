@@ -101,11 +101,14 @@ abstract class Instance() {
 
 	/**
 	 * Returns the nearest instance (not self)
+	 * @param onlyEnemy default true
+	 * @param onlyFlying default false
 	 */
 	def instanceNearest(onlyEnemy: Boolean = true, onlyFlying: Boolean = false): Option[Instance] = {
 
 		val sides = if (onlyEnemy) World.instances.filter(x => x.side != this.side).toVector else World.instances.toVector
 		val enemies = if (onlyFlying) sides.filter(x => x.flying) else sides
+		
 		if (enemies.size < 1) {
 			None
 

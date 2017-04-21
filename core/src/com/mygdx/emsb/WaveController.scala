@@ -10,6 +10,7 @@ import com.mygdx.instances.Beafire
 import com.mygdx.instances.Magi
 import com.mygdx.instances.Saks
 import com.mygdx.instances.Borssy
+import com.mygdx.instances.BorssyBungo
 
 /**
  * @author alkiok1
@@ -26,7 +27,7 @@ class WaveController(val file: String = "") {
   //If the waves are not loaded from file, use default waves.
 
   waves += new Wave(0, Array("-"), 10)
-  waves += new Wave(1, Array("borssy"), 30)
+  waves += new Wave(1, Array("borssyBungo"), 30)
   waves += new Wave(2, Array("vihuy", "vihuy", "vihuy", "saks"), 60)
   waves += new Wave(3, Array("vihuy", "saks", "cannibal"), 20)
   waves += new Wave(4, Array("saks", "beafire", "magi"), 20)
@@ -70,6 +71,7 @@ class WaveController(val file: String = "") {
   		case "beafire"  => new Beafire()
   		case "bungo"    => new Bungo()
   		case "borssy"   => new Borssy()
+  		case "borssyBungo" => new BorssyBungo()
   		case _ 					=> new Vihuy()
   	}
   	if (!enemy.flying) {
