@@ -5,7 +5,7 @@ import com.mygdx.emsb.global
 
 
 class Abaji() extends FriendlyUnit(){
-  maxHp      = 8
+  maxHp      = 25
 	hp         = maxHp
   spd        = 0.6
   realSpdX   = spd

@@ -12,7 +12,7 @@ class Beafire() extends EnemyUnit() {
   realSpdX    = spd
   dmg         = 3
   attackSpeed = (60 * randomRange(0.8,1.2)).toInt
-  range       = (20 * randomRange(0.8,1.2)).toInt
+  range       = 20
   name        = "Beafire"
   goldGain    = 25
   scoreGain   = 10

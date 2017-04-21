@@ -22,7 +22,7 @@ class SnowTower() extends Building() {
   hp          = maxHp
   dmg         = 1.0  * math.pow(global.buildingDmgMultiplier, global.buildingDmgLevel)
   range       = 250
-  attackSpeed = 55
+  attackSpeed = (55   * math.pow(global.buildingASMultiplier, global.buildingASLevel)).toInt
   sprite      = global.sprites("snowTower")
   name				= "Snow tower"
   

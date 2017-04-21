@@ -71,7 +71,7 @@ abstract class Character() extends Instance() {
 
 	}
 
-	def canAttack: Boolean = this.target.get.hitArea.isInside(new Coords(this.attackPoint, this.position.y))
+	def canAttack: Boolean = this.target.get.hitArea.isInside(new Coords(this.attackPoint, this.coords.y + 2))
 
 	/**
 	 * This method will be called only if

@@ -27,12 +27,17 @@ class WaveController(val file: String = "") {
   //If the waves are not loaded from file, use default waves.
 
   waves += new Wave(0, Array("-"), 10)
-  waves += new Wave(1, Array("borssyBungo"), 30)
+  waves += new Wave(1, Array("vihuy"), 30)
   waves += new Wave(2, Array("vihuy", "vihuy", "vihuy", "saks"), 60)
-  waves += new Wave(3, Array("vihuy", "saks", "cannibal"), 20)
-  waves += new Wave(4, Array("saks", "beafire", "magi"), 20)
-  waves += new Wave(5, Array("vihuy", "saks", "cannibal", "beafire", "magi"), 20)
-  waves += new Wave(6, Array("bungo"), 20)
+  waves += new Wave(3, Array("vihuy", "saks", "cannibal"), 40)
+  waves += new Wave(4, Array("saks", "beafire", "magi"), 40)
+  waves += new Wave(5, Array("vihuy", "saks", "cannibal", "beafire", "magi"), 60)
+  waves += new Wave(6, Array("bungo"), 50)
+  waves += new Wave(7, Array("beafire", "vihuy", "borssy"), 60)
+  waves += new Wave(8, Array("borssyBungo", "cannibal", "vihuy", "magi"), 40)
+  waves += new Wave(9, Array("borssyBungo", "saks", "vihuy", "magi", "borssy"), 20)
+  waves += new Wave(10, Array("borssyBungo", "saks", "vihuy", "magi", "borssy", "cannibal", "beafire"), 20)
+  
   
   if (file != "") {
   	val loader = new WaveLoader(file)
@@ -64,15 +69,15 @@ class WaveController(val file: String = "") {
    */
   def spawn() = {
   	val enemy: Instance = enemies(rand.nextInt(enemies.size)) match {
-  		case "vihuy"	  => new Vihuy()
-  		case "saks" 		=> new Saks()
-  		case "magi" 	  => new Magi()
-  		case "cannibal" => new Cannibal()
-  		case "beafire"  => new Beafire()
-  		case "bungo"    => new Bungo()
-  		case "borssy"   => new Borssy()
+  		case "vihuy"			 => new Vihuy()
+  		case "saks" 			 => new Saks()
+  		case "magi" 			 => new Magi()
+  		case "cannibal"		 => new Cannibal()
+  		case "beafire" 		 => new Beafire()
+  		case "bungo"   		 => new Bungo()
+  		case "borssy"  		 => new Borssy()
   		case "borssyBungo" => new BorssyBungo()
-  		case _ 					=> new Vihuy()
+  		case _ 						 => new Vihuy()
   	}
   	if (!enemy.flying) {
   		enemy.coords = new Coords(choose(global.minX -30 + irandomRange(-30, 0), global.maxX + 30 + irandomRange(0, 30)), global.spawnHeight)

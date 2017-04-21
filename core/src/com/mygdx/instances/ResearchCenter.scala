@@ -59,7 +59,7 @@ class ResearchCenter() extends Building() {
 	  	if (global.gold >= upgrade("cost").asInstanceOf[Int]) {
 	  		upgrade("level") = upgrade("level").asInstanceOf[Int] + 1
 	  		global.gold -= upgrade("cost").asInstanceOf[Int]
-	  		
+	  		upgrade("cost") = (upgrade("cost").asInstanceOf[Int] * 1.5).asInstanceOf[Int]
 	  		World.instances.foreach(x => if (x.isInstanceOf[Building]) x.asInstanceOf[Building].update(str))
 	  	}
 	  	

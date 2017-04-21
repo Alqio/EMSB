@@ -25,6 +25,7 @@ abstract class Instance() {
 	val solid = false
 	var sprite: Sprite = global.sprites("vihuy")
 	val healthBar: Sprite = global.sprites("healthBar")
+	val healthBarOutline: Sprite = global.sprites("healthBarOutline")
 	var target: Option[Instance] = this.instanceNearest()
 	var projectile: Option[Projectile] = None
 	var name = "sukka mehu"
@@ -64,9 +65,13 @@ abstract class Instance() {
 		this.sprite.draw(batch)
 		
 		val hpRatio = this.hp / this.maxHp
+		
+		this.healthBarOutline.setSize(this.sprite.getWidth(), this.healthBar.getHeight())
+		this.healthBarOutline.setPosition(pos.x - global.camera.coords.x.toFloat, pos.y + this.sprite.getHeight())
 		this.healthBar.setSize(this.sprite.getWidth() * hpRatio.toFloat, this.healthBar.getHeight())
 		this.healthBar.setPosition(pos.x - global.camera.coords.x.toFloat, pos.y + this.sprite.getHeight())
 		this.healthBar.draw(batch)
+		this.healthBarOutline.draw(batch)
 	}
 
 	/**

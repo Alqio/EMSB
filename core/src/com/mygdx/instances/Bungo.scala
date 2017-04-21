@@ -20,23 +20,21 @@ class Bungo() extends EnemyUnit() {
   goldGain   = 4
   var spawned = false
   var falling = false
-  var fallingSpeed = 2.5
+  var fallingSpeed = 1.1
   
   //Normal enemies can't load the sprite from global.sprites because then the sprite couldn't be flipped depending on the direction.
   sprite   = new Sprite(new Texture("images/bungo.png"))
 	deathSound = Some(global.sounds("bungoDeath"))
 	
 	override def setTarget() = {
-		if (!falling) {
-			val j = World.instances.filter(x => x.isInstanceOf[MainHouse])
-			if (j.size != 0)
-				target = Some(j.last)
-			else 
-				target = None
-		} else {
+		val j = World.instances.filter(x => x.isInstanceOf[MainHouse])
+		if (j.size != 0)
+			target = Some(j.last)
+		else 
 			target = None
-		}
 	}
+	
+	override def place_free(x: Int, y: Int) = true
 	
 	override def move() = {
 		if (!falling) {

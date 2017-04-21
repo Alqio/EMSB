@@ -29,7 +29,7 @@ object global {
   val spawnHeight						= 200
   val poisonDamage					= 0.04
   var score                 = 0
-  var gold                  = 345
+  var gold                  = 125
   var playerName            = "Sukka Mehuttaja"
 	val WIDTH                 = 1280
 	val HEIGHT                = 720  
@@ -82,6 +82,7 @@ object global {
     "researchCenterIcon" -> new Sprite(new Texture("images/researchCenterIcon.png")),
     "asUp" 							 -> new Sprite(new Texture("images/attackSpeedIcon.png")),
     "healthBar" 				 -> new Sprite(new Texture("images/healthBar.png")),
+    "healthBarOutline"	 -> new Sprite(new Texture("images/healthBarOutline.png")),
     "barracks" 					 -> new Sprite(new Texture("images/barracks.png")),
     "infantryIcon"       -> new Sprite(new Texture("images/infantryIcon.png")),
     "barracksIcon"       -> new Sprite(new Texture("images/barracksIcon.png")),
@@ -107,7 +108,8 @@ object global {
   	"bungoDeath"    -> Gdx.audio.newSound(Gdx.files.internal("sounds/sndBungoDeath.wav")),
   	"borssyDeath"   -> Gdx.audio.newSound(Gdx.files.internal("sounds/sndBorssyDeath.wav")),
   	"build"         -> Gdx.audio.newSound(Gdx.files.internal("sounds/sndBuild.wav")),
-  	"antiAirShoot"  -> Gdx.audio.newSound(Gdx.files.internal("sounds/sndAntiAirShoot.wav"))
+  	"antiAirShoot"  -> Gdx.audio.newSound(Gdx.files.internal("sounds/sndAntiAirShoot.wav")),
+  	"death" 				-> Gdx.audio.newSound(Gdx.files.internal("sounds/sndDeath.wav"))
   )
 	
 	/**
@@ -310,6 +312,7 @@ object global {
    */
   def death() = {
   	println("vituiks meni")
+  	global.sounds("death").play(0.5f)
   	global.state = new DeathState(ctrl)
   	ctrl.selected = None
   }

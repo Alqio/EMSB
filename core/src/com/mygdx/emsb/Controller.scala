@@ -42,6 +42,7 @@ class Controller extends ApplicationAdapter {
 	var menuMusic: Music 							= _
 	var camera: Camera								= _
 	
+	var menuBg: Sprite								= _
 	var logo: Sprite									= _
 	var tausta: Sprite        				= _
 	var mountains: Sprite 						= _
@@ -76,6 +77,10 @@ class Controller extends ApplicationAdapter {
 		tausta = new Sprite(new Texture(Gdx.files.internal("images/background.png")))
 		tausta.setPosition(0,0)
 		tausta.setSize(global.WIDTH, global.HEIGHT)
+		
+		menuBg = new Sprite(new Texture(Gdx.files.internal("images/bgMenu.png")))
+		menuBg.setPosition(0, 0)
+		menuBg.setSize(1280,720)
 		
 		mountains = new Sprite(new Texture(Gdx.files.internal("images/bgMountain.png")))
 		mountains.setPosition(0,80)
@@ -196,8 +201,12 @@ class Controller extends ApplicationAdapter {
 		global.musics.values.toVector.foreach(_.dispose())
 		global.font.dispose()
 		cursor.dispose()
+		tausta.getTexture().dispose()
+		logo.getTexture().dispose()
+		menuBg.getTexture().dispose()
+		floor.getTexture().dispose()
 		batch.dispose()
-	}
+	} 
 	
 	/**
 	 * Build a new building
@@ -239,13 +248,6 @@ class Controller extends ApplicationAdapter {
 	def handleFightInput() = {
 		
 		
-		if (Gdx.input.isKeyJustPressed(Input.Keys.Q)) {
-			var torni: Option[Building] = if (selected.isDefined && selected.get.isInstanceOf[SnowTower]) Some(selected.get.asInstanceOf[SnowTower]) else None
-			
-			if (torni.isDefined) {
-				selected.get.asInstanceOf[SnowTower].upgrade(math.min(torni.get.level + 1, torni.get.maxLevel))
-			}
-		}
 		/**
 		 * Start a new wave if the previous one was finished.
 		 */

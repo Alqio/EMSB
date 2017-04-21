@@ -10,7 +10,7 @@ class Vihuy() extends EnemyUnit() {
   spd        = 1
   realSpdX   = spd
   dmg        = 1.0
-  range      = 16
+  range      = 20
   name       = "Vihuy"
   goldGain   = 2
   

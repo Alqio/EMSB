@@ -100,6 +100,30 @@ class StartButton(area: Area) extends MenuButton("Normal", area) {
 		}
 	}
 }
+class BackButton(area: Area) extends MenuButton("Back", area) {
+	override def action() = {
+		if (hover) {
+			sprite = hoverSprite
+		} else {
+			sprite = icon
+		}
+		if (isPressed) {
+			global.state = new MenuState(global.ctrl)
+		}
+	}
+}
+class HelpButton(area: Area) extends MenuButton("Help", area) {
+	override def action() = {
+		if (hover) {
+			sprite = hoverSprite
+		} else {
+			sprite = icon
+		}
+		if (isPressed) {
+			global.state = new HelpState(global.ctrl)
+		}
+	}
+}
 class ExitButton(area: Area) extends MenuButton("Quit", area) {
 	override def action() = {
 		if (hover) {
