@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.math.Vector3
 
+import Methods._
 
 import math._
 import com.mygdx.instances.Instance
@@ -60,6 +61,19 @@ class Projectile(val creator: Instance, val spritePath: String) {
   }
   
   /**
+   * Destroy this projectile
+   */
+  def destroy() = {
+		World.projectiles.remove(World.projectiles.indexOf(this))
+		this.sprite.getTexture().dispose()  	
+  }
+  
+  /**
+   * Set new target if needed
+   */
+  def setTarget() = {}
+  
+  /**
    * Step
    */
   def step() = {
@@ -69,11 +83,11 @@ class Projectile(val creator: Instance, val spritePath: String) {
   	} else {
 	  	if (World.projectiles.contains(this) && this.target.isDefined && World.instances.contains(this.target.get)) {
 	  		this.move()
+	  		this.setTarget()
 	  		if (this.target.get.isHitBy(this)) {
 	  			
 	  			target.get.takeDmg(this)
-	  			World.projectiles.remove(World.projectiles.indexOf(this))
-	  			this.sprite.getTexture().dispose()
+	  			this.destroy()
 	  		}
 	  	}
   	}
@@ -86,6 +100,10 @@ class Projectile(val creator: Instance, val spritePath: String) {
 
 case class Snowball1(override val creator: Instance) extends Projectile(creator, "images/snowBall1.png") {
   spd = 8
+  
+}
+case class Snowball7(override val creator: Instance) extends Projectile(creator, "images/snowBall7.png") {
+  spd = 12
   
 }
 case class Snowball2(override val creator: Instance) extends Projectile(creator, "images/snowBall4.png") {
@@ -110,6 +128,49 @@ case class Bone(override val creator: Instance) extends Projectile(creator, "ima
 	spd = 15
 	typeOf = "bone"
 	rot = 30
+}
+case class FallingFireball(override val creator: Instance) extends Projectile(creator, "images/fireBall.png") {
+	spd = 5 * randomRange(0.8,1.2)
+	coords = new Coords(this.creator.position.x + irandomRange(-10,10), this.creator.position.y + irandomRange(-3,3))
+	typeOf = "fire"
+	var side = "enemy"
+	override def setTarget() = {
+		this.target = instanceNearest()
+		println(target)
+	}
+	
+  override def move() = {
+  	this.coords.y -= spd
+  	
+  	if (this.coords.y <= 200) {
+  		this.destroy()
+  	}
+  }	
+	/**
+	 * Returns the nearest instance (not self)
+	 */
+	def instanceNearest(onlyEnemy: Boolean = true): Option[Instance] = {
+
+		val enemies = if (onlyEnemy) World.instances.filter(x => x.side != this.side).toVector else World.instances.toVector
+
+		if (enemies.size < 1) {
+			None
+
+		} else {
+
+			var dist = this.coords.distanceToPoint(enemies(0).coords)
+			var nearest = enemies(0)
+
+			for (ins <- enemies) {
+				if (ins != this && this.coords.distanceToPoint(ins.coords) < dist) {
+					nearest = ins
+					dist = this.coords.distanceToPoint(nearest.coords)
+				}
+			}
+
+			Some(nearest)
+		}
+	}  
 }
 
 /**

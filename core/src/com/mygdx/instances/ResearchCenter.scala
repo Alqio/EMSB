@@ -24,7 +24,8 @@ class ResearchCenter() extends Building() {
   	"ASUpgrade"    -> UpgradeButton(this, "ASUpgrade",  Area(Coords(548, 92), UpgradeButton.width, UpgradeButton.height)),
   	"FireUnlock"   -> new UnlockButton(this, "Fire", Area(Coords(548 + 64, 92), UpgradeButton.width, UpgradeButton.height)),
   	"IceUnlock"    -> new UnlockButton(this, "Ice", Area(Coords(548 + 64 + 64, 92), UpgradeButton.width, UpgradeButton.height)),
-  	"PoisonUnlock" -> new UnlockButton(this, "Poison", Area(Coords(548 + 128 + 64, 92), UpgradeButton.width, UpgradeButton.height))
+  	"PoisonUnlock" -> new UnlockButton(this, "Poison", Area(Coords(548 + 128 + 64, 92), UpgradeButton.width, UpgradeButton.height)),
+  	"AntiAirUnlock" -> new UnlockButton(this, "AntiAir", Area(Coords(420 - 64, 92), UpgradeButton.width, UpgradeButton.height))
   )
   
   /**

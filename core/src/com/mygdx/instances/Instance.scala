@@ -28,6 +28,7 @@ abstract class Instance() {
 	var target: Option[Instance] = this.instanceNearest()
 	var projectile: Option[Projectile] = None
 	var name = "sukka mehu"
+	var flying = false
 	
   var spd: Double = 0
 	var hitSound: Option[Sound] = None
@@ -101,10 +102,10 @@ abstract class Instance() {
 	/**
 	 * Returns the nearest instance (not self)
 	 */
-	def instanceNearest(onlyEnemy: Boolean = true): Option[Instance] = {
+	def instanceNearest(onlyEnemy: Boolean = true, onlyFlying: Boolean = false): Option[Instance] = {
 
-		val enemies = if (onlyEnemy) World.instances.filter(x => x.side != this.side).toVector else World.instances.toVector
-
+		val sides = if (onlyEnemy) World.instances.filter(x => x.side != this.side).toVector else World.instances.toVector
+		val enemies = if (onlyFlying) sides.filter(x => x.flying) else sides
 		if (enemies.size < 1) {
 			None
 

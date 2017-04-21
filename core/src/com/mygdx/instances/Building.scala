@@ -31,6 +31,8 @@ abstract class Building() extends Instance(){
   def onSelection()
   def unlock(typeOf: String, str: String)
   
+  def setTarget() = this.target = this.instanceNearest()
+  
   def step() = {
   	
   	if (this.hp < this.maxHp) {
@@ -42,7 +44,7 @@ abstract class Building() extends Instance(){
   	
   	
   	/** Set target */
-  	this.target = this.instanceNearest()
+  	this.setTarget()
   	
   	/** Attack only if the target is defined 
   	 *  Alarm(0) (and AlarmActions(0)) is for attack

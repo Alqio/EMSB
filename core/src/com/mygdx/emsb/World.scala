@@ -24,7 +24,6 @@ object World{
 		    instance = Some(i) 
 		  }
 		}
-    //println(instance)
     instance
 	}
 	

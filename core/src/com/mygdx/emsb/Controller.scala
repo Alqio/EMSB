@@ -210,11 +210,13 @@ class Controller extends ApplicationAdapter {
 				case Some("researchCenter") => new ResearchCenter()
 				case Some("barracks")       => new Barracks()
 				case Some("wall")         	=> new Wall()
+				case Some("antiAir")        => new AntiAir()
 				case _ 											=> new SnowTower()
 			}
 			buildning.coords = Coords(global.mouseX, global.spawnHeight)
 			World.instances += buildning
 			global.gold -= global.buildables(global.building.get)("cost").asInstanceOf[Int]
+			global.sounds("build").play(0.5f)
 		}
 	}
 	def handleInput() = {

@@ -22,6 +22,10 @@ package object Methods {
 	def randomRange(min: Double, max: Double) = {
 		val rand = util.Random
 		val dist = math.abs(max - min)
+		var num = rand.nextDouble
+		while (num > dist) {
+			num = rand.nextDouble
+		}
 		math.min(min + rand.nextDouble,max)
 	}
 	

@@ -29,7 +29,7 @@ object global {
   val spawnHeight						= 200
   val poisonDamage					= 0.04
   var score                 = 0
-  var gold                  = 125
+  var gold                  = 345
   var playerName            = "Sukka Mehuttaja"
 	val WIDTH                 = 1280
 	val HEIGHT                = 720  
@@ -90,7 +90,9 @@ object global {
     "menuButton" 				 -> new Sprite(new Texture("images/menuButton.png")),
     "menuButtonHover"    -> new Sprite(new Texture("images/menuButtonHover.png")),
     "logo" 							 -> new Sprite(new Texture("images/logo.png")),
-    "abajiIcon" 				 -> new Sprite(new Texture("images/abajiIcon.png"))
+    "abajiIcon" 				 -> new Sprite(new Texture("images/abajiIcon.png")),
+    "antiAir" 					 -> new Sprite(new Texture("images/antiAir.png")),
+    "antiAirIcon"				 -> new Sprite(new Texture("images/antiAirIcon.png"))
    )	
   val musics = Map[String, Music](
   	"background" -> Gdx.audio.newMusic(Gdx.files.internal("sounds/sndBg.mp3")),
@@ -102,7 +104,10 @@ object global {
   	"towerShoot"    -> Gdx.audio.newSound(Gdx.files.internal("sounds/sndShoot.wav")),
   	"saksDeath"     -> Gdx.audio.newSound(Gdx.files.internal("sounds/sndSaksDeath.wav")),
   	"infantryDeath" -> Gdx.audio.newSound(Gdx.files.internal("sounds/sndInfantryDeath.wav")),
-  	"bungoDeath"    -> Gdx.audio.newSound(Gdx.files.internal("sounds/sndBungoDeath.wav"))
+  	"bungoDeath"    -> Gdx.audio.newSound(Gdx.files.internal("sounds/sndBungoDeath.wav")),
+  	"borssyDeath"   -> Gdx.audio.newSound(Gdx.files.internal("sounds/sndBorssyDeath.wav")),
+  	"build"         -> Gdx.audio.newSound(Gdx.files.internal("sounds/sndBuild.wav")),
+  	"antiAirShoot"  -> Gdx.audio.newSound(Gdx.files.internal("sounds/sndAntiAirShoot.wav"))
   )
 	
 	/**
@@ -141,7 +146,14 @@ object global {
 			"text" 		  -> "A poison tower that deals damage over time",
 			"sprite"    -> global.sprites("poisonTowerIcon"),
 			"buildCost" -> 60
-		)
+		),
+    "AntiAir" -> Map[String, Any](
+			"unlocked"  -> false,
+			"cost"      -> 75,
+			"text" 		  -> "Unlock an anti-air tower",
+			"sprite"    -> global.sprites("antiAirIcon"),
+			"buildCost" -> 40
+		)		
   )
   
   
@@ -196,6 +208,11 @@ object global {
   		"cost"    -> 30,
   		"text"    -> "A wall that blocks enemies.",
   		"sprite"  -> global.sprites("wallIcon")
+  	),
+  	"antiAir" -> Map[String, Any] (
+  		"cost"    -> 40,
+  		"text"    -> "An anti-air tower",
+  		"sprite"  -> global.sprites("antiAirIcon")
   	)
   	
   )
@@ -204,10 +221,10 @@ object global {
    * Update the unlocked list. (actually remake it)
    */
   def updateUnlocked() = {
-  	unlocked = (Array(0,1,2,3) zip unlocks.values.map(x => x("unlocked").asInstanceOf[Boolean])).toMap
+  	unlocked = (Array(0,1,2,3, 4) zip unlocks.values.map(x => x("unlocked").asInstanceOf[Boolean])).toMap
   }
   
-  var unlocked = (Array(0,1,2,3) zip unlocks.values.map(x => x("unlocked").asInstanceOf[Boolean])).toMap
+  var unlocked = (Array(0,1,2,3, 4) zip unlocks.values.map(x => x("unlocked").asInstanceOf[Boolean])).toMap
   
   
   

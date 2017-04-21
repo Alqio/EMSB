@@ -9,6 +9,8 @@ import com.mygdx.emsb.global
 import com.mygdx.emsb.Coords
 import com.mygdx.emsb.Area
 
+import collection.mutable.Map
+
 class MainHouse extends Building {
 	
   maxHp       = 200.0 * math.pow(global.buildingHpMultiplier,global.buildingHpLevel)
@@ -24,11 +26,15 @@ class MainHouse extends Building {
   	"researchCenter" -> new BuildButton(this, "researchCenter", Area(Coords(484 + 64, 92), UpgradeButton.width, UpgradeButton.height)),
   	"barracks"       -> new BuildButton(this, "barracks", Area(Coords(548 + 64, 92), UpgradeButton.width, UpgradeButton.height)),
   	"wall"   				 -> new BuildButton(this, "wall", Area(Coords(612 + 64, 92), UpgradeButton.width, UpgradeButton.height))
+  	//"antiAir"    		 -> new BuildButton(this, "antiAir", Area(Coords(612 + 64 + 64, 92), UpgradeButton.width, UpgradeButton.height))
   )  
   
 	def onSelection() = {
   	for (i <- buttons.values) {
   		World.buttons += i
+  	}
+  	if (global.unlocks("AntiAir")("unlocked").asInstanceOf[Boolean]) {
+  		World.buttons += new BuildButton(this, "antiAir", Area(Coords(612 + 64 + 64, 92), UpgradeButton.width, UpgradeButton.height))
   	}
   }
 	def unlock(typeOf: String, str: String) = {}

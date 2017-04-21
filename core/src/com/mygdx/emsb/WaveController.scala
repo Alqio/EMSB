@@ -9,6 +9,7 @@ import com.mygdx.instances.Cannibal
 import com.mygdx.instances.Beafire
 import com.mygdx.instances.Magi
 import com.mygdx.instances.Saks
+import com.mygdx.instances.Borssy
 
 /**
  * @author alkiok1
@@ -25,7 +26,7 @@ class WaveController(val file: String = "") {
   //If the waves are not loaded from file, use default waves.
 
   waves += new Wave(0, Array("-"), 10)
-  waves += new Wave(1, Array("vihuy"), 30)
+  waves += new Wave(1, Array("borssy"), 30)
   waves += new Wave(2, Array("vihuy", "vihuy", "vihuy", "saks"), 60)
   waves += new Wave(3, Array("vihuy", "saks", "cannibal"), 20)
   waves += new Wave(4, Array("saks", "beafire", "magi"), 20)
@@ -68,9 +69,14 @@ class WaveController(val file: String = "") {
   		case "cannibal" => new Cannibal()
   		case "beafire"  => new Beafire()
   		case "bungo"    => new Bungo()
+  		case "borssy"   => new Borssy()
   		case _ 					=> new Vihuy()
   	}
-  	enemy.coords = new Coords(choose(global.minX -30 + irandomRange(-30, 0), global.maxX + 30 + irandomRange(0, 30)), global.spawnHeight)
+  	if (!enemy.flying) {
+  		enemy.coords = new Coords(choose(global.minX -30 + irandomRange(-30, 0), global.maxX + 30 + irandomRange(0, 30)), global.spawnHeight)
+  	} else {
+  		enemy.coords = new Coords(choose(global.minX -30 + irandomRange(-30, 0), global.maxX + 30 + irandomRange(0, 30)), global.spawnHeight + 250 + irandomRange(-20, 5))
+  	}
   	enemyCount += 1
   	World.instances += enemy
   }
