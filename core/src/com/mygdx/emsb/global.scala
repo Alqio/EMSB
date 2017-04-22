@@ -27,7 +27,7 @@ object global {
   var buildingRepairLevel	  = 0
   
   val spawnHeight						= 200
-  val poisonDamage					= 0.04
+  val poisonDamage					= 0.02
   var score                 = 0
   var gold                  = 125
   var playerName            = "Sukka Mehuttaja"
@@ -57,8 +57,7 @@ object global {
 	generator.dispose()
 	
 	parameter.characters = FreeTypeFontGenerator.DEFAULT_CHARS
-	
-	
+
   /**
    * A list of all sprites in the game. They are all loaded when the game starts, and they can then be disposed of later. 
    */

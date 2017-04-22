@@ -20,8 +20,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable
 import com.badlogic.gdx.scenes.scene2d.InputListener
 import com.badlogic.gdx.InputProcessor
 import com.badlogic.gdx.graphics.FPSLogger
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter
+//import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator
+//import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter
 import com.badlogic.gdx.audio._
 import com.badlogic.gdx.graphics.Pixmap
 

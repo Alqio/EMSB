@@ -16,7 +16,10 @@ package object Methods {
 	def irandomRange(min: Int, max: Int) = {
 		val rand = util.Random
 		val dist = math.abs(max - min)
-		min + rand.nextInt(dist)
+		if (dist > 0)
+			min + rand.nextInt(dist)
+		else
+			min
 	}
 
 	def randomRange(min: Double, max: Double) = {

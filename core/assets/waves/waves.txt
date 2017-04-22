@@ -10,3 +10,5 @@ jou
 wave: 3
 enemies: cannibal, saks, magi
 speed: 10
+
+asd

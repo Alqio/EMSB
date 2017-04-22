@@ -1,6 +1,9 @@
 1. Test upgrades, DONE DE VÖRKAR
 2. Test sprites
 
+gradle -> update dependencies
+project -> clean project
+
 Unit tests here mby?
 
 - sounds DONE

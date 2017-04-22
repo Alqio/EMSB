@@ -6,7 +6,7 @@ import com.mygdx.emsb.Controller
 import com.mygdx.emsb.CameraDemo
 /**
  * @author alkiok1
- */
+ */ 
 object DesktopLauncher {
 	def main(args: Array[String]) {
 		var config: LwjglApplicationConfiguration = new LwjglApplicationConfiguration
