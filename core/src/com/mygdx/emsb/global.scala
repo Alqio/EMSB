@@ -17,9 +17,9 @@ import collection.mutable.Map
 
 object global {
   
-  var buildingDmgMultiplier = 1.2
+  var buildingDmgMultiplier = 1.4
   var buildingDmgLevel      = 0
-  var buildingHpMultiplier  = 1.2
+  var buildingHpMultiplier  = 1.4
   var buildingHpLevel       = 0
   var buildingASMultiplier  = 0.8
   var buildingASLevel  			= 0
@@ -38,6 +38,7 @@ object global {
   var building: Option[String] = None
   var buildingSprite: Option[Sprite] = None
   
+  var wave: Int							= 0
   var ctrl: Controller			= null
   var state: State 					= null
   var camera: Camera 				= null
@@ -96,7 +97,7 @@ object global {
    )	
   val musics = Map[String, Music](
   	"background" -> Gdx.audio.newMusic(Gdx.files.internal("sounds/sndBg.mp3")),
-  	"menu"       -> Gdx.audio.newMusic(Gdx.files.internal("sounds/sndMenu.wav"))
+  	"menu"       -> Gdx.audio.newMusic(Gdx.files.internal("sounds/sndMenu.mp3"))
   )
   
   val sounds = Map[String, Sound](
@@ -137,20 +138,20 @@ object global {
     "Fire"    -> Map[String, Any](
 			"unlocked"  -> false,
 			"cost"      -> 100,
-			"text"		  -> "A fire tower that uses fire projectiles to deal extra damage",
+			"text"		  -> "A fire tower that deals more damage",
 			"sprite"    -> global.sprites("fireTowerIcon"),
 			"buildCost" -> 60
 		),
     "Poison" -> Map[String, Any](
 			"unlocked"  -> false,
 			"cost"      -> 100,
-			"text" 		  -> "A poison tower that deals damage over time",
+			"text" 		  -> "A poison tower that deals dot",
 			"sprite"    -> global.sprites("poisonTowerIcon"),
 			"buildCost" -> 60
 		),
     "AntiAir" -> Map[String, Any](
 			"unlocked"  -> false,
-			"cost"      -> 75,
+			"cost"      -> 45,
 			"text" 		  -> "Unlock an anti-air tower",
 			"sprite"    -> global.sprites("antiAirIcon"),
 			"buildCost" -> 40
@@ -234,7 +235,7 @@ object global {
    */
   def reset() = {
   	score 								= 0
-  	gold  								= 120
+  	gold  								= 125
 	  buildingDmgLevel      = 0
 	  buildingHpLevel       = 0
 	  buildingASLevel  			= 0
@@ -242,6 +243,9 @@ object global {
   	upgrades("HpUpgrade")("level") = buildingHpLevel
   	upgrades("ASUpgrade")("level") = buildingASLevel
   	upgrades("DmgUpgrade")("level") = buildingDmgLevel
+  	upgrades("HpUpgrade")("cost") = 45
+  	upgrades("ASUpgrade")("cost") = 50
+  	upgrades("DmgUpgrade")("cost") = 45	
   	updateUnlocked()
   	World.instances.clear()
   	World.buttons.clear()

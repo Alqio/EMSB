@@ -171,8 +171,8 @@ class Controller extends ApplicationAdapter {
 		
 		if (global.state.name == "FightState") {
 			val pos2 = new Vector3(20, global.HEIGHT - 20, 0)
-			global.drawOutline("Score: " + global.score + "\nGold:   " + global.gold, pos2.x.toInt, pos2.y.toInt, 1, Color.RED, font, batch)
-			
+			global.drawOutline("Score: " + global.score + "\nGold:   " + global.gold, pos2.x.toInt, pos2.y.toInt, 1, Color.WHITE, font, batch)
+			global.drawOutline("Wave: " + global.wave, global.WIDTH - 128, global.HEIGHT - 32, 1, Color.WHITE, font, batch)
 			//val pos3 = new Vector3(Gdx.input.getX(), 720 - Gdx.input.getY(), 0)
 			val pos3 = new Vector3(global.mouseX, global.mouseY, 0)
 		  val drawPos = new Vector3(global.mouseViewX, global.mouseViewY,0)

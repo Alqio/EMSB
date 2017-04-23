@@ -13,8 +13,8 @@ class Magi() extends EnemyUnit() {
 	hp          = maxHp
   spd         = 1.3
   realSpdX    = spd
-  dmg         = 1.2
-  attackSpeed = (20 * randomRange(0.8,1.2)).toInt
+  dmg         = 1
+  attackSpeed = (25 * randomRange(0.8,1.2)).toInt
   range       = (150 * randomRange(0.8,1.2)).toInt
   name        = "Magi"
   goldGain    = 15 

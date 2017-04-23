@@ -30,7 +30,7 @@ class WaveController(val file: String = "") {
   waves += new Wave(1, Array("vihuy"), 30)
   waves += new Wave(2, Array("vihuy", "vihuy", "vihuy", "saks"), 60)
   waves += new Wave(3, Array("vihuy", "saks", "cannibal"), 40)
-  waves += new Wave(4, Array("saks", "beafire", "magi"), 40)
+  waves += new Wave(4, Array("saks", "beafire", "magi", "vihuy", "vihuy"), 40)
   waves += new Wave(5, Array("vihuy", "saks", "cannibal", "beafire", "magi"), 60)
   waves += new Wave(6, Array("bungo"), 120)
   waves += new Wave(7, Array("beafire", "vihuy", "borssy"), 60)
@@ -56,7 +56,8 @@ class WaveController(val file: String = "") {
    */
   def startWave() = {
   	finished = false
-  	if (wave < waves.size) {
+  	global.wave += 1
+  	if (wave < waves.size - 1) {
   		wave += 1
   	}
   	enemies = waves(wave).enemies
@@ -100,7 +101,7 @@ class WaveController(val file: String = "") {
 	  	if (alarm(0).time <= 0) {
 	  		if (enemyCount < maxEnemyCount) {
 	  			spawn()
-	  			alarm(0).time = irandomRange(waves(wave).spawnSpeed, 60 + 5 * World.enemies.size)
+	  			alarm(0).time = irandomRange(waves(wave).spawnSpeed, 60 + 15 * World.enemies.size)
 	  		}
 	  	}
 	  	
@@ -109,7 +110,7 @@ class WaveController(val file: String = "") {
 		  		for (i <- 0 until irandomRange(0, 3 + wave)) {
 		  			spawn()
 		  		}
-	  			alarm(1).time = irandomRange(waves(wave).spawnSpeed, 240 + 5 * World.enemies.size)
+	  			alarm(1).time = irandomRange(waves(wave).spawnSpeed, 240 + 10 * World.enemies.size)
 	  		}
 	  	}
 	  	

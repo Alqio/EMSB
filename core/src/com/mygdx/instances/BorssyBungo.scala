@@ -10,7 +10,7 @@ import com.mygdx.emsb.FallingFireball
 
 class BorssyBungo() extends EnemyUnit() {
   
-	maxHp      = 45
+	maxHp      = 60
 	hp         = maxHp
   spd        = 0.8
   realSpdX   = spd
@@ -32,7 +32,7 @@ class BorssyBungo() extends EnemyUnit() {
 	
 	override def attack() = {
 		if (attacking <= 0) {
-			for (i <- 0 until irandomRange(1,5)) {
+			for (i <- 0 until irandomRange(1,2)) {
 				var i = new Bungo()
 				i.coords = new Coords(this.position.x + irandomRange(-15, 15), this.position.y + irandomRange(-10, 10))
 				i.falling = true

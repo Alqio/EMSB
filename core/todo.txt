@@ -50,10 +50,12 @@ Unit tests here mby?
 KORJAA VIKA WAVE
 NÄYTÄ CURRENT WAVE
 
+MUUTA MISTÄ WAVES.TXT LUETAAN
+
 buffaa 
 beafire nopeutta DONE
 börry hp, spd DONE
-poison damage
+poison damage DONE
 anti air attack speed DONE
 borssy bungo putoamisspeed ja normi spd ja enemmän kerralla  DONE
 

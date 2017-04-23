@@ -20,7 +20,7 @@ class Barracks() extends Building(){
     
   var buttons = Map[String, Button]( 
   	"Infantry"   -> new BarracksButton(this, "Infantry", Area(Coords(420 + 64 , 92), UpgradeButton.width, UpgradeButton.height)),
-  	"Abaji"   	 -> new BarracksButton(this, "Abaji", Area(Coords(420 + 64 + 64 , 92), UpgradeButton.width, UpgradeButton.height))
+  	"Abaji"   	 -> new BarracksButton(this, "Abaji", Area(Coords(420 + 64 + 64 + 1, 92), UpgradeButton.width, UpgradeButton.height))
   )
   	
 	def spawn(what: String) = {

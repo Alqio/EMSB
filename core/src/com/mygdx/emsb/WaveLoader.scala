@@ -19,10 +19,10 @@ class WaveLoader(val input: String){
 		//val f = Source.fromURL(Source.getClass().getResource(input))
 		//val f = Source.fromFile(input)
 		
-		val handle: FileHandle = Gdx.files.internal(input)
+		val handle: FileHandle = Gdx.files.internal("waves/waves.txt")
 		val f = handle.readString().split("\n")
-		var fileLines = f.toList.filter(x => x != "").map(x => x.toLowerCase()).dropWhile(x => !x.contains("wave"))
-		
+		var fileLines = f.toList.filter(x => x != "" && !x.startsWith("#")).map(x => x.toLowerCase()).dropWhile(x => !x.contains("wave"))
+		println("Lines: \n" + fileLines.mkString("\n"))
 		
 		while (fileLines.size >= 3) {
 			waves += createWave(fileLines.take(3))
@@ -31,6 +31,7 @@ class WaveLoader(val input: String){
 				fileLines = fileLines.drop(1)
 			}
 		}
+		println(this.waves.sortBy(_.number).mkString("\n"))
 		
 	} catch {
 		case ex: FileNotFoundException => println("Error: File " + input + " not found")

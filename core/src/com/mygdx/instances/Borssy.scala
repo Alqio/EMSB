@@ -10,7 +10,7 @@ import com.mygdx.emsb.FallingFireball
 
 class Borssy() extends EnemyUnit() {
   
-	maxHp      = 15
+	maxHp      = 45
 	hp         = maxHp
   spd        = 2.5
   realSpdX   = spd

@@ -23,9 +23,9 @@ class MainHouse extends Building {
 
   var buttons = Map[String, Button]( 
   	"snowTower"      -> new BuildButton(this, "snowTower", Area(Coords(420 + 64, 92), UpgradeButton.width, UpgradeButton.height)),
-  	"researchCenter" -> new BuildButton(this, "researchCenter", Area(Coords(484 + 64, 92), UpgradeButton.width, UpgradeButton.height)),
-  	"barracks"       -> new BuildButton(this, "barracks", Area(Coords(548 + 64, 92), UpgradeButton.width, UpgradeButton.height)),
-  	"wall"   				 -> new BuildButton(this, "wall", Area(Coords(612 + 64, 92), UpgradeButton.width, UpgradeButton.height))
+  	"researchCenter" -> new BuildButton(this, "researchCenter", Area(Coords(484 + 64 + 1, 92), UpgradeButton.width, UpgradeButton.height)),
+  	"barracks"       -> new BuildButton(this, "barracks", Area(Coords(548 + 64 + 2, 92), UpgradeButton.width, UpgradeButton.height)),
+  	"wall"   				 -> new BuildButton(this, "wall", Area(Coords(612 + 64 + 3, 92), UpgradeButton.width, UpgradeButton.height))
   	//"antiAir"    		 -> new BuildButton(this, "antiAir", Area(Coords(612 + 64 + 64, 92), UpgradeButton.width, UpgradeButton.height))
   )  
   
@@ -34,7 +34,7 @@ class MainHouse extends Building {
   		World.buttons += i
   	}
   	if (global.unlocks("AntiAir")("unlocked").asInstanceOf[Boolean]) {
-  		World.buttons += new BuildButton(this, "antiAir", Area(Coords(612 + 64 + 64, 92), UpgradeButton.width, UpgradeButton.height))
+  		World.buttons += new BuildButton(this, "antiAir", Area(Coords(612 + 64 + 64 + 4, 92), UpgradeButton.width, UpgradeButton.height))
   	}
   }
 	def unlock(typeOf: String, str: String) = {}

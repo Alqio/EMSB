@@ -20,12 +20,12 @@ class ResearchCenter() extends Building() {
   
   var buttons = Map[String, Button]( // new Area(Coords(420, 40), Coords(452, 72))
   	"DmgUpgrade"   -> UpgradeButton(this, "DmgUpgrade", Area(Coords(420, 92), UpgradeButton.width, UpgradeButton.height)),
-  	"HpUpgrade"    -> UpgradeButton(this, "HpUpgrade",  Area(Coords(484, 92), UpgradeButton.width, UpgradeButton.height)),
-  	"ASUpgrade"    -> UpgradeButton(this, "ASUpgrade",  Area(Coords(548, 92), UpgradeButton.width, UpgradeButton.height)),
-  	"FireUnlock"   -> new UnlockButton(this, "Fire", Area(Coords(548 + 64, 92), UpgradeButton.width, UpgradeButton.height)),
-  	"IceUnlock"    -> new UnlockButton(this, "Ice", Area(Coords(548 + 64 + 64, 92), UpgradeButton.width, UpgradeButton.height)),
-  	"PoisonUnlock" -> new UnlockButton(this, "Poison", Area(Coords(548 + 128 + 64, 92), UpgradeButton.width, UpgradeButton.height)),
-  	"AntiAirUnlock" -> new UnlockButton(this, "AntiAir", Area(Coords(420 - 64, 92), UpgradeButton.width, UpgradeButton.height))
+  	"HpUpgrade"    -> UpgradeButton(this, "HpUpgrade",  Area(Coords(484 + 1, 92), UpgradeButton.width, UpgradeButton.height)),
+  	"ASUpgrade"    -> UpgradeButton(this, "ASUpgrade",  Area(Coords(548 + 2, 92), UpgradeButton.width, UpgradeButton.height)),
+  	"FireUnlock"   -> new UnlockButton(this, "Fire", Area(Coords(548 + 64 + 3, 92), UpgradeButton.width, UpgradeButton.height)),
+  	"IceUnlock"    -> new UnlockButton(this, "Ice", Area(Coords(548 + 64 + 64 + 4, 92), UpgradeButton.width, UpgradeButton.height)),
+  	"PoisonUnlock" -> new UnlockButton(this, "Poison", Area(Coords(548 + 128 + 64 + 5, 92), UpgradeButton.width, UpgradeButton.height)),
+  	"AntiAirUnlock" -> new UnlockButton(this, "AntiAir", Area(Coords(420 - 64 - 1, 92), UpgradeButton.width, UpgradeButton.height))
   )
   
   /**

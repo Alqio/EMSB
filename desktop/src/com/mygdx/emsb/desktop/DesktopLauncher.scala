@@ -7,7 +7,7 @@ import com.mygdx.emsb.CameraDemo
 /**
  * @author alkiok1
  */ 
-object DesktopLauncher {
+object DesktopLauncher1 {
 	def main(args: Array[String]) {
 		var config: LwjglApplicationConfiguration = new LwjglApplicationConfiguration
 		config.foregroundFPS = 120
@@ -16,6 +16,7 @@ object DesktopLauncher {
 		config.title  = "Hermo's Revenge: Evil Miguli Strikes Back"
 		config.vSyncEnabled = false
 		config.forceExit = false
+		config.resizable = false
 		
 		//        cfg.addIcon("data/ic_launcher.png", Files.FileType.Internal);
 
