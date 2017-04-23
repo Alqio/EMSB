@@ -35,8 +35,8 @@ class WaveController(val file: String = "") {
   waves += new Wave(6, Array("bungo"), 120)
   waves += new Wave(7, Array("beafire", "vihuy", "borssy"), 60)
   waves += new Wave(8, Array("borssyBungo", "cannibal", "vihuy", "magi"), 40)
-  waves += new Wave(9, Array("borssyBungo", "saks", "vihuy", "magi", "borssy"), 20)
-  waves += new Wave(10, Array("borssyBungo", "saks", "vihuy", "magi", "borssy", "cannibal", "beafire"), 20)
+  waves += new Wave(9, Array("borssyBungo", "saks", "vihuy", "magi", "borssy"), 10)
+  waves += new Wave(10, Array("borssyBungo", "saks", "vihuy", "magi", "borssy", "cannibal", "beafire"), 10)
   
   
   if (file != "") {
@@ -56,7 +56,9 @@ class WaveController(val file: String = "") {
    */
   def startWave() = {
   	finished = false
-  	wave += 1
+  	if (wave < waves.size) {
+  		wave += 1
+  	}
   	enemies = waves(wave).enemies
   	maxEnemyCount = 10 + wave * 5
   	enemyCount = 0

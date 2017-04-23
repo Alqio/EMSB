@@ -157,7 +157,7 @@ abstract class Instance() {
 		if (p.typeOf == "ice") {
 			alarms(1).time = 60
 		} else if (p.typeOf == "poison") {
-			alarms(2).time = 120
+			alarms(2).time = 60
 		}
 	}
 	

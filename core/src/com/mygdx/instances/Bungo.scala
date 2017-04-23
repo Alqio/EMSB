@@ -20,7 +20,7 @@ class Bungo() extends EnemyUnit() {
   goldGain   = 4
   var spawned = false
   var falling = false
-  var fallingSpeed = 1.1
+  var fallingSpeed = 1.5
   
   //Normal enemies can't load the sprite from global.sprites because then the sprite couldn't be flipped depending on the direction.
   sprite   = new Sprite(new Texture("images/bungo.png"))
@@ -41,7 +41,7 @@ class Bungo() extends EnemyUnit() {
   		this.coords.x += this.realSpdX * suunta
 		} else {
 			this.coords.y -= this.fallingSpeed
-			this.fallingSpeed += 0.01
+			this.fallingSpeed += 0.02
 			println("jo")
 			if (this.coords.y <= global.spawnHeight) {
 				falling = false

@@ -27,7 +27,7 @@ object global {
   var buildingRepairLevel	  = 0
   
   val spawnHeight						= 200
-  val poisonDamage					= 0.02
+  val poisonDamage					= 0.04
   var score                 = 0
   var gold                  = 125
   var playerName            = "Sukka Mehuttaja"

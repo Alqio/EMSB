@@ -6,15 +6,15 @@ import com.mygdx.emsb.global
 
 class Beafire() extends EnemyUnit() {
   
-	maxHp       = 20
+	maxHp       = 16
 	hp          = maxHp
-  spd         = 0.3
+  spd         = 0.6
   realSpdX    = spd
   dmg         = 3
   attackSpeed = (60 * randomRange(0.8,1.2)).toInt
   range       = 20
   name        = "Beafire"
-  goldGain    = 25
+  goldGain    = 15
   scoreGain   = 10
   
   //Normal enemies can't load the sprite from global.sprites because then the sprite couldn't be flipped depending on the direction.

@@ -13,9 +13,9 @@ class AntiAir extends Building {
 	
   maxHp       = 15.0 * math.pow(global.buildingHpMultiplier,global.buildingHpLevel)
   hp          = maxHp
-  dmg         = 1.0   * math.pow(global.buildingDmgMultiplier, global.buildingDmgLevel)
-  range       = 300
-  attackSpeed = 25
+  dmg         = 1.5   * math.pow(global.buildingDmgMultiplier, global.buildingDmgLevel)
+  range       = 400
+  attackSpeed = 10
   sprite      = global.sprites("antiAir")
   name				= "Anti Air tower"  
   sndShoot    = global.sounds("antiAirShoot")

@@ -47,6 +47,20 @@ Unit tests here mby?
 	- miguli
 
 
+KORJAA VIKA WAVE
+NÄYTÄ CURRENT WAVE
+
+buffaa 
+beafire nopeutta DONE
+börry hp, spd DONE
+poison damage
+anti air attack speed DONE
+borssy bungo putoamisspeed ja normi spd ja enemmän kerralla  DONE
+
+nerfaa
+ice tower damage
+
+
 24.3.17 18:19
 Jatka seuraavaks selectionia, laita jonnekin näkymään upgradevaihtoehdot ja sillein et niit voi joko painaa, tai sit valita näppiksellä
 
