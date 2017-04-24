@@ -10,19 +10,19 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Files
 import com.badlogic.gdx.files.FileHandle
 
+/**
+ * WaveLoader loads from a file if possible
+ */
 class WaveLoader(val input: String){
 
 	//var input = "waves.txt"
 	val waves = Buffer[Wave]()
 	waves += new Wave(0, Array("-"), 10)
 	try {
-		//val f = Source.fromURL(Source.getClass().getResource(input))
-		//val f = Source.fromFile(input)
 		
 		val handle: FileHandle = Gdx.files.internal("waves/waves.txt")
 		val f = handle.readString().split("\n")
 		var fileLines = f.toList.filter(x => x != "" && !x.startsWith("#")).map(x => x.toLowerCase()).dropWhile(x => !x.contains("wave"))
-		println("Lines: \n" + fileLines.mkString("\n"))
 		
 		while (fileLines.size >= 3) {
 			waves += createWave(fileLines.take(3))
@@ -31,14 +31,16 @@ class WaveLoader(val input: String){
 				fileLines = fileLines.drop(1)
 			}
 		}
-		println(this.waves.sortBy(_.number).mkString("\n"))
 		
 	} catch {
 		case ex: FileNotFoundException => println("Error: File " + input + " not found")
 		case e: Exception							 => println("Error: " + e)
 		case _ : Throwable 						 => println("An error occurred")
 	}
-
+	
+	/**
+	 * Load waves
+	 */
 	def getWaves() = this.waves.sortBy(_.number)
 	
 	
@@ -95,6 +97,9 @@ class WaveLoader(val input: String){
 		
 	}
 	
+	/**
+	 * This is used for splitting strings
+	 */
 	implicit class StringImp(s: String) {
 		/*
 		 * Compare string when they are lowercased and trimmed

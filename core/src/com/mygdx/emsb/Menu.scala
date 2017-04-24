@@ -2,10 +2,14 @@ package com.mygdx.emsb
 
 import collection.mutable.Buffer
 
+/**
+ * Object Menu loads all the buttons that the menu needs
+ */
+
 object Menu {
   var inMenu = true
   
-  val buttons = Buffer[Button]()
+  val buttons		  = Buffer[Button]()
   val helpButtons = Buffer[Button]()
   
   buttons += new StartButton(Area(Coords(640 - 64, 360), MenuButton.width, MenuButton.height))

@@ -10,11 +10,11 @@ import com.mygdx.emsb.Coords
 
 class Bungo() extends EnemyUnit() {
   
-	maxHp      = 2
+	maxHp      = 2   * global.enemyLevel
 	hp         = maxHp
   spd        = 3
   realSpdX   = spd
-  dmg        = 4.0
+  dmg        = 4.0 * global.enemyLevel
   range      = 20
   name       = "Bungo"
   goldGain   = 4
@@ -26,6 +26,7 @@ class Bungo() extends EnemyUnit() {
   sprite   = new Sprite(new Texture("images/bungo.png"))
 	deathSound = Some(global.sounds("bungoDeath"))
 	
+	//Bungos go straight for the main house
 	override def setTarget() = {
 		val j = World.instances.filter(x => x.isInstanceOf[MainHouse])
 		if (j.size != 0)

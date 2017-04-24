@@ -14,14 +14,14 @@ import com.mygdx.emsb.global
 
 
 /**
- * @author alkiok1
+ * Instance class represents buildings and characters
  */
 abstract class Instance() {
 
 	//Coords class is mutable and changes when the coordinate changes
 	var coords = new Coords(100, 480)
 
-	var suunta = 1 //1 = oikea, -1 = vasen
+	var suunta = 1 //1 = right, -1 = left
 	val solid = false
 	var sprite: Sprite = global.sprites("vihuy")
 	val healthBar: Sprite = global.sprites("healthBar")
@@ -58,7 +58,7 @@ abstract class Instance() {
 	//alarm 1 ice effect
 	//alarm 2 poison
 
-	/** Draw the instance */
+	/** Draw the instance and its health bar*/
 	def draw(batch: SpriteBatch) = {
 		val pos = new Vector3(this.coords.x.toFloat, this.coords.y.toFloat, 0)
 		this.sprite.setPosition(pos.x - global.camera.coords.x.toFloat, pos.y)
@@ -140,11 +140,11 @@ abstract class Instance() {
 		funktio()
 	}
 
-	/** Each instance's step event is called fps(60?) times a second. */
+	/** Each instance's step event is called fps times a second. */
 	def step()
 
 	/**
-	 * Take dmg from projectiles for example
+	 * Take dmg from projectiles
 	 */
 	def takeDmg(p: Projectile) = {
 		this.hp -= p.dmg
@@ -160,12 +160,17 @@ abstract class Instance() {
 			alarms(2).time = 60
 		}
 	}
-	
+	/**
+	 * Take damage
+	 */
 	def takeDmg(dmg: Double) = {
 		this.hp -= dmg
 		if (this.hp <= 0) die()
 	}
-
+	
+	/**
+	 * Destroy the instance
+	 */
 	def die() = {
 		if (this.deathSound.isDefined) deathSound.get.play(0.5f * global.volume)
 		if (this.isInstanceOf[EnemyUnit]) {

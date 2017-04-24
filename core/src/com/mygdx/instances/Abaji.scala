@@ -18,6 +18,6 @@ class Abaji() extends FriendlyUnit(){
   //Normal enemies can't load the sprite from global.sprites because then the sprite couldn't be flipped depending on the direction.
   sprite   = new Sprite(new Texture("images/abaji.png"))
 	deathSound = Some(global.sounds("infantryDeath"))
-	//global.sprites("vihuy")
+
 	override def place_free(x: Int, y: Int) = true
 }

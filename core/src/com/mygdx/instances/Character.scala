@@ -19,13 +19,17 @@ abstract class Character() extends Instance() {
 	var attackPoint = this.coords.x
 
 	var direction = 0 // 0 - 360
-
+	
+	//After freezing effect ends, set speed back to normal
 	this.alarmActions(this.alarms(1)) = () => {
 		this.realSpdX = spd
 	}
 
 	def setTarget() = this.target = this.instanceNearest()
 
+	/**
+	 * Try to attack the target or move if not in range yet
+	 */
 	def step() = {
 
 		this.setTarget()
@@ -87,10 +91,10 @@ abstract class Character() extends Instance() {
 
 	/**
 	 * Move the character if possible.
-	 *  Returns true if move was successfull, else false
+	 * Returns true if move was successfull, else false
 	 */
 	def move() = {
-		//btw, ei toimi :)))
+		
 		if (place_free(this.position.x.toInt + (this.realSpdX.toInt + this.sprite.getWidth().toInt / 2) * suunta, this.position.y.toInt + this.realSpdY.toInt) && this.target.isDefined) {
 			this.coords.x += this.realSpdX * suunta
 			this.coords.y += (if (this.coords.y < this.target.get.coords.y) this.realSpdY else -1 * this.realSpdY)
@@ -101,7 +105,7 @@ abstract class Character() extends Instance() {
 	}
 
 	/**
-	 *  checks if the place in coordinates (x,y) is free (it doesn't contain a SOLID object)
+	 *  Checks if the place in coordinates (x,y) is free (it doesn't contain a SOLID object)
 	 */
 	def place_free(x: Int, y: Int): Boolean = {
 		val newCoords = new Coords(x, y)

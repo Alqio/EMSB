@@ -6,6 +6,10 @@ import com.badlogic.gdx.graphics.g2d.Sprite
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Color
 
+/**
+ * States represent different game states (such as FightState or MenuState)
+ * A state will determines what will be drawn and whose step event will be executed during game loop
+ */
 abstract class State(val name: String, val ctrl: Controller) {
 	
   def draw(batch: SpriteBatch)
@@ -51,9 +55,6 @@ class MenuState(override val ctrl: Controller) extends State("MenuState", ctrl) 
 
 class FightState(override val ctrl: Controller) extends State("FightState", ctrl) {
 	
-	def create() = {
-		
-	}
 	
 	def draw(batch: SpriteBatch) = {
 	  ctrl.tausta.draw(batch)

@@ -8,8 +8,12 @@ import com.badlogic.gdx.math.Vector3
 import com.badlogic.gdx.graphics.Color
 import com.mygdx.instances.Building
 import com.badlogic.gdx.graphics.g2d.GlyphLayout
+
+
 /**
- * @author alkiok1
+ * Button class represents buttons (surprisingly)
+ * @param area This button's area (where it can be clicked/hovered)
+ * @param target what is this button's target unlock/upgrade
  */
 abstract class Button(val area: Area, val target: String) {
   
@@ -21,7 +25,6 @@ abstract class Button(val area: Area, val target: String) {
 	 * Check whether the button has been pressed this step
 	 */
 	def isPressed = {
-		//println(new Coords(Gdx.input.getX(), global.HEIGHT - Gdx.input.getY()))
 		Gdx.input.justTouched() && hover
 	}
 	/**
@@ -40,11 +43,14 @@ abstract class Button(val area: Area, val target: String) {
 	
 	def height = this.area.height
 	
+	/**
+	 * Draw text (can be drawn inside or outside the button)
+	 */
 	def drawText(batch: SpriteBatch)
 	
   /** 
-   *  Draw the button 
-   *  */
+   *  Draw the button, its text and its icon
+   */
   def draw(batch: SpriteBatch) = {
     val pos = new Vector3(this.area.xy1.x.toFloat, this.area.xy1.y.toFloat, 0)
     this.sprite.setPosition(pos.x, pos.y)
@@ -60,6 +66,9 @@ abstract class Button(val area: Area, val target: String) {
 	
 }
 
+/**
+ * Menu button represents the buttons in the menu. It draws its text centered and inside the button
+ */
 
 class MenuButton(text: String, area: Area) extends Button(area, text) {
 	
@@ -95,6 +104,7 @@ class StartButton(area: Area) extends MenuButton("Normal", area) {
 			sprite = icon
 		}
 		if (isPressed) {
+			global.ctrl.filePath = ""
 			global.state = new FightState(global.ctrl)
 			global.ctrl.init()
 		}
@@ -151,6 +161,9 @@ class LoadButton(area: Area) extends MenuButton("Custom", area) {
 	}
 }
 
+/**
+ * This button is used by research center to upgrade buildings
+ */
 class UpgradeButton (val creator: Building, target: String, area: Area) extends Button(area, target) {
 	
 	var sprite = global.sprites("squareButton")
@@ -172,7 +185,9 @@ class UpgradeButton (val creator: Building, target: String, area: Area) extends 
 	}
 	
 }
-
+/**
+ * This button is used by research center to unlock new buildings
+ */
 class UnlockButton (val creator: Building, target: String, area: Area, val snowTower: Boolean = false) extends Button(area, target) {
 	
 	var sprite = global.sprites("squareButton")
@@ -194,7 +209,9 @@ class UnlockButton (val creator: Building, target: String, area: Area, val snowT
 	}
 	
 }
-
+/**
+ * This buttons is used by Main House to create new buildnings
+ */
 class BuildButton (val creator: Building, target: String, area: Area) extends Button(area, target) {
 	var sprite = global.sprites("squareButton")
 	var icon = global.buildables(target)("sprite").asInstanceOf[Sprite]
@@ -213,7 +230,9 @@ class BuildButton (val creator: Building, target: String, area: Area) extends Bu
 		}
 	}
 }
-
+/**
+ * This button is used by barracks to create new units
+ */
 class BarracksButton (val creator: Building, target: String, area: Area) extends Button(area, target) {
 	var sprite = global.sprites("squareButton")
 	var icon   = global.upgrades(target)("sprite").asInstanceOf[Sprite]//global.buildables(target)("sprite").asInstanceOf[Sprite]
@@ -231,7 +250,9 @@ class BarracksButton (val creator: Building, target: String, area: Area) extends
 		}
 	}
 }
-
+/**
+ * This object is used to get the width and height of the button
+ */
 
 object UpgradeButton {
 	
@@ -243,7 +264,9 @@ object UpgradeButton {
 	}
 	
 }
-
+/**
+ * This object is used to get the width and height of the button
+ */
 object MenuButton {
 	def width = global.sprites("menuButton").getWidth.toInt
 	def height = global.sprites("menuButton").getHeight.toInt

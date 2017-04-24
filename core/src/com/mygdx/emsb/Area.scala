@@ -16,18 +16,11 @@ class Area(val xy1: Coords, val xy2: Coords) {
 	 */
 	def isInside(coords: Coords) = pienempiX <= coords.x && suurempiX >= coords.x && suurempiY >= coords.y && pienempiY <= coords.y
 		
-	/**
-	 * Checks if an area is inside this area
-	 */
-	/*
-	 * this.pienempiX <= area.pienempiX && 
-														 this.pienempiY <= area.pienempiY && 
-														 this.suurempiX >= area.suurempiX && 
-														 this.suurempiY >= area.suurempiY
-	 */
-	
 	def isInside(area: Area) = intersects(area)
 	
+	/**
+	 * Checks whether this and another area intersect
+	 */
 	def intersects(area: Area) = {
 		pienempiX <= area.pienempiX + area.width && pienempiX + width >= area.pienempiX && pienempiY <= area.pienempiY + area.height && pienempiY + height >= area.pienempiY
 	}

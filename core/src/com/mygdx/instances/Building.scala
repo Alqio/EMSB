@@ -16,7 +16,6 @@ abstract class Building() extends Instance(){
    * This method updates the building's hp and damage when they have been upgraded in researchCenter.
    */
   def update(str: String) = {
-  	println("updated!")
   	var level = global.upgrades(str)("level").asInstanceOf[Int] 
   	str match {
   		case "DmgUpgrade" => this.dmg *= global.buildingDmgMultiplier
@@ -27,7 +26,9 @@ abstract class Building() extends Instance(){
   		case "ASUpgrade"  => this.attackSpeed = (this.attackSpeed * global.buildingASMultiplier).toInt
   	}
   }
-  
+  /**
+   * What happens when selecting this building
+   */
   def onSelection()
   def unlock(typeOf: String, str: String)
   
@@ -60,7 +61,5 @@ abstract class Building() extends Instance(){
   def canAttack: Boolean = {
   	this.coords.distanceToPoint(this.target.get.coords) <= this.range && this.alarms(0).time == -1
   }
-  
-
   
 }

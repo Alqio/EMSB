@@ -11,7 +11,7 @@ import com.mygdx.emsb.Area
 
 class AntiAir extends Building {
 	
-  maxHp       = 30.0 * math.pow(global.buildingHpMultiplier,global.buildingHpLevel)
+  maxHp       = 30.0   * math.pow(global.buildingHpMultiplier,global.buildingHpLevel)
   hp          = maxHp
   dmg         = 3.2    * math.pow(global.buildingDmgMultiplier, global.buildingDmgLevel)
   range       = 400
@@ -20,6 +20,9 @@ class AntiAir extends Building {
   name				= "Anti Air tower"  
   sndShoot    = global.sounds("antiAirShoot")
   
+  /**
+   * Anti-Air tower hits only flying targets
+   */
   override def setTarget() = {
   	this.target = this.instanceNearest(true, true)
   }

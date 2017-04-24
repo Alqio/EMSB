@@ -15,16 +15,24 @@ import com.mygdx.instances.MainHouse
 import collection.mutable.LinkedHashMap
 import collection.mutable.Map
 
+/**
+ * Object global handles all global values and methods
+ * It also loads most sprites, sounds and musics that the game needs.
+ */
+
 object global {
   
+	//global values
   var buildingDmgMultiplier = 1.4
   var buildingDmgLevel      = 0
   var buildingHpMultiplier  = 1.4
   var buildingHpLevel       = 0
   var buildingASMultiplier  = 0.8
   var buildingASLevel  			= 0
-  var buildingRepairSpeed   = 0.001
+  var buildingRepairSpeed   = 0.0012
   var buildingRepairLevel	  = 0
+  
+  var enemyLevel: Float 		= 1
   
   val spawnHeight						= 200
   val poisonDamage					= 0.04
@@ -35,21 +43,27 @@ object global {
 	val HEIGHT                = 720  
 	val minX									= -800
 	val maxX									= WIDTH + 800
-  var building: Option[String] = None
-  var buildingSprite: Option[Sprite] = None
+	
   
   var wave: Int							= 0
-  var ctrl: Controller			= null
-  var state: State 					= null
-  var camera: Camera 				= null
+  
+  //Controller will set these values
+  var ctrl: Controller			= _
+  var state: State 					= _
+  var camera: Camera 				= _
+  
   var mouseX								= 0
   var mouseY								= 0
   var mouseViewX						= 0
   var mouseViewY						= 0
+  
   //Volume is either 1f or 0f, 0f meaning the game is muted
   var volume								= 1f
   
-  //Create fonts
+  var building: Option[String] = None
+  var buildingSprite: Option[Sprite] = None
+  
+  //Create font
 	val generator: FreeTypeFontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/04B_03__.TTF"))
 	val parameter: FreeTypeFontParameter = new FreeTypeFontParameter()
 	parameter.size = 24
@@ -60,7 +74,7 @@ object global {
 	parameter.characters = FreeTypeFontGenerator.DEFAULT_CHARS
 
   /**
-   * A list of all sprites in the game. They are all loaded when the game starts, and they can then be disposed of later. 
+   * Maps of most sprites, sounds and musics in the game. They are all loaded when the game starts, and they can then be disposed of later. 
    */
   val sprites = Map[String, Sprite](
     "vihuy"          		 -> new Sprite(new Texture("images/vihuy.png")),
@@ -94,7 +108,8 @@ object global {
     "abajiIcon" 				 -> new Sprite(new Texture("images/abajiIcon.png")),
     "antiAir" 					 -> new Sprite(new Texture("images/antiAir.png")),
     "antiAirIcon"				 -> new Sprite(new Texture("images/antiAirIcon.png"))
-   )	
+   )
+  
   val musics = Map[String, Music](
   	"background" -> Gdx.audio.newMusic(Gdx.files.internal("sounds/sndBg.mp3")),
   	"menu"       -> Gdx.audio.newMusic(Gdx.files.internal("sounds/sndMenu.mp3"))
@@ -111,15 +126,7 @@ object global {
   	"antiAirShoot"  -> Gdx.audio.newSound(Gdx.files.internal("sounds/sndAntiAirShoot.wav")),
   	"death" 				-> Gdx.audio.newSound(Gdx.files.internal("sounds/sndDeath.wav"))
   )
-	
-	/**
-	 * Unlocked map represents unlocked upgrades.
-	 * For example, if snowTower doesn't have any upgrades, it has only Array(1),
-	 * and 1 representing the level of the upgrade (1 = initial level)
-	 * 
-	 * If it has unlocked for example fire tower (level 3), it is "snowTower" -> Array(1, 3)
-	 * 
-	 */
+	//Unlocks map contains the possible unlocks for Snow tower
 	var unlocks = LinkedHashMap[String, Map[String, Any]](
 		"Normal" -> Map[String, Any](
 			"unlocked" -> true,
@@ -158,7 +165,7 @@ object global {
 		)		
   )
   
-  
+  //Upgrades map contains possible upgrades that research center has and units that barracks can summon
   val upgrades = LinkedHashMap[String, Map[String, Any]](
   	"HpUpgrade" -> Map[String, Any] (
   		"level" -> this.buildingHpLevel,
@@ -189,7 +196,7 @@ object global {
   		"sprite" -> global.sprites("abajiIcon")
   	)
   )
- 
+ 	//Buildables contains all possible buildings
   val buildables = LinkedHashMap[String, Map[String, Any]] (
   	"snowTower" -> Map[String, Any] (
   		"cost"    -> 15,
@@ -225,7 +232,14 @@ object global {
   def updateUnlocked() = {
   	unlocked = (Array(0,1,2,3, 4) zip unlocks.values.map(x => x("unlocked").asInstanceOf[Boolean])).toMap
   }
-  
+	/**
+	 * Unlocked map represents unlocked upgrades.
+	 * For example, if snowTower doesn't have any upgrades, it has only Array(1),
+	 * and 1 representing the level of the upgrade (1 = initial level)
+	 * 
+	 * If it has unlocked for example fire tower (level 3), it is "snowTower" -> Array(1, 3)
+	 * 
+	 */  
   var unlocked = (Array(0,1,2,3, 4) zip unlocks.values.map(x => x("unlocked").asInstanceOf[Boolean])).toMap
   
   
@@ -262,7 +276,7 @@ object global {
 		}  	
   	ctrl.menuMusic.play()
 		val mainHouse = new MainHouse()
-		mainHouse.coords = Coords(640 - 48, 200)
+		mainHouse.coords = Coords(640 - 64, 200)
 		World.instances += mainHouse  	
   }
   
@@ -314,7 +328,6 @@ object global {
    * The death of the player
    */
   def death() = {
-  	println("vituiks meni")
   	global.sounds("death").play(0.5f)
   	global.state = new DeathState(ctrl)
   	ctrl.selected = None

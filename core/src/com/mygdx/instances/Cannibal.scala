@@ -8,11 +8,11 @@ import com.mygdx.emsb.Bone
 
 class Cannibal() extends EnemyUnit(){
   
-	maxHp       = 2
+	maxHp       = 2 * global.enemyLevel
 	hp          = maxHp
   spd         = 1.3
   realSpdX    = spd
-  dmg         = 5
+  dmg         = 5 * global.enemyLevel
   attackSpeed = (20 * randomRange(0.8,1.2)).toInt
   range       = (200 * randomRange(0.8,1.2)).toInt
   name        = "Cannibal"

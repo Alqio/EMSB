@@ -26,7 +26,6 @@ class MainHouse extends Building {
   	"researchCenter" -> new BuildButton(this, "researchCenter", Area(Coords(484 + 64 + 1, 92), UpgradeButton.width, UpgradeButton.height)),
   	"barracks"       -> new BuildButton(this, "barracks", Area(Coords(548 + 64 + 2, 92), UpgradeButton.width, UpgradeButton.height)),
   	"wall"   				 -> new BuildButton(this, "wall", Area(Coords(612 + 64 + 3, 92), UpgradeButton.width, UpgradeButton.height))
-  	//"antiAir"    		 -> new BuildButton(this, "antiAir", Area(Coords(612 + 64 + 64, 92), UpgradeButton.width, UpgradeButton.height))
   )  
   
 	def onSelection() = {

@@ -5,7 +5,7 @@ import com.mygdx.instances.Instance
 import com.mygdx.instances.EnemyUnit
 
 /**
- * @author alkiok1
+ * World contains lists of all current instances, projectiles and buttons in the World. 
  */
 object World{
   
@@ -17,6 +17,9 @@ object World{
 		this.instances.filter(x => x.isInstanceOf[EnemyUnit])
 	}
 	
+	/**
+	 * Returns the instance at coordinates
+	 */
 	def instanceAt(koordinaatit: Coords): Option[Instance] = {
     var instance: Option[Instance] = None
 		for (i <- instances) {
@@ -26,12 +29,16 @@ object World{
 		}
     instance
 	}
-	
+	/**
+	 * Checks whether an area is free
+	 */
 	def areaIsFree(area: Area): Boolean = {
-		//val solidit = World.instances.filter(x => x.solid)
 		World.instances.filter(x => area.isInside(x.hitArea) || x.hitArea.isInside(area)).size == 0
 	}
 	
+	/**
+	 * Return the button at coordinates
+	 */
 	def buttonAt(coordinates: Coords): Option[Button] = {
 		var button: Option[Button] = None
 		for (i <- buttons) {
@@ -46,16 +53,16 @@ object World{
 	 * Update the world. Move all instances and projectiles, execute their step events, move alarms and check button events.
 	 */
 	def updateWorld() = {
-		/** Execute the step event for all instances **/
+		/** Execute the step event for all instances */
 		instances.toVector.foreach(_.step())
 		
-		/** Execute the step event for all projectiles **/
+		/** Execute the step event for all projectiles */
 		projectiles.toVector.foreach(_.step())
 		
-		/** Move all alarms **/
+		/** Move all alarms */
 		instances.foreach(_.alarms.foreach(_.move()))	  
 		
-		/** Check all buttons if they are pressed **/
+		/** Check all buttons if they are pressed */
 		buttons.toVector.foreach(_.action())
 	}
 	 

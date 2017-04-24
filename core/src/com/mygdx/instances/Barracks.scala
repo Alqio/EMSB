@@ -22,17 +22,20 @@ class Barracks() extends Building(){
   	"Infantry"   -> new BarracksButton(this, "Infantry", Area(Coords(420 + 64 , 92), UpgradeButton.width, UpgradeButton.height)),
   	"Abaji"   	 -> new BarracksButton(this, "Abaji", Area(Coords(420 + 64 + 64 + 1, 92), UpgradeButton.width, UpgradeButton.height))
   )
-  	
+  
+  /**
+   * Spawn friendly units 
+   */
 	def spawn(what: String) = {
 		if (what == "Infantry") {
 			for (i <- 0 until 3) {
 				var j = new Infantry()
-				j.coords = new Coords(this.coords.x - 12 + 12 * i, this.coords.y)
+				j.coords = new Coords(this.position.x - 12 + 12 * i, this.coords.y)
 				World.instances += j
 			}
 		} else if (what == "Abaji") {
 			var j = new Abaji()
-			j.coords = new Coords(this.coords.x - 12 + 12, this.coords.y)
+			j.coords = new Coords(this.position.x - 12 + 12, this.coords.y)
 			World.instances += j
 		}
 	}
@@ -42,6 +45,7 @@ class Barracks() extends Building(){
   		World.buttons += i
   	}  	
   }
+  
   def unlock(typeOf: String, str: String) = {
   	if (typeOf == "spawn") {
   		val upgrade = global.upgrades(str)

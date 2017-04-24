@@ -10,11 +10,11 @@ import com.mygdx.emsb.FallingFireball
 
 class BorssyBungo() extends EnemyUnit() {
   
-	maxHp      = 60
+	maxHp      = 60  * global.enemyLevel
 	hp         = maxHp
   spd        = 0.8
   realSpdX   = spd
-  dmg        = 2.0
+  dmg        = 2.0 * global.enemyLevel
   range      = 240
   name       = "Börssy dropping Bungos"
   attackSpeed = 35

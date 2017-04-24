@@ -3,11 +3,12 @@ package com.mygdx.emsb
 import com.mygdx.instances.Instance
 
 /**
- * @author alkiok1
+ * Alarm class represents time. When an alarm's time reaches 0, the alarm's action will be executed
  */
 class Alarm (var time: Int, val actor: Instance) {
 	
-	/** Stops at -1 **/
+	/** Move the alarm's time forward. 
+	 *  Stops at -1 */
 	def move() = {
 		if (this.time >= 0) {
 			time -= 1
@@ -20,9 +21,13 @@ class Alarm (var time: Int, val actor: Instance) {
 	override def toString = "Alarm time: " + this.time + ", creator: " + this.actor
 }
 
+/**
+ * Very similiar to normal alarm, expect this class doesn't have an actor
+ */
 class WaveAlarm (var time: Int) {
 	
-	/** Stops at -1 **/
+	/** Move the alarm's time forward.
+	 *  Stops at -1 */
 	def move() = {
 		if (this.time >= 0) {
 			time -= 1

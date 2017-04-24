@@ -7,11 +7,11 @@ import com.mygdx.emsb.World
 
 class MiniBungo() extends EnemyUnit() {
   
-	maxHp      = 1
+	maxHp      = 1   * global.enemyLevel
 	hp         = maxHp
   spd        = 2.5
   realSpdX   = spd
-  dmg        = 0.3
+  dmg        = 0.3 * global.enemyLevel
   range      = 4
   name       = "Mini bungo"
   goldGain   = 1

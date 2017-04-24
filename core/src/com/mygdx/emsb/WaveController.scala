@@ -13,7 +13,7 @@ import com.mygdx.instances.Borssy
 import com.mygdx.instances.BorssyBungo
 
 /**
- * @author alkiok1
+ * WaveController handles waves and spawning enemies
  */
 class WaveController(val file: String = "") {
   var wave = 0
@@ -122,6 +122,9 @@ class WaveController(val file: String = "") {
   
 }
 
+/**
+ * Wave has a number, spawn speed and a list of enemies
+ */
 class Wave (val number: Int, val enemies: Array[String], var spawnSpeed: Int) {
 	
 	override def toString = "Wave(" + number + "): " + enemies.mkString(", ") + " ... with spawnSpeed of " + spawnSpeed

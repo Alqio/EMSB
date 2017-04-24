@@ -48,13 +48,13 @@ class ResearchCenter() extends Building() {
 	}
 	
   /**
-   * typeOf is either unlock or upgrade
+   * Unlock or upgrade
+   * @param typeOf is either unlock or upgrade
    */
   def unlock(typeOf: String, str: String) = {
   	if (typeOf == "upgrade") {
 	  	val upgrade = global.upgrades(str)
 	  	
-	  	println("Upgrade: " + upgrade)
 	  	
 	  	if (global.gold >= upgrade("cost").asInstanceOf[Int]) {
 	  		upgrade("level") = upgrade("level").asInstanceOf[Int] + 1
@@ -65,7 +65,6 @@ class ResearchCenter() extends Building() {
 	  	
   	} else if (typeOf == "unlock") {
   		val unlock = global.unlocks(str)
-  		println("Unlock: " + unlock)
   		
 	  	if (global.gold >= unlock("cost").asInstanceOf[Int]) {
 	  		unlock("unlocked") = true
@@ -73,7 +72,6 @@ class ResearchCenter() extends Building() {
 	  		World.buttons.clear()
 	  		this.onSelection()
 	  		global.updateUnlocked()
-	  		//World.buttons.toVector.foreach(x => if (x.isInstanceOf[UnlockButton] && x.target == str) World.buttons -= x)
 	  	}  		
   		
   	}

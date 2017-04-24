@@ -9,11 +9,11 @@ import com.mygdx.emsb.global
 
 class Magi() extends EnemyUnit() {
   
-	maxHp       = 3
+	maxHp       = 3 * global.enemyLevel
 	hp          = maxHp
   spd         = 1.3
   realSpdX    = spd
-  dmg         = 1
+  dmg         = 1 * global.enemyLevel
   attackSpeed = (25 * randomRange(0.8,1.2)).toInt
   range       = (150 * randomRange(0.8,1.2)).toInt
   name        = "Magi"

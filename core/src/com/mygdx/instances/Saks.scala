@@ -6,11 +6,11 @@ import com.mygdx.emsb.World
 
 class Saks() extends EnemyUnit() {
   
-	maxHp      = 3
+	maxHp      = 3   * global.enemyLevel
 	hp         = maxHp
   spd        = 0.6
   realSpdX   = spd
-  dmg        = 1.8
+  dmg        = 1.8 * global.enemyLevel
   range      = 20
   name       = "Saks"
   goldGain   = 5

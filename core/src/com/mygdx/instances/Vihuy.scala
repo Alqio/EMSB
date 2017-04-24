@@ -5,11 +5,11 @@ import com.mygdx.emsb.global
 
 class Vihuy() extends EnemyUnit() {
   
-	maxHp      = 1
+	maxHp      = 1 * global.enemyLevel 
 	hp         = maxHp
   spd        = 1
   realSpdX   = spd
-  dmg        = 1.0
+  dmg        = 1 * global.enemyLevel
   range      = 20
   name       = "Vihuy"
   goldGain   = 2

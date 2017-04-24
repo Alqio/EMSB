@@ -1,7 +1,7 @@
 package com.mygdx.instances
 
 /**
- * @author alkiok1
+ * Enemy unit has scoreGain and goldGain
  */
 abstract class EnemyUnit() extends Character() {
   override val side = "enemy"

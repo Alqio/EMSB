@@ -13,16 +13,15 @@ import math._
 import com.mygdx.instances.Instance
 
 /**
- * @author alkiok1
- * val coords: Coords, var direction: Int, var dmg: Int, val spritePath: String, var friendly: Boolean, ctrl: Controller
+ * Projectile is created by an instance and tries to hit its target to deal damage.
  */
  
 class Projectile(val creator: Instance, val spritePath: String) {
 	
-	//global.sprites(spritePath)
-	
+	//the sprite has to be loaded for each projectile, because otherwise rotating it would affect all sprites
   val sprite = new Sprite(new Texture(spritePath))
-  //sprite.set(global.sprites("snowBall1"))
+
+  
   this.sprite.setOriginCenter()
   var spd = 4.0
   var rot = 0
@@ -33,6 +32,9 @@ class Projectile(val creator: Instance, val spritePath: String) {
   var coords = new Coords(this.creator.position.x, this.creator.position.y)
   var target = this.creator.target
   
+  /**
+   * Move the projectile
+   */
   def move() = {
   	alpha = atan(abs(this.target.get.position.y - this.coords.y)/abs(this.target.get.position.x - this.coords.x))
   	//println(this + ": " + alpha* 360 / math.Pi)
@@ -74,12 +76,12 @@ class Projectile(val creator: Instance, val spritePath: String) {
   def setTarget() = {}
   
   /**
-   * Step
+   * Step event for the projectile. Projectile will try to move until it hits its target
    */
   def step() = {
   	
   	if (this.target.isEmpty || !World.instances.contains(this.target.get)) {
-  		World.projectiles.remove(World.projectiles.indexOf(this))
+  		this.destroy()
   	} else {
 	  	if (World.projectiles.contains(this) && this.target.isDefined && World.instances.contains(this.target.get)) {
 	  		this.move()
@@ -129,6 +131,9 @@ case class Bone(override val creator: Instance) extends Projectile(creator, "ima
 	typeOf = "bone"
 	rot = 30
 }
+/**
+ * Falling fireball falls from the sky
+ */
 case class FallingFireball(override val creator: Instance) extends Projectile(creator, "images/fireBall.png") {
 	spd = 5 * randomRange(0.8,1.2)
 	coords = new Coords(this.creator.position.x + irandomRange(-10,10), this.creator.position.y + irandomRange(-3,3))
@@ -173,14 +178,3 @@ case class FallingFireball(override val creator: Instance) extends Projectile(cr
 	}  
 }
 
-/**
-image_angle
-spd
-step
- - hit or move, check collision on the edge of the sprite HOW?????
-ala classit? 
-
-TARGET.ISHIT TMS
-
-
-*/

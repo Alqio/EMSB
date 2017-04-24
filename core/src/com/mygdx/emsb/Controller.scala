@@ -4,10 +4,7 @@ import com.badlogic.gdx.ApplicationAdapter
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.Texture
-import com.badlogic.gdx.graphics.g2d.SpriteBatch
-import com.badlogic.gdx.graphics.g2d.Sprite
-import com.badlogic.gdx.graphics.g2d.BitmapFont
-import com.badlogic.gdx.graphics.g2d.GlyphLayout
+import com.badlogic.gdx.graphics.g2d.{SpriteBatch, Sprite, BitmapFont, GlyphLayout}
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.math.MathUtils;
@@ -20,8 +17,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable
 import com.badlogic.gdx.scenes.scene2d.InputListener
 import com.badlogic.gdx.InputProcessor
 import com.badlogic.gdx.graphics.FPSLogger
-//import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator
-//import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter
 import com.badlogic.gdx.audio._
 import com.badlogic.gdx.graphics.Pixmap
 
@@ -29,15 +24,21 @@ import com.badlogic.gdx.graphics.Pixmap
 import collection.mutable.Buffer
 import com.mygdx.instances._
 
+
+/**
+ * Controller is the main application class. It control the flow of the game, and for example
+ * it renders the screen and has the main loop.
+ */
 class Controller extends ApplicationAdapter {
+	//First a bunch of variables need to be initialised, most of them will be set in the create() method
+	//They can't be created in the create() method, because otherwise their scope would be too small
 	var batch: SpriteBatch            = _
 	var font: BitmapFont              = _
 	var selected: Option[Instance]    = None
 	var shapeRenderer: ShapeRenderer  = _
-	var firstDraw: Boolean            = true
-	var squareButton: Texture 				= _
 	var fpsLogger: FPSLogger					= _
 	var spawner: WaveController				= _
+	
 	var backgroundMusic: Music 				= _
 	var menuMusic: Music 							= _
 	var camera: Camera								= _
@@ -47,13 +48,19 @@ class Controller extends ApplicationAdapter {
 	var tausta: Sprite        				= _
 	var mountains: Sprite 						= _
 	var floor: Sprite									= _
-	var filePath: String 							= ""
 	var cursor: Pixmap								= _
+	
+	var filePath: String 							= ""
 	
 	var textLayout1: GlyphLayout      = _
 	var textLayout2: GlyphLayout      = _
 	var fontCoordinates 							= (0f, 0f)
+	
+	/**
+	 * All variables will be set in create() method. Create method initialises the game
+	 */
 	override def create() = {
+		
 		global.font.setColor(Color.WHITE)
 		textLayout1 = new GlyphLayout(global.font, "Press 'SPACE' to continue");
 		global.font.setColor(Color.BLACK)
@@ -62,6 +69,8 @@ class Controller extends ApplicationAdapter {
 		
 		val fontX: Float = (640 - (textLayout1.width/2)).toFloat
 		val fontY: Float = 440f
+		
+		
 		fontCoordinates = (fontX, fontY)
 		font 					= global.font
 		shapeRenderer = new ShapeRenderer()
@@ -71,9 +80,12 @@ class Controller extends ApplicationAdapter {
 		global.camera = camera
 		global.ctrl   = this
 		global.state  = new MenuState(this)
+		
+		//Set cursor icon
 		cursor 				= new Pixmap(Gdx.files.internal("images/cursor.png"))
 		Gdx.graphics.setCursor(Gdx.graphics.newCursor(cursor, 0,0))
 		
+		//Set background sprites
 		tausta = new Sprite(new Texture(Gdx.files.internal("images/background.png")))
 		tausta.setPosition(0,0)
 		tausta.setSize(global.WIDTH, global.HEIGHT)
@@ -93,8 +105,8 @@ class Controller extends ApplicationAdapter {
 		logo = global.sprites("logo")
 		logo.setOriginCenter()
 		logo.setPosition(0, 470)
-		//logo.setSize(1280, 256)
 		
+		//Set and musics
 		menuMusic = global.musics("menu")
 		menuMusic.setLooping(true)
 		menuMusic.setVolume(0.25f * global.volume)
@@ -105,14 +117,19 @@ class Controller extends ApplicationAdapter {
 		backgroundMusic.setLooping(true)
 		backgroundMusic.setVolume(0.5f * global.volume)
 		
+		//Create a new sprite batch
 		batch = new SpriteBatch()
 		
+		//Create the main house to the room
 		val mainHouse = new MainHouse()
-		mainHouse.coords = Coords(640 - 48, 200)
+		mainHouse.coords = Coords(640 - 64, 200)
 		World.instances += mainHouse
 		
 	}
 	
+	/**
+	 * Load a new spawner (the wave values might be changed) and start musics
+	 */
 	def init() = {
 		spawner =	new WaveController(filePath)
 		
@@ -124,12 +141,16 @@ class Controller extends ApplicationAdapter {
 		}
 	}
 	
+	/**
+	 * Draw the required things. The actual drawing is handled by current state
+	 */
 	def draw() = {
-		
 		global.state.draw(batch)
-
 	}
 	
+	/**
+	 * Draw shapes
+	 */
 	def drawShapes() = {
 	  shapeRenderer.setColor(Color.RED);
 		shapeRenderer.begin(ShapeType.Line)
@@ -139,20 +160,21 @@ class Controller extends ApplicationAdapter {
 	}
 	
 	
-	/** The game loop */
+	/** 
+	 *  The game loop
+	 */
 	override def render() = {
-		/**
-		 * Clear the screen
-		 */
+		//Clear the screen
 	  Gdx.gl.glClearColor(0.5f, 0f, 0.3f, 1)
 	  Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
 	  
 	  //fpsLogger.log()
-
+	  
 	  if (selected.isEmpty) {
 	  	global.building = None
 	  }
 	  
+	  //Handle input and instances' events
 	  spawner.step()
 		global.state.step()
 		camera.move()
@@ -173,17 +195,16 @@ class Controller extends ApplicationAdapter {
 			val pos2 = new Vector3(20, global.HEIGHT - 20, 0)
 			global.drawOutline("Score: " + global.score + "\nGold:   " + global.gold, pos2.x.toInt, pos2.y.toInt, 1, Color.WHITE, font, batch)
 			global.drawOutline("Wave: " + global.wave, global.WIDTH - 128, global.HEIGHT - 32, 1, Color.WHITE, font, batch)
-			//val pos3 = new Vector3(Gdx.input.getX(), 720 - Gdx.input.getY(), 0)
 			val pos3 = new Vector3(global.mouseX, global.mouseY, 0)
 		  val drawPos = new Vector3(global.mouseViewX, global.mouseViewY,0)
-		  //global.drawOutline("WorldX: " + pos3.x + "\nWorldY: " + pos3.y + "\nView X: " + drawPos.x + "\nView Y: " + drawPos.y, drawPos.x.toInt, drawPos.y.toInt, 1, Color.RED, font, batch)
+		  
+			//global.drawOutline("WorldX: " + pos3.x + "\nWorldY: " + pos3.y + "\nView X: " + drawPos.x + "\nView Y: " + drawPos.y, drawPos.x.toInt, drawPos.y.toInt, 1, Color.RED, font, batch)
 			
 		  
 			if (spawner.finished) {
-				val pos = new Vector3(520, 360, 0)
-				//global.drawOutline("Press 'SPACE' to continue", pos.x.toInt, pos.y.toInt, 1, Color.WHITE, font, batch)
 				global.drawOutline(textLayout1, textLayout2, fontCoordinates._1.toInt, fontCoordinates._2.toInt, 1, font, batch)
 			}
+			
 		}
 		
 		batch.end()
@@ -228,6 +249,10 @@ class Controller extends ApplicationAdapter {
 			global.sounds("build").play(0.5f)
 		}
 	}
+	
+	/**
+	 * Handle normal input (such as muting)
+	 */
 	def handleInput() = {
 		if (global.state.name == "DeathState") {
 			if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
@@ -245,19 +270,18 @@ class Controller extends ApplicationAdapter {
 		}
 	}
 	
-	def handleFightInput() = {
+	/**
+	 * Handle input that is used in fight mode
+	 */
+	def handleFightInput() = {	
 		
-		
-		/**
-		 * Start a new wave if the previous one was finished.
-		 */
-		
+		//Start a new wave if the previous one was finished.
 		if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
 			if (spawner.finished) {
 				spawner.startWave()
 			}
 		}
-		
+		//Deselect if right click is pressed
 		if (Gdx.input.isButtonPressed(Input.Buttons.RIGHT)) {
 			selected = None
 			global.building = None
@@ -270,7 +294,8 @@ class Controller extends ApplicationAdapter {
 			 * Otherwise, change selected to either None if an empty location is pressed or an instance at that location
 			 */
 			if (World.buttonAt(new Coords(Gdx.input.getX(), global.HEIGHT - Gdx.input.getY())).isEmpty) {
-								
+				
+				//If not in build mode
 				if (global.building.isEmpty) {
 					var tempSelected = World.instanceAt(new Coords(global.mouseX, global.mouseY))
 				
@@ -305,39 +330,5 @@ class Controller extends ApplicationAdapter {
 				}
 			}
 		}
-		
 	}
-	
 }
-
-
-		/*
-		stage = new Stage(new ScreenViewport())
-		Gdx.input.setInputProcessor(stage)
-		
-		
-		
-		var button = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("squareButtonEmpty.png")))))
-		button.setPosition(100f, 100f)
-		
-		button.addListener(new InputListener(){
-			override def touchUp (event: InputEvent,  x: Float, y: Float, pointer: Int, button: Int) {
-	    	println("press a button")
-	   	}
-	    override def touchDown (InputEvent event, float x, float y, int pointer, int button) {
-	    	println("pressed a button")
-	     	return true;
-	    }
-	  })
-	  
-		stage.addActor(button)
-		
-		
-		
-				val pos = new Vector3(Gdx.input.getX(),Gdx.input.getY(), 0)
-		drawOutline("x: " + pos.x + "\ny: " + (Gdx.graphics.getHeight() - 1 - pos.y.toInt), pos.x.toInt, Gdx.graphics.getHeight() - 1 - pos.y.toInt, 1,Color.RED, font, batch)
-	
-		
-		
-		*/
-
