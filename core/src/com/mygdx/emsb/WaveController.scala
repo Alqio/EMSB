@@ -57,6 +57,7 @@ class WaveController(val file: String = "") {
   def startWave() = {
   	finished = false
   	global.wave += 1
+  	global.enemyLevel += 0.075f
   	if (wave < waves.size - 1) {
   		wave += 1
   	}
