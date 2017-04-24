@@ -32,7 +32,7 @@ object global {
   var buildingRepairSpeed   = 0.0012
   var buildingRepairLevel	  = 0
   
-  var enemyLevel: Float 		= 1
+  var enemyLevel: Float 		= 1 - 0.03f - 0.03f
   
   val spawnHeight						= 200
   val poisonDamage					= 0.04
@@ -186,12 +186,12 @@ object global {
   		"sprite"-> global.sprites("asUp")
   	),
   	"Infantry" -> Map[String, Any] (
-  		"cost"  -> 20,
+  		"cost"  -> 15,
   		"text"  -> "Summon three (3) friendly infantry units.",
   		"sprite" -> global.sprites("infantryIcon")
   	),
   	"Abaji" -> Map[String, Any] (
-  		"cost"  -> 20,
+  		"cost"  -> 15,
   		"text"  -> "Summon one (1) Abaji to fight for you.",
   		"sprite" -> global.sprites("abajiIcon")
   	)

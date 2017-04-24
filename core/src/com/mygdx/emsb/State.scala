@@ -33,7 +33,7 @@ class HelpState(override val ctrl: Controller) extends State("HelpState", ctrl) 
 	
 	def draw(batch: SpriteBatch) = {
 		ctrl.menuBg.draw(batch)
-		global.drawOutline("Hermo's Revenge - Evil Miguli Strikes Back\n\nYou need to defend Hermo's home from Evil Miguli's minions!\nControls:\nUse cursor to select and build buildnings\nPress 'M' to mute/unmute\nUse arrow keys to move camera\n\nYou can create custom waves in assets/waves/waves.txt\nThe format is:\nwave: wave number\nenemies: enemies separated by comma\nspeed: spawn speed (int)\n\nThis game is a sequel to\nFilemon's Revenge (https://gamedev.fi/keskustelu/index.php?topic=185)\nand Hermo's Revenge (https://gamedev.fi/keskustelu/index.php?topic=2036)\n\n\nGame by Kyosti Alkio", 64, global.HEIGHT - 64, 1, Color.YELLOW, global.font, batch)
+		global.drawOutline("Hermo's Revenge - Evil Miguli Strikes Back\n\nYou need to defend Hermo's home from Evil Miguli's minions!\nControls:\nUse cursor to select and build buildnings\nPress 'M' to mute/unmute\nUse arrow keys to move camera\n\nYou can create custom waves in assets/waves/waves.txt\nThe format is:\nwave: wave number\nenemies: enemies separated by comma\nspeed: spawn speed (int)\n\nThis game is a sequel to\nFilemon's Revenge (https://gamedev.fi/keskustelu/index.php?topic=185)\nand Hermo's Revenge (https://gamedev.fi/keskustelu/index.php?topic=2036)\n\n\nGame by Kyosti Alkio", 64, global.HEIGHT - 64, 1, Color.RED, global.font, batch)
 		Menu.helpButtons.foreach(_.draw(batch))
 	}
 	def step() = {

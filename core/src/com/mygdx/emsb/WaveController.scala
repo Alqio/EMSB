@@ -31,13 +31,17 @@ class WaveController(val file: String = "") {
   waves += new Wave(2, Array("vihuy", "vihuy", "vihuy", "saks"), 60)
   waves += new Wave(3, Array("vihuy", "saks", "cannibal"), 40)
   waves += new Wave(4, Array("saks", "beafire", "magi", "vihuy", "vihuy"), 40)
-  waves += new Wave(5, Array("vihuy", "saks", "cannibal", "beafire", "magi"), 60)
+  waves += new Wave(5, Array("vihuy", "saks", "cannibal", "beafire", "magi","vihuy","saks"), 60)
   waves += new Wave(6, Array("bungo"), 120)
   waves += new Wave(7, Array("beafire", "vihuy", "borssy"), 60)
   waves += new Wave(8, Array("borssyBungo", "cannibal", "vihuy", "magi"), 40)
   waves += new Wave(9, Array("borssyBungo", "saks", "vihuy", "magi", "borssy"), 10)
   waves += new Wave(10, Array("borssyBungo", "saks", "vihuy", "magi", "borssy", "cannibal", "beafire"), 10)
-  
+  waves += new Wave(11, Array("borssyBungo", "borssy"), 20)
+  waves += new Wave(12, Array("magi", "borssy", "cannibal", "vihuy"), 20)
+  waves += new Wave(13, Array("bungo", "borssyBungo", "vihuy", "beafire"), 10)
+  waves += new Wave(14, Array("borssyBungo", "saks", "cannibal", "beafire"), 10)
+  waves += new Wave(15, Array("borssyBungo", "saks", "vihuy", "magi", "borssy", "cannibal", "beafire"), 10)
   
   if (file != "") {
   	val loader = new WaveLoader(file)
@@ -49,7 +53,7 @@ class WaveController(val file: String = "") {
   println(waves.mkString("\n"))
   
   
-  val alarm = Array.fill(12)(new WaveAlarm(0))
+  val alarm = Array.fill(2)(new WaveAlarm(0))
   
   /**
    * Start a new wave
@@ -57,7 +61,7 @@ class WaveController(val file: String = "") {
   def startWave() = {
   	finished = false
   	global.wave += 1
-  	global.enemyLevel += 0.075f
+  	global.enemyLevel += 0.03f
   	if (wave < waves.size - 1) {
   		wave += 1
   	}
