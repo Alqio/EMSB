@@ -23,6 +23,8 @@ class Barracks() extends Building(){
   	"Abaji"   	 -> new BarracksButton(this, "Abaji", Area(Coords(420 + 64 + 64 + 1, 92), UpgradeButton.width, UpgradeButton.height))
   )
   
+  
+  
   /**
    * Spawn friendly units 
    */
