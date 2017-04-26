@@ -13,9 +13,9 @@ import collection.mutable.Map
 
 class MainHouse extends Building {
 	
-  maxHp       = 200.0 * math.pow(global.buildingHpMultiplier,global.buildingHpLevel)
+  maxHp       = 240.0 * math.pow(global.buildingHpMultiplier,global.buildingHpLevel)
   hp          = maxHp
-  dmg         = 0.5   * math.pow(global.buildingDmgMultiplier, global.buildingDmgLevel)
+  dmg         = 0.3   * math.pow(global.buildingDmgMultiplier, global.buildingDmgLevel)
   range       = 300
   attackSpeed = 45
   sprite      = global.sprites("mainHouse")

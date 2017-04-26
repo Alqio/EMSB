@@ -5,7 +5,7 @@ import com.mygdx.emsb.global
 
 class Vihuy() extends EnemyUnit() {
   
-	maxHp      = 1 * global.enemyLevel 
+	maxHp      = 0.6 * global.enemyLevel 
 	hp         = maxHp
   spd        = 1
   realSpdX   = spd

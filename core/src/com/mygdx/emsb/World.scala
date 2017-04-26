@@ -25,6 +25,7 @@ object World{
 		for (i <- instances) {
 		  if (i.checkCollision(koordinaatit)) {
 		    instance = Some(i) 
+		    return instance
 		  }
 		}
     instance

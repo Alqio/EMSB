@@ -7,7 +7,7 @@ import com.mygdx.emsb.global
 class Infantry() extends FriendlyUnit(){
   maxHp      = 1
 	hp         = maxHp
-  spd        = 1
+  spd        = 1.2
   realSpdX   = spd
   dmg        = 0.3
   range      = 10

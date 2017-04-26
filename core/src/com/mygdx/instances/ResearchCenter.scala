@@ -12,7 +12,7 @@ class ResearchCenter() extends Building() {
   
 	dmg               = 0
   name              = "Research center"
-  hp                = 50 * math.pow(global.buildingHpMultiplier,global.buildingHpLevel)
+  hp                = 80 * math.pow(global.buildingHpMultiplier,global.buildingHpLevel)
   maxHp             = hp
   sprite            = global.sprites("researchCenter")
   maxLevel          = 1 
@@ -59,6 +59,13 @@ class ResearchCenter() extends Building() {
 	  		upgrade("level") = upgrade("level").asInstanceOf[Int] + 1
 	  		global.gold -= upgrade("cost").asInstanceOf[Int]
 	  		upgrade("cost") = (upgrade("cost").asInstanceOf[Int] * 1.5).asInstanceOf[Int]
+	  		
+	  		str match {
+	  			case "HpUpgrade"  => global.buildingHpLevel  += 1
+	  			case "DmgUpgrade" => global.buildingDmgLevel += 1
+	  			case "ASUpgrade"  => global.buildingASLevel  += 1
+	  		}
+	  		
 	  		World.instances.foreach(x => if (x.isInstanceOf[Building]) x.asInstanceOf[Building].update(str))
 	  	}
 	  	

@@ -8,24 +8,24 @@ import com.mygdx.emsb.Coords
 import com.mygdx.emsb.FallingFireball
 
 
-class BorssyBungo() extends EnemyUnit() {
+class FlyingVihuy() extends EnemyUnit() {
   
-	maxHp      = 120  * global.enemyLevel
+	maxHp      = 25  * global.enemyLevel
 	hp         = maxHp
-  spd        = 0.8
+  spd        = 1.5
   realSpdX   = spd
-  dmg        = 2.0 * global.enemyLevel
+  dmg        = 3 * global.enemyLevel
   range      = 240
-  name       = "Börssy dropping Bungos"
-  attackSpeed = 35
-  goldGain   = 10
-  scoreGain  = 22
+  name       = "Flying Vihuy"
+  attackSpeed = 40
+  goldGain   = 6
+  scoreGain  = 10
   flying		 = true
-  var attacking = 75
+  var attacking = 2
   
   
   //Normal enemies can't load the sprite from global.sprites because then the sprite couldn't be flipped depending on the direction.
-  sprite   = new Sprite(new Texture("images/borssyBungo.png"))
+  sprite   = new Sprite(new Texture("images/flyingVihuy.png"))
 	deathSound = Some(global.sounds("borssyDeath"))
 	if (this.coords.x < this.target.get.position.x) suunta = 1 else suunta = -1
 	
@@ -33,15 +33,11 @@ class BorssyBungo() extends EnemyUnit() {
 	
 	override def attack() = {
 		if (attacking <= 0) {
-			for (i <- 0 until irandomRange(2,6)) {
-				var i = new Bungo()
-				i.coords = new Coords(this.position.x + irandomRange(-15, 15), this.position.y + irandomRange(-10, 10))
-				i.falling = true
-				World.instances += i
-			}
-			attacking = 75
+			var i = new FallingFireball(this)
+			World.projectiles += i
+			attacking = 1
 		}
-  }
+  }	
 	
 	override def move() = {
 		

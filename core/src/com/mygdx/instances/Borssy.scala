@@ -14,7 +14,7 @@ class Borssy() extends EnemyUnit() {
 	hp         = maxHp
   spd        = 2.5
   realSpdX   = spd
-  dmg        = 3.5 * global.enemyLevel
+  dmg        = 2.5   * global.enemyLevel
   range      = 240
   name       = "Börssy"
   attackSpeed = 10

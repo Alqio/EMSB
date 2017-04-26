@@ -11,16 +11,16 @@ class SnowTower() extends Building() {
   
   
   upgrades += "names"  -> Array("Normal", "Ice", "Fire", "Poison")
-  upgrades += "damage" -> Array(1.0, 3.0, 4.5, 1.5)
+  upgrades += "damage" -> Array(1.0, 2.4, 3.9, 2.6)
   upgrades += "maxHp"  -> Array(20, 50, 40, 45)
   upgrades += "sprite" -> Array(global.sprites("snowTower"), global.sprites("iceTower"), global.sprites("fireTower"), global.sprites("poisonTower"))
   
   
   
   maxLevel    = this.upgrades("names").size
-  maxHp       = 25.0 * math.pow(global.buildingHpMultiplier,global.buildingHpLevel)
+  maxHp       = 55.0 * math.pow(global.buildingHpMultiplier,global.buildingHpLevel)
   hp          = maxHp
-  dmg         = 1.0  * math.pow(global.buildingDmgMultiplier, global.buildingDmgLevel)
+  dmg         = 0.6  * math.pow(global.buildingDmgMultiplier, global.buildingDmgLevel)
   range       = 250
   attackSpeed = (55   * math.pow(global.buildingASMultiplier, global.buildingASLevel)).toInt
   sprite      = global.sprites("snowTower")
@@ -80,7 +80,6 @@ class SnowTower() extends Building() {
    *  @param level     The level to upgrade/downgrade
    *  */
   def upgrade(level: Int) = {
-  	println("trying to upgrade to level: " + level)
   	
   	val realLevel = level
   	

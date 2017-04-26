@@ -11,11 +11,11 @@ import com.mygdx.emsb.Area
 
 class AntiAir extends Building {
 	
-  maxHp       = 30.0   * math.pow(global.buildingHpMultiplier,global.buildingHpLevel)
+  maxHp       = 50.0   * math.pow(global.buildingHpMultiplier,global.buildingHpLevel)
   hp          = maxHp
   dmg         = 3.2    * math.pow(global.buildingDmgMultiplier, global.buildingDmgLevel)
-  range       = 400
-  attackSpeed = 14
+  range       = 500
+  attackSpeed = 18
   sprite      = global.sprites("antiAir")
   name				= "Anti Air tower"  
   sndShoot    = global.sounds("antiAirShoot")

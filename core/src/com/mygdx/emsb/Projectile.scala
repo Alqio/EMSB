@@ -57,7 +57,6 @@ class Projectile(val creator: Instance, val spritePath: String) {
     } else {
     	this.sprite.rotate(rot)
     }
-   // this.sprite.rotate((alpha* 360 / math.Pi).toFloat)
     this.sprite.setPosition(pos.x - global.camera.coords.x.toFloat, pos.y)
 		this.sprite.draw(batch)
   }
@@ -87,7 +86,6 @@ class Projectile(val creator: Instance, val spritePath: String) {
 	  		this.move()
 	  		this.setTarget()
 	  		if (this.target.get.isHitBy(this)) {
-	  			
 	  			target.get.takeDmg(this)
 	  			this.destroy()
 	  		}
@@ -134,12 +132,11 @@ case class Bone(override val creator: Instance) extends Projectile(creator, "ima
 
 case class FallingFireballBig(override val creator: Instance) extends Projectile(creator, "images/fireBallBig.png") {
 	spd = 5 * randomRange(0.8,1.2)
-	coords = new Coords(this.creator.position.x + irandomRange(-10,10), this.creator.position.y + irandomRange(-3,3))
+	coords = new Coords(this.creator.position.x, this.creator.position.y + irandomRange(-3,3))
 	typeOf = "fire"
 	var side = "enemy"
 	override def setTarget() = {
 		this.target = instanceNearest()
-		println(target)
 	}
 	
   override def move() = {
@@ -180,12 +177,11 @@ case class FallingFireballBig(override val creator: Instance) extends Projectile
  */
 case class FallingFireball(override val creator: Instance) extends Projectile(creator, "images/fireBall.png") {
 	spd = 5 * randomRange(0.8,1.2)
-	coords = new Coords(this.creator.position.x + irandomRange(-10,10), this.creator.position.y + irandomRange(-3,3))
+	coords = new Coords(this.creator.position.x, this.creator.position.y + irandomRange(-3,3))
 	typeOf = "fire"
 	var side = "enemy"
 	override def setTarget() = {
 		this.target = instanceNearest()
-		println(target)
 	}
 	
   override def move() = {

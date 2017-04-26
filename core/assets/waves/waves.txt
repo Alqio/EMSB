@@ -1,7 +1,20 @@
-#Possible enemies: vihuy, saks, cannibal, bungo, borssy, borssybungo, magi, beafire
+#Possible enemies: vihuy, saks, cannibal, bungo, borssy, borssybungo, magi, beafire, darkBorssy, walkingBorssy, flyingVihuy
 wave: 1 
-enemies: vihuy, saks, bungo #testcomment
+enemies: walkingBorssy, flyingVihuy, darkBorssy 
 speed: 60
-wave: 2 jou
-enemies: magi, beafire
+
+wave: 2 
+enemies: magi, beafire, vihuy, saks
+speed: 20
+
+wave: 3
+enemies: magi, beafire, flyingVihuy
+speed: 20
+
+wave: 4 
+enemies: magi, beafire, bungo, borssyBungo
+speed: 20
+
+wave: 5 
+enemies: magi, beafire, borssy, vihuy, saks
 speed: 20

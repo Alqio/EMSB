@@ -119,7 +119,7 @@ class Controller extends ApplicationAdapter {
 		
 		miguliMusic    = global.musics("miguli")
 		miguliMusic.setLooping(true)
-		miguliMusic.setVolume(0.5f * global.volume)
+		miguliMusic.setVolume(0.3f * global.volume)
 		
 		//Create a new sprite batch
 		batch = new SpriteBatch()
@@ -172,8 +172,6 @@ class Controller extends ApplicationAdapter {
 	  Gdx.gl.glClearColor(0.5f, 0f, 0.3f, 1)
 	  Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
 	  
-	  //fpsLogger.log()
-	  
 	  if (selected.isEmpty) {
 	  	global.building = None
 	  }
@@ -198,9 +196,6 @@ class Controller extends ApplicationAdapter {
 		draw()
 		
 		if (global.state.name == "FightState") {
-//			val pos3 = new Vector3(global.mouseX, global.mouseY, 0)
-//		  val drawPos = new Vector3(global.mouseViewX, global.mouseViewY,0)
-//			global.drawOutline("WorldX: " + pos3.x + "\nWorldY: " + pos3.y + "\nView X: " + drawPos.x + "\nView Y: " + drawPos.y, drawPos.x.toInt, drawPos.y.toInt, 1, Color.RED, font, batch)
 			if (spawner.finished) {
 				global.drawOutline(textLayout1, textLayout2, fontCoordinates._1.toInt, fontCoordinates._2.toInt, 1, font, batch)
 			}
@@ -281,7 +276,7 @@ class Controller extends ApplicationAdapter {
 				
 			menuMusic.setVolume(0.25f * global.volume)
 			backgroundMusic.setVolume(0.5f * global.volume)
-			miguliMusic.setVolume(0.5f * global.volume)
+			miguliMusic.setVolume(0.3f * global.volume)
 		}
 	}
 	
@@ -347,7 +342,7 @@ class Controller extends ApplicationAdapter {
 					}
 						
 					
-					println("Selected: " + selected)
+					//println("Selected: " + selected)
 					
 					if (selected.isDefined) {
 						selected.get.asInstanceOf[Building].onSelection()

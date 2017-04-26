@@ -26,7 +26,7 @@ class WaveLoader(val input: String){
 										 .map(x => x.toLowerCase())
 										 .dropWhile(x => !x.contains("wave"))
 										 
-		println(fileLines.mkString("\n"))
+		//println(fileLines.mkString("\n"))
 		
 		while (fileLines.size >= 3) {
 			waves += createWave(fileLines.take(3))

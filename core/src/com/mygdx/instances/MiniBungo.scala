@@ -10,11 +10,12 @@ class MiniBungo() extends EnemyUnit() {
 	maxHp      = 1   * global.enemyLevel
 	hp         = maxHp
   spd        = 2.5
-  realSpdX   = spd
+  realSpdX   = spd * global.enemyLevel
   dmg        = 0.3 * global.enemyLevel
   range      = 4
   name       = "Mini bungo"
   goldGain   = 1
+  scoreGain  = 1
   
   //Normal enemies can't load the sprite from global.sprites because then the sprite couldn't be flipped depending on the direction.
   sprite   = new Sprite(new Texture("images/miniBungo.png"))

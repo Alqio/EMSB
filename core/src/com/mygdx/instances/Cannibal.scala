@@ -8,15 +8,15 @@ import com.mygdx.emsb.Bone
 
 class Cannibal() extends EnemyUnit(){
   
-	maxHp       = 2 * global.enemyLevel
+	maxHp       = 4 * global.enemyLevel
 	hp          = maxHp
-  spd         = 1.3
+  spd         = 1.1
   realSpdX    = spd
-  dmg         = 5 * global.enemyLevel
+  dmg         = 7 * global.enemyLevel
   attackSpeed = (20 * randomRange(0.8,1.2)).toInt
   range       = (200 * randomRange(0.8,1.2)).toInt
   name        = "Cannibal"
-  goldGain    = 8
+  goldGain    = 5
   scoreGain   = 3 
   var canThrow = true
   
@@ -30,7 +30,7 @@ class Cannibal() extends EnemyUnit(){
 	  	var i = new Bone(this)
 	  	World.projectiles += i
 	  	canThrow = false
-	  	dmg = 2
+	  	dmg = 3
 	  	range = 15
 	  	attackSpeed = 45
 	  	//this.sprite.getTexture().dispose()

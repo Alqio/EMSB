@@ -9,8 +9,8 @@ class Abaji() extends FriendlyUnit(){
 	hp         = maxHp
   spd        = 0.6
   realSpdX   = spd
-  dmg        = 0.5
-  range      = 10
+  dmg        = 0.8
+  range      = 5 + (this.sprite.getWidth()/2).toInt
   name       = "Äbäji"
   attackSpeed = 120
   

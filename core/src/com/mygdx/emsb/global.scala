@@ -23,13 +23,13 @@ import collection.mutable.Map
 object global {
   
 	//global values
-  var buildingDmgMultiplier = 1.4
+  var buildingDmgMultiplier = 1.3
   var buildingDmgLevel      = 0
-  var buildingHpMultiplier  = 1.4
+  var buildingHpMultiplier  = 1.25
   var buildingHpLevel       = 0
   var buildingASMultiplier  = 0.8
   var buildingASLevel  			= 0
-  var buildingRepairSpeed   = 0.0024
+  var buildingRepairSpeed   = 0.0035
   var buildingRepairLevel	  = 0
   
   var enemyLevel: Float 		= 1 - 0.03f - 0.03f

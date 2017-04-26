@@ -17,7 +17,7 @@ class Bungo() extends EnemyUnit() {
   dmg        = 4.0 * global.enemyLevel
   range      = 20
   name       = "Bungo"
-  goldGain   = 8
+  goldGain   = 2
   scoreGain  = 5
   var spawned = false
   var falling = false
@@ -51,7 +51,7 @@ class Bungo() extends EnemyUnit() {
 			}
 		}
   	if (!falling & !spawned && util.Random.nextInt(300) < 2) {
-  		for (i <- 0 until irandomRange(0, 5)) {
+  		for (i <- 0 until irandomRange(1, 9)) {
 	  		val i = new MiniBungo()
 	  		i.coords = new Coords(this.coords.x + irandomRange(-20,20), this.coords.y)
 	  		spawned = true

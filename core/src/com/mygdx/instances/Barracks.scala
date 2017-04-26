@@ -13,7 +13,7 @@ class Barracks() extends Building(){
 	
 	dmg               = 0
   name              = "Barracks"
-  hp                = 100 * math.pow(global.buildingHpMultiplier,global.buildingHpLevel)
+  hp                = 140 * math.pow(global.buildingHpMultiplier,global.buildingHpLevel)
   maxHp             = hp
   sprite            = global.sprites("barracks")
   maxLevel          = 1 

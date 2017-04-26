@@ -8,9 +8,9 @@ class Beafire() extends EnemyUnit() {
   
 	maxHp       = 16 * global.enemyLevel
 	hp          = maxHp
-  spd         = 0.6
+  spd         = 0.4
   realSpdX    = spd
-  dmg         = 2.2  * global.enemyLevel
+  dmg         = 1.5  * global.enemyLevel
   attackSpeed = (60 * randomRange(0.8,1.2)).toInt
   range       = 20
   name        = "Beafire"
