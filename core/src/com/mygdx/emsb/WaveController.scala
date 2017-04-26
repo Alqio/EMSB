@@ -23,25 +23,25 @@ class WaveController(val file: String = "") {
   var waves = Buffer[Wave]()
   var finished = true
   var enemies = Array("sukka")
-  
+  var enemyLevelCounter = 0.03f
   //If the waves are not loaded from file, use default waves.
 
   waves += new Wave(0, Array("-"), 10)
-  waves += new Wave(1, Array("vihuy"), 30)
+  waves += new Wave(1, Array("vihuy"), 40)
   waves += new Wave(2, Array("vihuy", "vihuy", "vihuy", "saks"), 60)
   waves += new Wave(3, Array("vihuy", "saks", "cannibal"), 40)
-  waves += new Wave(4, Array("saks", "beafire", "magi", "vihuy", "vihuy"), 40)
+  waves += new Wave(4, Array("saks", "beafire", "magi", "vihuy", "vihuy"), 70)
   waves += new Wave(5, Array("vihuy", "saks", "cannibal", "beafire", "magi","vihuy","saks"), 60)
   waves += new Wave(6, Array("bungo"), 120)
   waves += new Wave(7, Array("beafire", "vihuy", "borssy"), 60)
-  waves += new Wave(8, Array("borssyBungo", "cannibal", "vihuy", "magi"), 40)
-  waves += new Wave(9, Array("borssyBungo", "saks", "vihuy", "magi", "borssy"), 10)
-  waves += new Wave(10, Array("borssyBungo", "saks", "vihuy", "magi", "borssy", "cannibal", "beafire"), 10)
+  waves += new Wave(8, Array("borssyBungo", "cannibal", "vihuy", "magi", "bungo"), 40)
+  waves += new Wave(9, Array("borssyBungo", "saks", "vihuy", "magi", "borssy", "bungo", "bungo"), 15)
+  waves += new Wave(10, Array("borssyBungo", "saks", "vihuy", "magi", "borssy", "cannibal", "beafire", "bungo"), 10)
   waves += new Wave(11, Array("borssyBungo", "borssy"), 20)
   waves += new Wave(12, Array("magi", "borssy", "cannibal", "vihuy"), 20)
   waves += new Wave(13, Array("bungo", "borssyBungo", "vihuy", "beafire"), 10)
-  waves += new Wave(14, Array("borssyBungo", "saks", "cannibal", "beafire"), 10)
-  waves += new Wave(15, Array("borssyBungo", "saks", "vihuy", "magi", "borssy", "cannibal", "beafire"), 10)
+  waves += new Wave(14, Array("borssyBungo", "saks", "cannibal", "beafire"), 5)
+  waves += new Wave(15, Array("borssyBungo", "saks", "vihuy", "magi", "borssy", "cannibal", "beafire", "bungo"), 0)
   
   if (file != "") {
   	val loader = new WaveLoader(file)
@@ -61,12 +61,14 @@ class WaveController(val file: String = "") {
   def startWave() = {
   	finished = false
   	global.wave += 1
-  	global.enemyLevel += 0.03f
+  	global.enemyLevel += enemyLevelCounter
   	if (wave < waves.size - 1) {
   		wave += 1
+  	} else {
+  		enemyLevelCounter += 0.01f
   	}
   	enemies = waves(wave).enemies
-  	maxEnemyCount = 10 + wave * 5
+  	maxEnemyCount = 10 + wave * 5 + (if (global.wave >= 12) 3 * global.wave else 0)
   	enemyCount = 0
   	alarm(0).time = 60
   	alarm(1).time = math.max(300 - 10 * wave, 10)
@@ -106,7 +108,7 @@ class WaveController(val file: String = "") {
 	  	if (alarm(0).time <= 0) {
 	  		if (enemyCount < maxEnemyCount) {
 	  			spawn()
-	  			alarm(0).time = irandomRange(waves(wave).spawnSpeed, 60 + 15 * World.enemies.size)
+	  			alarm(0).time = irandomRange(waves(wave).spawnSpeed, math.max(10, 60 + 15 * World.enemies.size - 5*global.wave))
 	  		}
 	  	}
 	  	
@@ -115,7 +117,7 @@ class WaveController(val file: String = "") {
 		  		for (i <- 0 until irandomRange(0, 3 + wave)) {
 		  			spawn()
 		  		}
-	  			alarm(1).time = irandomRange(waves(wave).spawnSpeed, 240 + 10 * World.enemies.size)
+	  			alarm(1).time = irandomRange(waves(wave).spawnSpeed, math.max(10, 200 + 10 * World.enemies.size - 5*global.wave))
 	  		}
 	  	}
 	  	

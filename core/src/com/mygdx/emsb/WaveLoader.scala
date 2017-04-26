@@ -1,6 +1,5 @@
 package com.mygdx.emsb
 
-import scala.io.Source
 import collection.mutable.Buffer
 import java.io._
 import collection.mutable.Map
@@ -22,7 +21,12 @@ class WaveLoader(val input: String){
 		
 		val handle: FileHandle = Gdx.files.internal("waves/waves.txt")
 		val f = handle.readString().split("\n")
-		var fileLines = f.toList.filter(x => x != "" && !x.startsWith("#")).map(x => x.toLowerCase()).dropWhile(x => !x.contains("wave"))
+		var fileLines = f.toList
+										 .filter(x => x != "" && !x.startsWith("#"))
+										 .map(x => x.toLowerCase())
+										 .dropWhile(x => !x.contains("wave"))
+										 
+		println(fileLines.mkString("\n"))
 		
 		while (fileLines.size >= 3) {
 			waves += createWave(fileLines.take(3))
@@ -77,7 +81,7 @@ class WaveLoader(val input: String){
 		if (Try(nroLine(0)._2.toInt).isSuccess) {
 			nro = nroLine(0)._2.toInt
 		} else {
-			nro = waves.size + 1
+			nro = waves.size
 		}
 		
 		val enemies = Buffer[String]()
@@ -108,7 +112,7 @@ class WaveLoader(val input: String){
 
 		def cmpLine(ss: String): Boolean = s.takeWhile(_ != ':') === ss
 		
-		def after: String = s.dropWhile(_ != ':').drop(1).trim()
+		def after: String = s.dropWhile(_ != ':').drop(1).takeWhile(_ != '#').trim()
 		
 		def before: String = s.takeWhile(_ != ':').trim().toLowerCase()
 	}	

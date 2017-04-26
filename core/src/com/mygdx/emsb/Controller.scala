@@ -60,7 +60,6 @@ class Controller extends ApplicationAdapter {
 	 * All variables will be set in create() method. Create method initialises the game
 	 */
 	override def create() = {
-		
 		global.font.setColor(Color.WHITE)
 		textLayout1 = new GlyphLayout(global.font, "Press 'SPACE' to continue");
 		global.font.setColor(Color.BLACK)
@@ -72,17 +71,17 @@ class Controller extends ApplicationAdapter {
 		
 		
 		fontCoordinates = (fontX, fontY)
-		font 					= global.font
-		shapeRenderer = new ShapeRenderer()
-		fpsLogger 		= new FPSLogger()
-		spawner 			=	new WaveController(filePath)
-		camera 				= new Camera()
-		global.camera = camera
-		global.ctrl   = this
-		global.state  = new MenuState(this)
+		font 				  	= global.font
+		shapeRenderer   = new ShapeRenderer()
+		fpsLogger 	  	= new FPSLogger()
+		spawner 		  	=	new WaveController(filePath)
+		camera 			  	= new Camera()
+		global.camera   = camera
+		global.ctrl     = this
+		global.state    = new MenuState(this)
 		
 		//Set cursor icon
-		cursor 				= new Pixmap(Gdx.files.internal("images/cursor.png"))
+		cursor 				  = new Pixmap(Gdx.files.internal("images/cursor.png"))
 		Gdx.graphics.setCursor(Gdx.graphics.newCursor(cursor, 0,0))
 		
 		//Set background sprites
@@ -180,6 +179,8 @@ class Controller extends ApplicationAdapter {
 		camera.move()
 		if (global.state.name == "FightState")
 			handleFightInput()
+		else if(global.state.name == "EscState") 
+			handleEscInput()
 	  handleInput()
 		batch.begin()
 		
@@ -192,15 +193,9 @@ class Controller extends ApplicationAdapter {
 		draw()
 		
 		if (global.state.name == "FightState") {
-			val pos2 = new Vector3(20, global.HEIGHT - 20, 0)
-			global.drawOutline("Score: " + global.score + "\nGold:   " + global.gold, pos2.x.toInt, pos2.y.toInt, 1, Color.WHITE, font, batch)
-			global.drawOutline("Wave: " + global.wave, global.WIDTH - 128, global.HEIGHT - 32, 1, Color.WHITE, font, batch)
-			val pos3 = new Vector3(global.mouseX, global.mouseY, 0)
-		  val drawPos = new Vector3(global.mouseViewX, global.mouseViewY,0)
-		  
-			//global.drawOutline("WorldX: " + pos3.x + "\nWorldY: " + pos3.y + "\nView X: " + drawPos.x + "\nView Y: " + drawPos.y, drawPos.x.toInt, drawPos.y.toInt, 1, Color.RED, font, batch)
-			
-		  
+//			val pos3 = new Vector3(global.mouseX, global.mouseY, 0)
+//		  val drawPos = new Vector3(global.mouseViewX, global.mouseViewY,0)
+//			global.drawOutline("WorldX: " + pos3.x + "\nWorldY: " + pos3.y + "\nView X: " + drawPos.x + "\nView Y: " + drawPos.y, drawPos.x.toInt, drawPos.y.toInt, 1, Color.RED, font, batch)
 			if (spawner.finished) {
 				global.drawOutline(textLayout1, textLayout2, fontCoordinates._1.toInt, fontCoordinates._2.toInt, 1, font, batch)
 			}
@@ -265,9 +260,23 @@ class Controller extends ApplicationAdapter {
 				global.volume = 1f
 			else
 				global.volume = 0f
+				
 			menuMusic.setVolume(0.25f * global.volume)
 			backgroundMusic.setVolume(0.5f * global.volume)
 		}
+	}
+	
+	/**
+	 * Handle input when game is paused
+	 */
+	def handleEscInput() = {
+		if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE) || Gdx.input.isKeyJustPressed(Input.Keys.N)) {
+			global.state = new FightState(this)
+		} else if (Gdx.input.isKeyJustPressed(Input.Keys.Y)) {
+			global.reset()
+			global.state = new MenuState(this)
+		}
+		
 	}
 	
 	/**
@@ -286,6 +295,12 @@ class Controller extends ApplicationAdapter {
 			selected = None
 			global.building = None
 			World.buttons.clear()
+		}
+		
+		if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+			selected = None
+			global.building = None
+			global.state = new EscState(this)
 		}
 		
 		if (Gdx.input.justTouched() && !Gdx.input.isButtonPressed(Input.Buttons.RIGHT)) {

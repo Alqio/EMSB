@@ -173,7 +173,6 @@ class UpgradeButton (val creator: Building, target: String, area: Area) extends 
 		val text = global.upgrades(target)("text").asInstanceOf[String]
 		val cost = global.upgrades(target)("cost").asInstanceOf[Int]
 		val pos = new Vector3(this.area.xy1.x.toFloat, this.area.xy2.y.toFloat - UpgradeButton.height - 12,0)
-		//global.font.draw(batch, text + "\nCost: " + cost, pos.x, pos.y)
 		global.drawOutline(text + "\nCost: " + cost,  pos.x.toInt, pos.y.toInt, 1, Color.RED, global.font, batch)
 	}
 	

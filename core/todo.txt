@@ -11,30 +11,30 @@ Unit tests here mby?
 - upgrade valikko DONE
 - spawner DONE
 - waves DONE
-- menu
+- menu DONE
 - tower upgrades (ei voi valita vielä 6.4.17) DONE
 	- fire
 	- ice
 	- poison
-- camera (siirrä ne hitto vaa manuaalisesti, valitse kaikki Worldin jutut ja siirrät niitä)
+- camera (siirrä ne hitto vaa manuaalisesti, valitse kaikki Worldin jutut ja siirrät niitä) DONE
 - damagen teko vihuille (se on ny jotenki alarmeissa ja stepissä, korjaa ku ehit :) SnowTower tekee sen aika jännästi atm, kokeile muokata molempiin joku yhteinen tapa) DONE
 - vihujen kuoleminen DONE 
 - fiksumpi buttonien luonti DONE
 - tornien hp:n parantuminen DONE
 - Lisää vaihtoehtoja researchCenteriin DONE PUOLIKS
 	- esim healausnopeus
-	- attack speed
+	- attack speed DONE
 
 17.4.2017, mitä vielä jäljellä:
 - kuoleminen DONE 
 - ulkopuolisten tiedostojen lataus DONE
-- lisää vihuja
+- lisää vihuja DONE
 	- börssy(?)
 	- joku lentävä
 - parallax tausta
 - uus musiikki
-- menu
-	- Ehkä viel HELP?
+- menu DONE
+	- Ehkä viel HELP? DONE
 - camera (konsultoi pyryä) DONE
 - bosseja?
 	- ainaki evil miguli ois kiva, mut mitenköhän toimii?
@@ -47,8 +47,8 @@ Unit tests here mby?
 	- miguli
 
 
-KORJAA VIKA WAVE
-NÄYTÄ CURRENT WAVE
+KORJAA VIKA WAVE DONED
+NÄYTÄ CURRENT WAVE DONE
 
 MUUTA MISTÄ WAVES.TXT LUETAAN
 

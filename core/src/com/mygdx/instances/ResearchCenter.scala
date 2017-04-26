@@ -55,7 +55,6 @@ class ResearchCenter() extends Building() {
   	if (typeOf == "upgrade") {
 	  	val upgrade = global.upgrades(str)
 	  	
-	  	
 	  	if (global.gold >= upgrade("cost").asInstanceOf[Int]) {
 	  		upgrade("level") = upgrade("level").asInstanceOf[Int] + 1
 	  		global.gold -= upgrade("cost").asInstanceOf[Int]

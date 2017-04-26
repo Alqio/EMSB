@@ -1,5 +1,5 @@
 /**
- * @author alkiok1
+ * @author Kyösti Alkio
  */
 
 package object Methods {
@@ -9,7 +9,7 @@ package object Methods {
 	/**
 	 * 1  == true
 	 * 0  == false
-	 * -1 == false myös
+	 * -1 == false too
 	 */
 	def intToBool(value: Int) = if (value == 1) true else false
 	
@@ -17,7 +17,7 @@ package object Methods {
 		val rand = util.Random
 		val dist = math.abs(max - min)
 		if (dist > 0)
-			min + rand.nextInt(dist)
+			math.min(max, min) + rand.nextInt(dist)
 		else
 			min
 	}
@@ -42,16 +42,6 @@ package object Methods {
   
   def lerp(eka: Double, toka: Double, prosentti: Double) = {
     (toka - eka).toDouble * prosentti
-  }
-  
-  
-  
-  def printf(s: String, vektori: Vector[AnyVal]) = {
-    for (i <- s.indices) {
-      if (i == '%') {
-
-      }
-    }
   }
   
   
