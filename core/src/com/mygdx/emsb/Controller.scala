@@ -41,6 +41,7 @@ class Controller extends ApplicationAdapter {
 	
 	var backgroundMusic: Music 				= _
 	var menuMusic: Music 							= _
+	var miguliMusic: Music 						= _
 	var camera: Camera								= _
 	
 	var menuBg: Sprite								= _
@@ -115,6 +116,10 @@ class Controller extends ApplicationAdapter {
 		backgroundMusic = global.musics("background")
 		backgroundMusic.setLooping(true)
 		backgroundMusic.setVolume(0.5f * global.volume)
+		
+		miguliMusic    = global.musics("miguli")
+		miguliMusic.setLooping(true)
+		miguliMusic.setVolume(0.5f * global.volume)
 		
 		//Create a new sprite batch
 		batch = new SpriteBatch()
@@ -209,12 +214,25 @@ class Controller extends ApplicationAdapter {
 	}
 	
 	/**
+	 * What happens when miguli spawns?
+	 */
+	def miguli() = {
+		if (menuMusic.isPlaying())
+			menuMusic.pause()
+		if (menuMusic.isPlaying())
+			menuMusic.pause()
+			
+		miguliMusic.play()
+	}
+	
+	/**
 	 * Dispose of the resources that were used in the game.
 	 */
 	override def dispose() = {
 		global.sprites.values.toVector.foreach(_.getTexture().dispose())
 		global.sounds.values.toVector.foreach(_.dispose())
 		global.musics.values.toVector.foreach(_.dispose())
+		global.miguliSounds.values.toVector.foreach(_.dispose())
 		global.font.dispose()
 		cursor.dispose()
 		tausta.getTexture().dispose()
@@ -263,6 +281,7 @@ class Controller extends ApplicationAdapter {
 				
 			menuMusic.setVolume(0.25f * global.volume)
 			backgroundMusic.setVolume(0.5f * global.volume)
+			miguliMusic.setVolume(0.5f * global.volume)
 		}
 	}
 	

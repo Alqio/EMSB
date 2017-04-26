@@ -11,6 +11,7 @@ import com.mygdx.instances.Magi
 import com.mygdx.instances.Saks
 import com.mygdx.instances.Borssy
 import com.mygdx.instances.BorssyBungo
+import com.mygdx.instances.EvilMiguli
 
 /**
  * WaveController handles waves and spawning enemies
@@ -31,7 +32,7 @@ class WaveController(val file: String = "") {
   waves += new Wave(2, Array("vihuy", "vihuy", "vihuy", "saks"), 60)
   waves += new Wave(3, Array("vihuy", "saks", "cannibal"), 40)
   waves += new Wave(4, Array("saks", "beafire", "magi", "vihuy", "vihuy"), 70)
-  waves += new Wave(5, Array("vihuy", "saks", "cannibal", "beafire", "magi","vihuy","saks"), 60)
+  waves += new Wave(5, Array("vihuy", "saks", "cannibal", "beafire","vihuy","saks"), 60)
   waves += new Wave(6, Array("bungo"), 120)
   waves += new Wave(7, Array("beafire", "vihuy", "borssy"), 60)
   waves += new Wave(8, Array("borssyBungo", "cannibal", "vihuy", "magi", "bungo"), 40)
@@ -53,7 +54,7 @@ class WaveController(val file: String = "") {
   println(waves.mkString("\n"))
   
   
-  val alarm = Array.fill(2)(new WaveAlarm(0))
+  val alarm = Array.fill(3)(new WaveAlarm(0))
   
   /**
    * Start a new wave
@@ -72,6 +73,13 @@ class WaveController(val file: String = "") {
   	enemyCount = 0
   	alarm(0).time = 60
   	alarm(1).time = math.max(300 - 10 * wave, 10)
+  	if (wave >= 10 && wave % 5 == 0) {
+  		val i = new EvilMiguli()
+  		i.coords = new Coords(choose(global.minX -30 + irandomRange(-30, 0), global.maxX + 30 + irandomRange(0, 30)), global.spawnHeight + 250 + irandomRange(-20, 5))
+  		World.instances += i
+  		global.ctrl.miguli()
+  	}
+  	
   }
   
   /**

@@ -29,7 +29,7 @@ object global {
   var buildingHpLevel       = 0
   var buildingASMultiplier  = 0.8
   var buildingASLevel  			= 0
-  var buildingRepairSpeed   = 0.0012
+  var buildingRepairSpeed   = 0.0024
   var buildingRepairLevel	  = 0
   
   var enemyLevel: Float 		= 1 - 0.03f - 0.03f
@@ -112,11 +112,31 @@ object global {
   
   val musics = Map[String, Music](
   	"background" -> Gdx.audio.newMusic(Gdx.files.internal("sounds/sndBg.mp3")),
-  	"menu"       -> Gdx.audio.newMusic(Gdx.files.internal("sounds/sndMenu.mp3"))
+  	"menu"       -> Gdx.audio.newMusic(Gdx.files.internal("sounds/sndMenu.mp3")),
+  	"miguli"     -> Gdx.audio.newMusic(Gdx.files.internal("sounds/miguli/sndBoss.mp3"))
+  )
+  
+  val miguliSounds = Map[String, Sound](
+  	"miguli1"    -> Gdx.audio.newSound(Gdx.files.internal("sounds/miguli/snd_miguli1.wav")),
+  	"miguli2"    -> Gdx.audio.newSound(Gdx.files.internal("sounds/miguli/snd_miguli2.wav")),
+  	"miguli3"    -> Gdx.audio.newSound(Gdx.files.internal("sounds/miguli/snd_miguli3.wav")),
+  	"miguli4"    -> Gdx.audio.newSound(Gdx.files.internal("sounds/miguli/snd_miguli4.wav")),
+  	"miguli5"    -> Gdx.audio.newSound(Gdx.files.internal("sounds/miguli/snd_miguli5.wav")),
+  	"miguli6"    -> Gdx.audio.newSound(Gdx.files.internal("sounds/miguli/snd_miguli6.wav")),
+  	"miguli7"    -> Gdx.audio.newSound(Gdx.files.internal("sounds/miguli/snd_miguli7.wav")),
+  	"miguli8"    -> Gdx.audio.newSound(Gdx.files.internal("sounds/miguli/snd_miguli8.wav")),
+  	"miguli9"    -> Gdx.audio.newSound(Gdx.files.internal("sounds/miguli/snd_miguli9.wav")),
+  	"miguli10"   -> Gdx.audio.newSound(Gdx.files.internal("sounds/miguli/snd_miguli10.wav")),
+  	"miguli11"   -> Gdx.audio.newSound(Gdx.files.internal("sounds/miguli/snd_miguli11.wav")),
+  	"miguli12"   -> Gdx.audio.newSound(Gdx.files.internal("sounds/miguli/snd_miguli12.wav")),
+  	"laugh1"     -> Gdx.audio.newSound(Gdx.files.internal("sounds/miguli/snd_laugh.wav")),
+  	"laugh2"     -> Gdx.audio.newSound(Gdx.files.internal("sounds/miguli/snd_laugh2.wav"))
+  	
   )
   
   val sounds = Map[String, Sound](
   	"enemyDeath"    -> Gdx.audio.newSound(Gdx.files.internal("sounds/sndHit.wav")),
+  	"miguliDeath"   -> Gdx.audio.newSound(Gdx.files.internal("sounds/miguli/sndMiguliDeath.wav")),
   	"towerShoot"    -> Gdx.audio.newSound(Gdx.files.internal("sounds/sndShoot.wav")),
   	"saksDeath"     -> Gdx.audio.newSound(Gdx.files.internal("sounds/sndSaksDeath.wav")),
   	"infantryDeath" -> Gdx.audio.newSound(Gdx.files.internal("sounds/sndInfantryDeath.wav")),
@@ -254,6 +274,7 @@ object global {
 	  buildingHpLevel       = 0
 	  buildingASLevel  			= 0
 	  buildingRepairLevel	  = 0
+	  wave									= 0
   	upgrades("HpUpgrade")("level") = buildingHpLevel
   	upgrades("ASUpgrade")("level") = buildingASLevel
   	upgrades("DmgUpgrade")("level") = buildingDmgLevel
@@ -273,7 +294,10 @@ object global {
 		}
 		if (ctrl.menuMusic.isPlaying()) {
 			ctrl.menuMusic.stop()		
-		}  	
+		}
+		if (ctrl.miguliMusic.isPlaying()) {
+			ctrl.miguliMusic.stop()
+		}
   	ctrl.menuMusic.play()
 		val mainHouse = new MainHouse()
 		mainHouse.coords = Coords(640 - 64, 200)

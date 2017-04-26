@@ -19,6 +19,7 @@ class BorssyBungo() extends EnemyUnit() {
   name       = "Börssy dropping Bungos"
   attackSpeed = 35
   goldGain   = 4
+  scoreGain  = 22
   flying		 = true
   var attacking = 75
   

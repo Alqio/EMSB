@@ -59,6 +59,7 @@ abstract class Character() extends Instance() {
 				this.sprite.flip(true, false)
 				direction = 180
 			}
+			
 			if (canAttack) {
 				if (this.alarms(0).time <= 0) {
 					this.alarms(0).time += attackSpeed

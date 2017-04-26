@@ -131,6 +131,50 @@ case class Bone(override val creator: Instance) extends Projectile(creator, "ima
 	typeOf = "bone"
 	rot = 30
 }
+
+case class FallingFireballBig(override val creator: Instance) extends Projectile(creator, "images/fireBallBig.png") {
+	spd = 5 * randomRange(0.8,1.2)
+	coords = new Coords(this.creator.position.x + irandomRange(-10,10), this.creator.position.y + irandomRange(-3,3))
+	typeOf = "fire"
+	var side = "enemy"
+	override def setTarget() = {
+		this.target = instanceNearest()
+		println(target)
+	}
+	
+  override def move() = {
+  	this.coords.y -= spd
+  	
+  	if (this.coords.y <= 200) {
+  		this.destroy()
+  	}
+  }	
+	/**
+	 * Returns the nearest instance (not self)
+	 */
+	def instanceNearest(onlyEnemy: Boolean = true): Option[Instance] = {
+
+		val enemies = if (onlyEnemy) World.instances.filter(x => x.side != this.side).toVector else World.instances.toVector
+
+		if (enemies.size < 1) {
+			None
+
+		} else {
+
+			var dist = this.coords.distanceToPoint(enemies(0).coords)
+			var nearest = enemies(0)
+
+			for (ins <- enemies) {
+				if (ins != this && this.coords.distanceToPoint(ins.coords) < dist) {
+					nearest = ins
+					dist = this.coords.distanceToPoint(nearest.coords)
+				}
+			}
+
+			Some(nearest)
+		}
+	}  
+}
 /**
  * Falling fireball falls from the sky
  */

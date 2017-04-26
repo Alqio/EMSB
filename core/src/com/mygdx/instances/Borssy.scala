@@ -19,6 +19,7 @@ class Borssy() extends EnemyUnit() {
   name       = "Börssy"
   attackSpeed = 10
   goldGain   = 4
+  scoreGain  = 20
   flying		 = true
   var attacking = 5
   
