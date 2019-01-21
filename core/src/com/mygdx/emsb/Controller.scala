@@ -254,7 +254,7 @@ class Controller extends ApplicationAdapter {
 			buildning.coords = Coords(global.mouseX, global.spawnHeight)
 			World.instances += buildning
 			global.gold -= global.buildables(global.building.get)("cost").asInstanceOf[Int]
-			global.sounds("build").play(0.5f)
+			global.sounds("build").play(0.5f * global.volume)
 		}
 	}
 	
